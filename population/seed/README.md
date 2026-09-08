@@ -21,7 +21,7 @@ createdb thingdaddy_population
 cd ../api && npm install && npm start
 ```
 
-Then open `population/fill/td_screens_live.html` in a browser.
+Then open `apps/web/public/demo/td_screens_live.html` in a browser.
 
 The database is named `thingdaddy_population` so `api/.env` needs no change.
 You will also need `INGEST_TOKEN` in `.env` if you touch a write endpoint —

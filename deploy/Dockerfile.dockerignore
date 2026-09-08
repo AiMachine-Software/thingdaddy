@@ -1,0 +1,15 @@
+# Keep the build context small. The image needs apps/web (to build) + apps/api.
+**/node_modules
+**/dist
+**/.env
+**/.env.local
+**/.DS_Store
+.git
+agents
+docs
+scripts
+launchd
+data
+population
+apps/api/test
+apps/web/src/platform/sample

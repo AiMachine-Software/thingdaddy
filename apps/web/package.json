@@ -1,0 +1,25 @@
+{
+  "name": "@thingdaddy/web",
+  "private": true,
+  "version": "1.0.0",
+  "description": "ThingDaddy web app: the V4 platform, the population registry UI and the legacy demo pages behind one router and one nav.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "parse-check": "bash src/platform/parse-check.sh"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-react": "^7.26.0",
+    "@babel/preset-typescript": "^7.26.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.4.0"
+  }
+}

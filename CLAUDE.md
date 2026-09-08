@@ -147,12 +147,20 @@ GEPIR-confirmed. Everything else is a candidate until confirmed. (7 seed parties
 
 ```
 thingdaddy/
-  platform/     the app: first screen + 5-pillar workspace tabs (build fresh; harvest Build 44)
-  population/   the registry service (Postgres + Express API + Vite/React UI) — THE CORE
+  apps/web/     the web app (React + Vite, one router):
+                  src/platform/   the V4 platform (single file) — route /
+                  src/registry/   the population registry UI — route /registry
+                  public/demo/    the legacy single-file HTML demos — route /demo
+  apps/api/     the population API (Express over Postgres) — the registration seam
+  population/   the registry data tier: schema, seed, loaders, fleet tooling — THE CORE
   agents/       the population fleet (loops feeding the API's /ingest)
+  deploy/       Docker: one image = API + built web app, seeded Postgres
   docs/         mission, charter, blueprints, roadmap, setup playbook
   CLAUDE.md     this file — the contract
 ```
+
+Build / run: `npm install` then `npm run dev` (web), `npm run dev:api` (API),
+`npm run build` (static site into dist/). See README.md.
 
 Note: **Build 44** (the prior ~37K-line unified React file) is a **source to HARVEST FROM**, not
 a pattern to repeat. Build fresh on the clean population core; migrate Build 44's proven components

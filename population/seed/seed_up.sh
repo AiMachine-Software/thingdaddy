@@ -92,7 +92,7 @@ cat <<'EOF'
 READY.
 
   cd ../api && npm install && npm start
-  open ../fill/td_screens_live.html
+  open ../../apps/web/public/demo/td_screens_live.html
 
 WHAT WORKS
   /health · /stats · /search?q= · /verified

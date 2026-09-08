@@ -51,14 +51,14 @@ If a change would bend one of these, **stop and raise it in the PR** — the rul
 - **Run the test suites** and note the results in the PR description (they run against the
   scratch DB `thingdaddy_population_test`, never live):
   ```bash
-  PGDATABASE=thingdaddy_population_test node population/api/test/gate_guard.mjs
-  PGDATABASE=thingdaddy_population_test node population/api/test/write_auth.mjs
-  PGDATABASE=thingdaddy_population_test node population/api/test/claim_promote.mjs
+  PGDATABASE=thingdaddy_population_test node apps/api/test/gate_guard.mjs
+  PGDATABASE=thingdaddy_population_test node apps/api/test/write_auth.mjs
+  PGDATABASE=thingdaddy_population_test node apps/api/test/claim_promote.mjs
   ```
 - **If you touched the API, enumerate every write route** and confirm each is still
   token-gated and fail-closed — don't assume:
   ```bash
-  grep -n "app\.\(post\|put\|patch\|delete\)(" population/api/server.js
+  grep -n "app\.\(post\|put\|patch\|delete\)(" apps/api/server.js
   ```
   This is exactly how the ungated `/claim` route was caught. Every mutating route must
   require `INGEST_TOKEN` and fail closed (writes disabled, not open, when unconfigured).

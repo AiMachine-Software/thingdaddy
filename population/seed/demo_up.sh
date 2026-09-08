@@ -34,9 +34,9 @@ DB="${TD_DEMO_DB:-thingdaddy_population}"
 PORT=8787            # NOT configurable: td_screens_live.html hardcodes
                      # const API = 'http://127.0.0.1:8787' at line 649.
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-API="$ROOT/population/api"
+API="$ROOT/apps/api"
 SEED="$ROOT/population/seed"
-SCREENS="$ROOT/population/fill/td_screens_live.html"
+SCREENS="$ROOT/apps/web/public/demo/td_screens_live.html"
 LOG="/tmp/td_demo_api.log"
 PIDFILE="/tmp/td_demo_api.pid"
 
@@ -95,7 +95,7 @@ if [ ! -f "$SCREENS" ]; then
   git rev-parse --verify --quiet "$SCREENS_BRANCH" >/dev/null \
     || die "no screens on disk and $SCREENS_BRANCH not found. Fetch it, or merge PR #18."
   mkdir -p "$(dirname "$SCREENS")"
-  git show "$SCREENS_BRANCH:population/fill/td_screens_live.html" > "$SCREENS"
+  git show "$SCREENS_BRANCH:apps/web/public/demo/td_screens_live.html" > "$SCREENS"
   say "screens taken from $SCREENS_BRANCH"
 else
   say "screens already present"
@@ -193,7 +193,7 @@ say "every route the screens call is served by this build"
 step "SCREENS  (the pages the demo opens)"
 screens_missing=0
 check_screen() {
-  local label="$1" path="population/fill/$1.html"
+  local label="$1" path="apps/web/public/demo/$1.html"
   if [ -f "$ROOT/$path" ]; then
     printf '  present  %-34s %s\n' "$label" "$path"
   else
@@ -208,7 +208,7 @@ done
 
 if [ "$screens_missing" = "1" ]; then
   kill "$API_PID" 2>/dev/null
-  die "not every screen the demo opens is on disk under population/fill/.
+  die "not every screen the demo opens is on disk under apps/web/public/demo/.
 
            A page that is not there renders as a 404 while the API says
            healthy. Restore the MISSING file(s) from git, then run this

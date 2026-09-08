@@ -2,7 +2,7 @@
 
 The **Population Database** is ThingDaddy's staging + provenance spine: where party candidates are
 ingested, resolved, and — only when a real prefix is confirmed — promoted to verified. This tier is
-the **content engine**. The `platform/` repo is the read/render tier; the two meet only through the
+the **content engine**. The platform (`apps/web/src/platform/`) is the read/render tier; the two meet only through the
 API, never by reaching into each other's code.
 
 > One line: **ingest → resolve → ThingSite → register → verify**, at scale, candidate-until-ratified.
@@ -38,7 +38,7 @@ bash dev_up.sh                     # API on :8787, 5-pillar UI on :5173  ->  ope
 3. **No fabricated prefixes.** Unknown ⇒ `NULL` (candidate) or `exception` — never a guess, placeholder, or empty string.
 4. **Synthetic is labelled** `source='synthetic'`. Kept separable from real forever.
 5. **Numeric IDs; meaning in a bound label, never inside the ID.**
-6. **Never couple into `platform/`.** The tiers meet only through the API.
+6. **Never couple into the platform (`apps/web/src/platform/`).** The tiers meet only through the API.
 
 ## Testing (how we verify — the contract)
 ```bash
@@ -55,8 +55,8 @@ websearch/    open-web GTIN discovery (source=WEB)
 identity/     rooting (identity_xref)
 pagereader/ · docmine/ · sitemap/   the ThingSite depth stages
 standards/    P5 graph, binding sets, verified_prefixes.json (the ONLY verified registry)
-api/          Node registration API (the seam) + acceptance tests
-ui/           5-pillar React/Vite UI (by-MO, by-state browser)
+(apps/api)     Node registration API (the seam) + acceptance tests — moved to apps/api
+(apps/web)     5-pillar React UI — moved to apps/web/src/registry (route /registry)
 website_agent.py · project_thingsite.py · render_p4_cloud_edge.py   the content engine
 ```
 

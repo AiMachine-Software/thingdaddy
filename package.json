@@ -2,22 +2,21 @@
   "name": "thingdaddy",
   "private": true,
   "version": "1.0.0",
-  "description": "ThingDaddy monorepo: platform (React), population UI (React), population API (Express + Postgres), and the static demo pages. `npm run build` assembles the whole static site into dist/.",
+  "description": "ThingDaddy monorepo: apps/web (React: platform + registry + demo pages) and apps/api (Express + Postgres population API). Python fleet and data tooling stay under agents/ and population/.",
   "type": "module",
   "workspaces": [
-    "platform",
-    "population/ui",
-    "population/api"
+    "apps/web",
+    "apps/api"
   ],
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "build": "node web/build-site.mjs",
-    "preview": "node web/build-site.mjs --preview",
-    "dev:platform": "npm --workspace platform run dev",
-    "dev:population": "npm --workspace population/ui run dev",
-    "dev:api": "npm --workspace population/api run dev",
-    "start:api": "npm --workspace population/api run start"
+    "dev": "npm --workspace apps/web run dev",
+    "build": "npm --workspace apps/web run build",
+    "preview": "npm --workspace apps/web run preview",
+    "parse-check": "npm --workspace apps/web run parse-check",
+    "dev:api": "npm --workspace apps/api run dev",
+    "start:api": "npm --workspace apps/api run start"
   }
 }

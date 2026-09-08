@@ -6,7 +6,7 @@ promoted. It is a self-contained data tier. These rules are not optional.
 
 ## Isolation
 
-- **Never touch `platform/`.** No imports, no edits, no coupling to the V4 JSX.
+- **Never touch the platform (`apps/web/src/platform/`).** No imports, no edits, no coupling to the V4 JSX.
   The platform is the read/render tier; `population/` is the data tier. They meet
   only through explicit exports, never by reaching into each other's code.
 - Keep everything under `population/`. The database is a local Postgres instance

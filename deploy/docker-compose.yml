@@ -1,0 +1,71 @@
+# ThingDaddy deployable demo — postgres (seeded) + one app that serves the API
+# AND the pages from a single origin.
+#
+#   docker compose -f deploy/docker-compose.yml up -d --build
+#   open http://localhost:8789/
+#
+# Its own project name so it can never collide with the other thingdaddy-*
+# stacks already running on this machine.
+name: thingdaddy-web-demo
+
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-thingdaddy_population}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-thingdaddy}
+    volumes:
+      # The seed, read-only. NOT mounted into docker-entrypoint-initdb.d, or the
+      # entrypoint would also execute demo_up.sh / demo_down.sh / make_seed.sh.
+      - ../population/seed:/seed:ro
+      # One init script, which drives the seed's own seed_up.sh. First boot only.
+      - ./db-init/10-seed.sh:/docker-entrypoint-initdb.d/10-seed.sh:ro
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      # Loopback only, and on a port no other container here uses.
+      - "127.0.0.1:${DB_PORT:-5434}:5432"
+    healthcheck:
+      # -h 127.0.0.1 on purpose: during the init phase postgres listens on the
+      # unix socket ONLY, so a socket pg_isready would report healthy while the
+      # seed is still loading. TCP comes up only after init scripts finish.
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-thingdaddy_population}"]
+      interval: 3s
+      timeout: 5s
+      retries: 40
+      start_period: 10s
+    restart: unless-stopped
+
+  app:
+    build:
+      # Repo root: the API is in apps/api, the web app is built from apps/web.
+      context: ..
+      dockerfile: deploy/Dockerfile
+    environment:
+      PGHOST: db
+      PGPORT: 5432
+      PGDATABASE: ${POSTGRES_DB:-thingdaddy_population}
+      PGUSER: ${POSTGRES_USER:-postgres}
+      PGPASSWORD: ${POSTGRES_PASSWORD:-thingdaddy}
+      # 0.0.0.0 so the port publish reaches it. server.js defaults to 127.0.0.1,
+      # which inside a container would answer nobody.
+      HOST: "0.0.0.0"
+      PORT: "8787"
+      # The switch that turns on static serving. Unset = API only.
+      PUBLIC_DIR: /app/public
+      CORS_ORIGIN: ${CORS_ORIGIN:-*}
+    ports:
+      - "127.0.0.1:${WEB_PORT:-8789}:8787"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8787/health >/dev/null || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 5s
+    restart: unless-stopped
+
+volumes:
+  pgdata:
