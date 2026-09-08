@@ -14,14 +14,16 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write   # publishes dist/ into branch `main`, which Pages serves (legacy source mode)
 
 concurrency:
   group: pages
   cancel-in-progress: true
 
+# Pages on this repo is configured as "Deploy from a branch: main /" (changing it needs
+# admin on the org). So the build job publishes dist/ into `main`; Pages then builds from
+# it as before. `production` stays the source branch. Switch back to actions/deploy-pages
+# once the Pages source is set to "GitHub Actions".
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -37,19 +39,11 @@ jobs:
           # Served at https://<org>.github.io/thingdaddy/ -> assets must be prefixed.
           VITE_BASE: /thingdaddy
           VITE_API_BASE: ${{ vars.API_BASE }}
-      - uses: actions/upload-pages-artifact@v3
+      - run: touch dist/.nojekyll
+      - uses: peaceiris/actions-gh-pages@v4
         with:
-          path: dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/configure-pages@v5
-        with:
-          enablement: true
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: main
+          force_orphan: true
+          commit_message: "site: build from production ${{ github.sha }}"
