@@ -1,0 +1,55 @@
+name: Build and deploy production site
+
+# Builds the React apps + legacy pages into dist/ and publishes dist/ to GitHub
+# Pages. Runs on every push to `production`. See web/build-site.mjs for layout.
+#
+# Repository variables (Settings -> Secrets and variables -> Actions -> Variables):
+#   API_BASE   origin of a hosted population API, e.g. https://api.example.com
+#              Leave unset until the API is hosted; the population UI then shows
+#              "cannot reach the population API" instead of guessing an origin.
+
+on:
+  push:
+    branches: [production]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+        env:
+          # Served at https://<org>.github.io/thingdaddy/ -> assets must be prefixed.
+          VITE_BASE: /thingdaddy
+          VITE_API_BASE: ${{ vars.API_BASE }}
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - id: deployment
+        uses: actions/deploy-pages@v4

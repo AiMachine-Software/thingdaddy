@@ -31,3 +31,4 @@ population/sites/*/*_ThingSite.html
 .claude/settings.local.json
 BRIDGE_TEST.txt
 .git-worktree-pointer.bak.txt
+node_modules/
