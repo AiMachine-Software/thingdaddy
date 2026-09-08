@@ -1,0 +1,68 @@
+
+promote_harvest_to_stage   DRY   2026-09-06 11:32:43
+  thingdaddy_harvest  ->  thingdaddy_run
+  ONE PREFIX = ONE THINGSITE. This promotes a prefix, never a company.
+  It does not create or merge party rows, and the harvest is read only.
+
+PREFLIGHT
+  party_event    present · 9 columns
+  party_origin   present · 8 columns
+  company_key    present · 6 columns
+  harvest_row.grade ABSENT — grade is read from doc_claim.grade only
+  doc_claim      present · 16 columns
+  constraints on party: 5
+  constraints on company_prefix: 6
+
+QUEUE  300 rooted harvest compan(ies)
+
+REFUSALS BY GATE          (the gate refusing is the product)
+  length     0
+  licence    294
+  gln        0
+  prefix     6
+  party      0
+  slot       0
+
+  REFUSED  937777965787 aborns-pharmaceuticals-pty-ltd licence/licence_type-not-read
+           prefix 937777965787: licence_type was never read from the authority and no regulator holds this labeler. Absent is not a value; it stays in the harvest.
+  REFUSED  843652977    alimentias-espania-mediterrania-cibus-sl licence/licence_type-not-read
+           prefix 843652977: licence_type was never read from the authority and no regulator holds this labeler. Absent is not a value; it stays in the harvest.
+  REFUSED  937777960675 a-view-to-food-pty-ltd       licence/licence_type-not-read
+           prefix 937777960675: licence_type was never read from the authority and no regulator holds this labeler. Absent is not a value; it stays in the harvest.
+  REFUSED  4044564      ablig-feinfrost-gmbh         licence/licence_type-not-read
+           prefix 4044564: licence_type was never read from the authority and no regulator holds this labeler. Absent is not a value; it stays in the harvest.
+  REFUSED  0757659      aert                         licence/licence_type-not-read
+           prefix 0757659: licence_type was never read from the authority and no regulator holds this labeler. Absent is not a value; it stays in the harvest.
+  REFUSED  8420568      agerul-industrias-quimicas-s-l licence/licence_type-not-read
+           prefix 8420568: licence_type was never read from the authority and no regulator holds this labeler. Absent is not a value; it stays in the harvest.
+  REFUSED  8431604      a-g-farma                    licence/licence_type-not-read
+           prefix 8431604: licence_type was never read from the authority and no regulator holds this labeler. Absent is not a value; it stays in the harvest.
+  REFUSED  600165103381 a-v-w-systems                licence/licence_type-not-read
+           prefix 600165103381: licence_type was never read from the authority and no regulator holds this labeler. Absent is not a value; it stays in the harvest.
+  REFUSED  376023701    abak-gp                      licence/licence_type-not-read
+           prefix 376023701: licence_type was never read from the authority and no regulator holds this labeler. Absent is not a value; it stays in the harvest.
+  REFUSED  579000225915 abl-food-a-s                 licence/licence_type-not-read
+           prefix 579000225915: licence_type was never read from the authority and no regulator holds this labeler. Absent is not a value; it stays in the harvest.
+  REFUSED  0358790      advanced-vision-research     licence/licence_type-not-read
+           prefix 0358790: licence_type was never read from the authority and no regulator holds this labeler. Absent is not a value; it stays in the harvest.
+  REFUSED  4027600      aeroxon-insect-control-gmbh  licence/licence_type-not-read
+           prefix 4027600: licence_type was never read from the authority and no regulator holds this labeler. Absent is not a value; it stays in the harvest.
+  ... 282 more under licence
+  REFUSED  0827444      advanced-medical-optics      prefix/held-elsewhere
+           prefix 0827444 is already on party 4081474 (Bausch & Lomb Incorporated) via company_prefix, no harvest key points there. This company is 'advanced-medical-optics' -> party 4144173. One prefix, one row. Not resolved here — this is KJ's.
+  REFUSED  081059102    aep                          prefix/held-elsewhere
+           prefix 081059102 is already on party 4149189 (KALILA MEDICAL, INC.) via company_prefix, no harvest key points there. This company is 'aep' -> party 4144217. One prefix, one row. Not resolved here — this is KJ's.
+  REFUSED  0809148      180-innovations-llc          prefix/held-elsewhere
+           prefix 0809148 is already on party 4162081 (180 INNOVATIONS LLC) via company_prefix, no harvest key points there. This company is '180-innovations-llc' -> party 4143341. One prefix, one row. Not resolved here — this is KJ's.
+  REFUSED  871862741    a-e-medical-corporation-medical-concepts-europe-b-v prefix/held-elsewhere
+           prefix 871862741 is already on party 4154341 (A & E MEDICAL CORPORATION) via company_prefix, no harvest key points there. This company is 'a-e-medical-corporation-medical-concepts-europe-b-v' -> party 4143522. One prefix, one row. Not resolved here — this is KJ's.
+  REFUSED  0682607      acon-laboratories-in         prefix/held-elsewhere
+           prefix 0682607 is already on party 4148407 (Acon Laboratories, Inc.) via company_prefix, no harvest key points there. This company is 'acon-laboratories-in' -> party 4143972. One prefix, one row. Not resolved here — this is KJ's.
+  REFUSED  8054083      abbvie-ltd                   prefix/held-elsewhere
+           prefix 8054083 is already on party 4151617 (AbbVie Inc.) via company_prefix, no harvest key points there. This company is 'abbvie-ltd' -> party 4143765. One prefix, one row. Not resolved here — this is KJ's.
+
+ADMITTED   0
+UNCHANGED  0   (already promoted; this tool is idempotent)
+REFUSED    300
+
+DRY RUN. Nothing was written. Add --apply --i-am-kj to write.

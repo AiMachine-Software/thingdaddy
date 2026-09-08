@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ThingDaddy — demo</title>
+<style>
+:root{
+  --navy:#12344D; --bg:#F5F7F9; --surface:#fff; --rule:#DBE2E8; --ink:#1a1a1a;
+  --mut:#6b7178; --char:#1d1d1d; --teal:#118a8c;
+  --v:#0f7a34; --c:#a2660a; --e:#b3261e;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--surface);color:var(--ink);
+  font-family:"Source Sans Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.mono,code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px}
+nav{background:var(--char);height:56px;display:flex;align-items:center;gap:14px;padding:0 22px}
+nav .logo{color:#fff;font-weight:800;font-size:21px;letter-spacing:-.3px}
+nav .logo span{color:var(--teal)}
+nav .r{margin-left:auto;color:#9aa3ab;font-size:12.5px}
+.strip{background:var(--navy);color:#fff;padding:9px 22px;font-size:12.5px;display:flex;
+  gap:14px;align-items:center;flex-wrap:wrap}
+.strip .dot{width:11px;height:11px;border-radius:50%;background:#2ecc71}
+.strip .dot.bad{background:#e74c3c}
+.strip b{color:#9fe4e5}
+.page{max-width:1120px;margin:0 auto;padding:26px 22px 80px}
+h1{font-size:30px;letter-spacing:-.7px;margin:0 0 6px}
+h2{font-size:19px;margin:32px 0 6px}
+h2+.sub{color:var(--mut);font-size:14px;margin:0 0 14px;max-width:82ch;line-height:1.55}
+.brow{display:flex;max-width:560px;margin:14px 0 8px}
+.brow input{flex:1;border:1px solid #c8ced4;border-right:none;border-radius:24px 0 0 24px;
+  padding:13px 20px;font-size:15px;outline:none;font-family:ui-monospace,monospace}
+.brow button{border:none;background:var(--navy);color:#fff;border-radius:0 24px 24px 0;
+  padding:0 24px;font-weight:600;cursor:pointer;font-size:15px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:860px){.grid{grid-template-columns:1fr}}
+.surface{border:1px solid var(--rule);border-radius:10px;padding:15px 17px;
+  display:flex;flex-direction:column;gap:7px}
+.surface h3{margin:0;font-size:16.5px}
+.surface .what{font-size:13.5px;color:var(--mut);line-height:1.6;flex:1}
+.surface .st{font-size:11.5px;font-weight:700;letter-spacing:.5px}
+.surface .st.up{color:var(--v)} .surface .st.down{color:var(--e)}
+.surface .st.file{color:var(--mut)}
+button.act{border:1px solid var(--navy);background:#fff;color:var(--navy);border-radius:6px;
+  padding:8px 15px;font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit;
+  align-self:flex-start}
+button.act.pri{background:var(--navy);color:#fff}
+button.act:disabled{opacity:.4;cursor:not-allowed;border-style:dashed}
+ol.run{counter-reset:s;list-style:none;padding:0;margin:0}
+ol.run li{counter-increment:s;border:1px solid var(--rule);border-radius:9px;padding:13px 16px 13px 52px;
+  margin:0 0 8px;position:relative;font-size:14px;line-height:1.6}
+ol.run li:before{content:counter(s);position:absolute;left:16px;top:12px;width:24px;height:24px;
+  border-radius:50%;background:var(--navy);color:#fff;font-weight:800;font-size:13px;
+  display:flex;align-items:center;justify-content:center}
+ol.run li b{color:var(--ink)}
+ol.run li .say{display:block;margin-top:6px;color:var(--teal);font-style:italic}
+.note{background:var(--bg);border-left:3px solid var(--teal);padding:12px 15px;font-size:13.5px;
+  color:#41505c;margin:14px 0;line-height:1.65;max-width:86ch}
+.warn{background:#fdeceb;border-left:3px solid var(--e);padding:12px 15px;font-size:13.5px;
+  margin:14px 0;line-height:1.65;max-width:86ch}
+table{border-collapse:collapse;width:100%;font-size:13.5px;margin:8px 0 14px}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--rule)}
+th{font-size:11px;letter-spacing:.7px;text-transform:uppercase;color:var(--mut);font-weight:700}
+footer{border-top:1px solid var(--rule);margin-top:40px;padding:16px 0;font-size:12.5px;
+  color:var(--mut);line-height:1.7}
+</style>
+</head>
+<body>
+
+<nav><div class="logo">Thing<span>Daddy</span>.</div>
+  <div class="r">demo control · nothing here writes</div></nav>
+<div class="strip" id="strip"><span class="dot bad"></span><span>checking…</span></div>
+
+<div class="page">
+
+<h1>The demo</h1>
+<p class="sub" style="color:var(--mut);font-size:15px;max-width:84ch;line-height:1.6">
+  Every surface, one place. <b>Open two windows side by side</b> — the front door on the left,
+  the ThingSite on the right — and the whole story runs in about eight minutes.</p>
+
+<h2>Open a ThingSite</h2>
+<p class="sub">One prefix = one ThingSite. The address is the prefix, because it is the only key
+  here an authority issued.</p>
+<form class="brow" onsubmit="openSite(document.getElementById('q').value);return false">
+  <input id="q" value="0817089" placeholder="GS1 prefix">
+  <button>Open the ThingSite</button>
+</form>
+<div style="font-size:13px;color:var(--mut)">
+  try <a href="#" onclick="openSite('0817089');return false" class="mono">0817089</a> ·
+  <a href="#" onclick="openSite('081627002');return false" class="mono">081627002</a> Illumina ·
+  <a href="#" onclick="openSite('081577302');return false" class="mono">081577302</a> Thermo Asheville ·
+  <a href="#" onclick="openSite('0000001');return false" class="mono">0000001</a> honest not-found
+</div>
+
+<h2>The surfaces</h2>
+<div class="grid" id="surfaces"></div>
+
+<h2>The running order</h2>
+<p class="sub">Eight minutes, and every claim on screen is checkable while you say it.</p>
+<ol class="run">
+  <li><b>The front door.</b> Point at the LIVE banner before anything else — the connection
+    string, the database name, and the grade split, on screen before a single claim.
+    <span class="say">"It tells you which database it is reading and how many of each grade it
+      holds, before it shows you anything."</span></li>
+
+  <li><b>Search a company.</b> Two Diazyme rows come back, one rooted and one not.
+    <span class="say">"Duplicates are shown, never merged silently. The registrar does not decide
+      which company a name means — that is why the prefix is the key."</span></li>
+
+  <li><b>Open the ThingSite.</b> The three-authority panel is the whole argument: GS1 delegated
+    the number space and knows nothing about the devices; a regulator attested the filing and
+    cannot allocate a digit; <b>and the third card is the customer.</b>
+    <span class="say">"Neither authority can produce the other's half. And neither can answer what
+      only you know."</span></li>
+
+  <li><b>Rebuild it in front of them.</b> Fourteen values land one at a time, each with its
+    source.
+    <span class="say">"Airo writes you a website in minutes. We did not write yours — we found it.
+      A generated page is plausible; a found page is checkable."</span></li>
+
+  <li><b>The exception register.</b> 778 named refusals — gibberish name, placeholder/test,
+    all-zero prefix — each one a thing we looked at and could not resolve.
+    <span class="say">"Every competitor hides these. Publishing them is why the other grades mean
+      anything."</span></li>
+
+  <li><b>The composition matrix.</b> Four protocols against six instruments: four verified, four
+    refused, twelve candidate, four uncheckable. Click a REFUSED cell.
+    <span class="say">"The checker separated two Diazyme product lines from two declarations,
+      without being told they existed."</span></li>
+
+  <li><b>The MHS reference file.</b> Layers 1 and 2 fill from the SiLA Feature. Layer 3 —
+    enforced safety limits — shows the throughput limit marked <b>not machine-checkable</b>,
+    because it is prose in a Description string. Layer 4 is who is acting, and it is empty.
+    <span class="say">"MHS enforces a limit somebody typed at the rig. We can supply one the
+      manufacturer declared, page-cited, that travels when the machine is sold."</span></li>
+
+  <li><b>Flip to MACHINE.</b> Same fetch, same bytes.
+    <span class="say">"The page you were reading is a view of this. An agent that has never seen
+      it gets exactly this — including every declared gap."</span></li>
+</ol>
+
+<h2>What to say when it shows a gap</h2>
+<div class="note"><b>Do not apologise for a slot.</b> A declared gap is the product.
+  <br><br>
+  "Pillar 3 is empty because no method document has been read for this company. It says so, with
+  the reason. The alternative — a page that looks complete — is the thing we exist to replace."</div>
+
+<h2>Known, and say it before they find it</h2>
+<div class="warn">
+  <b>The demo root is wrong and we know why.</b> Verified by GS1 shows Diazyme holds
+  <span class="mono">081708902</span> and <span class="mono">081730202</span>. The register still
+  says <span class="mono">0817089</span> — a plausible GLN parse written on 20 July labelled
+  "GEPIR-verified", nineteen months after GEPIR was retired.
+  <br><br>
+  <b>The correction is blocked, correctly.</b> 976 of the spine's 1,127 EPC URNs cannot accept a
+  write: they carry <span class="mono">sgtin</span> on class-level GTINs and fail
+  <span class="mono">node_urn_epc_valid</span>, a constraint that was never validated against
+  them. The scheme is fixed at the producer first, then the spine re-mints, then the root moves.
+  <br><br>
+  <b>Say it out loud.</b> It was found by a tool that refused to trust its own control — which is
+  the argument, not an embarrassment.
+</div>
+
+<h2>Also true, and not a bug</h2>
+<table>
+  <tr><th>On screen</th><th>Why it is correct</th></tr>
+  <tr><td>the graph screens are empty</td>
+      <td>no spine node is backfilled for these parties — in production either. The route 404s
+        honestly and the UI says "not on the spine yet"</td></tr>
+  <tr><td>"Over 11,000,000 identities" on the old S1</td>
+      <td>a hardcoded string, not a query. GUDID + NMPA combined is real; the counter is not
+        wired to it</td></tr>
+  <tr><td>typing ACME</td>
+      <td>hits the fixture at line 285. That file is a hybrid: some screens call the API, some
+        still read <span class="mono">const RECORDS</span></td></tr>
+  <tr><td>68 verified out of 102,472</td>
+      <td>and all 68 rest on a retired registry or a seed, while 21,397 regulator-attested rows
+        sit at candidate. The audit reports it as B1 and B2</td></tr>
+</table>
+
+<footer><b>ThingDaddy.</b> The registrar for the physical internet. You own your IDs; we operate.<br>
+Every fact is <b>verified</b>, <b>candidate</b>, or an <b>exception</b> — never a guess.
+Nothing on this page writes, and nothing is minted here.</footer>
+</div>
+
+<script>
+const API = 'http://127.0.0.1:8787';
+const $ = id => document.getElementById(id);
+const esc = s => String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const num = n => (n==null?'—':Number(n).toLocaleString());
+
+/* Every surface is a real file or a real port. Nothing here is a mock, and if
+   something is not running the card SAYS SO rather than opening a dead window. */
+const SURFACES = [
+  { id:'thingsite', name:'The ThingSite', file:'td_thingsite.html',
+    what:'The centrepiece. One prefix, one page: the three authorities, the build replay, the '
+       + 'record with every source, the gaps, the unlock ladder, and a MACHINE view that is the '
+       + 'same bytes an agent gets.', kind:'file' },
+  { id:'console', name:'The console — 26 screens', file:'td_console.html',
+    what:'Tier 1 is fed by real endpoints. Tier 2 are demo shells behind a red banner, because '
+       + 'per-user authentication does not exist and the console will not pretend otherwise.',
+    kind:'file' },
+  { id:'config', name:'The Configurator', file:'td_configurator.html',
+    what:'Four protocols against six instruments, twenty-four checked cells. The verdicts are '
+       + 'computed, not written — and the MHS reference file shows what MHS needs and what only '
+       + 'the maker can supply.', kind:'file' },
+  { id:'screens', name:'S1 … S6 — the original screens', file:'td_screens_live.html',
+    what:'The file demoed on 4 September. A hybrid: some screens call the API, some still read '
+       + 'the fixture at line 285.', kind:'file' },
+  { id:'front', name:'thingdaddy.com — the front door', url:'http://127.0.0.1:8793/',
+    what:'td_site.py serving the search-and-graph home page from the register. Different '
+       + 'artefact from the screens: it reads claims directly and never touches the node spine.',
+    kind:'port', port:8793 },
+  { id:'api', name:'The API', url:'http://127.0.0.1:8787/agent/prefix/0817089',
+    what:'The agent-first record. Prefix as subject, one value per field, provenance as '
+       + 'structure, gaps declared. Everything above is a view of this.', kind:'port', port:8787 },
+];
+
+function openSite(p){
+  const u = 'td_thingsite.html#' + encodeURIComponent(String(p||'').trim());
+  window.open(u, 'thingsite');
+}
+
+function render(status){
+  $('surfaces').innerHTML = SURFACES.map(s => {
+    const up = s.kind === 'port' ? status[s.port] : null;
+    const st = s.kind === 'file'
+      ? '<span class="st file">FILE · opens beside this page</span>'
+      : (up ? '<span class="st up">RUNNING on ' + s.port + '</span>'
+            : '<span class="st down">NOT RUNNING on ' + s.port + '</span>');
+    const dis = (s.kind === 'port' && !up) ? 'disabled' : '';
+    const tgt = s.file ? `'${s.file}'` : `'${s.url}'`;
+    return `<div class="surface"><h3>${esc(s.name)}</h3>${st}
+      <div class="what">${esc(s.what)}</div>
+      <button class="act ${s.id==='thingsite'?'pri':''}" ${dis}
+        onclick="window.open(${tgt},'${s.id}')">Open</button></div>`;
+  }).join('');
+}
+
+async function boot(){
+  const status = {};
+  let h = null, s = null;
+  try { h = await (await fetch(API + '/health')).json(); status[8787] = true; }
+  catch(e){ status[8787] = false; }
+  try { await fetch('http://127.0.0.1:8793/', {mode:'no-cors'}); status[8793] = true; }
+  catch(e){ status[8793] = false; }
+  if (status[8787]) { try { s = await (await fetch(API + '/stats')).json(); } catch(e){} }
+
+  if (!status[8787]){
+    $('strip').innerHTML = `<span class="dot bad"></span><span><b>THE API IS NOT RUNNING.</b>
+      Nothing on any surface is live. Start it:
+      <span class="mono">./population/seed/demo_up.sh</span></span>`;
+  } else {
+    const by = (s && s.by_state) || {};
+    $('strip').innerHTML = `<span class="dot"></span>
+      <span><b>LIVE</b> ${API} · db <b>${esc(h.db)}</b></span>
+      <span>·</span><span><b>${num(s && s.total)}</b> records</span>
+      <span>(${num(by.candidate)} candidate · ${num(by.exception)} exception ·
+        <b>${num(by.verified)} verified</b>)</span>
+      <span>·</span><span>front door ${status[8793]
+        ? '<b>up</b> on 8793' : '<b style="color:#ffb3ae">not running</b> on 8793'}</span>`;
+  }
+  render(status);
+}
+boot();
+</script>
+</body>
+</html>

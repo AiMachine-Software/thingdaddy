@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ThingDaddy — Find your ThingSite</title>
+<style>
+  :root{--ink:#0e1b2b;--dim:#5a6b82;--line:#dbe4f0;--bg:#f6f9fc;--acc:#1f6feb;--deep:#0a2540;--ok:#137a4c;--okbg:#e8f6ee;--cand:#b4700a;--candbg:#fbf3ef;--gs1:#f26334}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+  .top{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;background:#fff;border-bottom:1px solid var(--line)}
+  .logo{font-weight:800;font-size:19px;letter-spacing:-.01em}.logo b{color:var(--acc)}
+  .top .nav{font-size:13px;color:var(--dim)}
+  .wrap{max-width:960px;margin:0 auto;padding:38px 24px 90px}
+
+  /* GENERIC DOOR */
+  #generic .hero{text-align:center;padding:26px 10px 6px}
+  #generic .kick{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc);font-weight:700}
+  #generic h1{font-size:38px;line-height:1.1;letter-spacing:-.02em;margin:12px 0 8px}
+  #generic .sub{font-size:18px;color:var(--dim);max-width:640px;margin:0 auto 8px;line-height:1.5}
+  .finder{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 6px 26px rgba(10,37,64,.08);max-width:660px;margin:26px auto 8px;padding:22px 24px}
+  .finder .fl{font-size:13px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+  .finder .row{display:flex;gap:10px}
+  .finder input{flex:1;font-size:17px;padding:14px 16px;border:1.5px solid var(--line);border-radius:10px;outline:none}
+  .finder input:focus{border-color:var(--acc)}
+  .finder button{font-size:16px;font-weight:700;color:#fff;background:var(--acc);border:0;border-radius:10px;padding:0 22px;cursor:pointer;white-space:nowrap}
+  .finder .hint{font-size:12.5px;color:var(--dim);margin-top:10px}
+  .finder .hint a{color:var(--acc);text-decoration:none;cursor:pointer;margin-right:10px}
+  .contrast{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:720px;margin:34px auto 0}
+  @media(max-width:640px){.contrast{grid-template-columns:1fr}#generic h1{font-size:30px}}
+  .col{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .col.them{opacity:.72}.col .h{font-size:13px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}
+  .col.them .h{color:var(--dim)}.col.us .h{color:var(--acc)}
+  .col p{font-size:14px;line-height:1.55;color:#33424f;margin:0}
+  .pillars5{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:720px;margin:30px auto 0}
+  .p5{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 13px;font-size:12.5px;color:var(--dim)}
+  .p5 b{color:var(--ink)}
+
+  /* PERSONAL DOOR */
+  #personal{display:none;animation:rise .5s ease}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .back{font-size:13px;color:var(--acc);cursor:pointer;margin-bottom:12px;display:inline-block}
+  .reveal{background:linear-gradient(103deg,var(--deep),#123a63 70%);color:#fff;border-radius:16px;padding:26px 28px;box-shadow:0 10px 34px rgba(10,37,64,.22)}
+  .reveal .we{font-size:12.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;opacity:.82}
+  .reveal h2{font-size:30px;line-height:1.12;margin:8px 0 6px;letter-spacing:-.01em}
+  .reveal .line{font-size:16px;opacity:.96;margin:0 0 4px;line-height:1.5}
+  .root{display:inline-flex;align-items:center;gap:8px;margin-top:12px;padding:7px 13px;border-radius:20px;font-size:13px;font-weight:700}
+  .root.ok{background:var(--okbg);color:var(--ok)}.root.cand{background:var(--candbg);color:var(--cand)}
+  .root code{font-family:ui-monospace,Menlo,monospace}
+  .stats{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 4px}
+  .stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 18px;min-width:120px}
+  .stat b{display:block;font-size:26px;font-weight:800;color:var(--ink)}.stat span{font-size:11.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.04em}
+  .pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:16px 0}
+  .pc{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 13px}
+  .pc .n{font-size:11px;font-weight:800;color:var(--acc)}.pc .v{font-size:22px;font-weight:800}.pc .l{font-size:11px;color:var(--dim);line-height:1.3}
+  .bar{height:5px;background:#eef2f8;border-radius:5px;overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;background:var(--acc)}
+  .claim{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:18px;padding:16px 18px;background:#fff;border:1px solid var(--line);border-radius:12px}
+  .claim button{font-size:16px;font-weight:800;color:#fff;background:var(--ok);border:0;border-radius:10px;padding:12px 22px;cursor:pointer}
+  .claim .consent{font-size:12.5px;color:var(--dim);line-height:1.5;flex:1;min-width:220px}
+  .notbuilt{background:#fff;border:1px dashed var(--line);border-radius:16px;padding:28px;text-align:center;margin-top:8px}
+  .notbuilt h2{font-size:24px;margin:0 0 8px}.notbuilt p{color:var(--dim);max-width:520px;margin:0 auto 16px;line-height:1.5}
+  .notbuilt button{font-size:16px;font-weight:800;color:#fff;background:var(--acc);border:0;border-radius:10px;padding:12px 24px;cursor:pointer}
+  .foot{text-align:center;color:#9fb0c4;font-size:12px;margin-top:34px}
+  .demo-note{text-align:center;font-size:12px;color:var(--dim);background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 12px;max-width:520px;margin:22px auto 0}
+</style>
+</head>
+<body>
+<div class="top"><div class="logo">Thing<b>Daddy</b></div><div class="nav">The registrar for the physical world</div></div>
+
+<div class="wrap">
+  <!-- ===== GENERIC DOOR ===== -->
+  <section id="generic">
+    <div class="hero">
+      <div class="kick">GoDaddy for things</div>
+      <h1>Your identity is already built.<br>Come claim it.</h1>
+      <p class="sub">A domain registrar hands you an empty box. We hand you your own business — every product, location, protocol and supplier, mapped onto one identity spine, waiting for you to confirm it.</p>
+    </div>
+
+    <div class="finder">
+      <div class="fl">Find your ThingSite</div>
+      <div class="row">
+        <input id="domain" placeholder="yourcompany.com" autocomplete="off" onkeydown="if(event.key==='Enter')find()">
+        <button onclick="find()">Find it →</button>
+      </div>
+      <div class="hint">Try:
+        <a onclick="go('thermofisher.com')">thermofisher.com</a>
+        <a onclick="go('diazyme.com')">diazyme.com</a>
+        <a onclick="go('tecan.com')">tecan.com</a>
+        <a onclick="go('acme-widgets.com')">acme-widgets.com</a>
+      </div>
+    </div>
+
+    <div class="contrast">
+      <div class="col them"><div class="h">A domain registrar</div><p>You search. You register an empty name. You configure it. You do all the work, on a blank tool.</p></div>
+      <div class="col us"><div class="h">ThingDaddy</div><p>We already mapped your business from your own public footprint. You arrive to a finished, candidate identity — and ratify what's true.</p></div>
+    </div>
+
+    <div class="pillars5">
+      <div class="p5"><b>P1</b> Identity</div><div class="p5"><b>P2</b> Driver</div><div class="p5"><b>P3</b> Workflow</div><div class="p5"><b>P4</b> Cloud &amp; Edge</div><div class="p5"><b>P5</b> AI Graph</div>
+    </div>
+    <div class="demo-note">Prototype of the two-door experience. The personal reveal uses ThingDaddy's pre-built fleet as candidate, sourced data — nothing minted.</div>
+  </section>
+
+  <!-- ===== PERSONAL DOOR ===== -->
+  <section id="personal">
+    <span class="back" onclick="reset()">← back</span>
+    <div id="personalBody"></div>
+    <div class="foot">Pre-built by ThingDaddy from public sources · candidate until you ratify · nothing minted, nothing fabricated.</div>
+  </section>
+</div>
+
+<script>
+// recognized companies — ThingDaddy's pre-built fleet (candidate/verified, sourced)
+const FLEET = {
+  "thermofisher.com": { name:"Thermo Fisher Scientific", root:"candidate",
+    prov:"candidate · multi-prefix enterprise", tier:"the deep one",
+    line:"We mapped 420 documents from your public site and mined the protocol settings out of your PDFs — candidate until you ratify your GS1 prefix.",
+    stats:[["420","documents mapped"],["107","candidate GTINs"],["3,041","settings mined from PDFs"]],
+    pillars:[["P1","244","products & catalog IDs"],["P2","167","instrument drivers"],["P3","526","protocols & methods"],["P4","154","cloud & edge"],["P5","178","the relationships"]] },
+  "diazyme.com": { name:"General Atomics · Diazyme", root:"candidate", prefix:"0817089",
+    prov:"GS1 US · GEPIR-verifiable", tier:"real device identity",
+    line:"We built your diagnostics arm on 184 real device identities from the FDA GUDID — and put your direct (SAP/EDI) and indirect (Ariba/cXML) procurement on one spine.",
+    stats:[["184","real device GTINs (GUDID)"],["2","procurement lanes on one spine"],["6","pillars incl. suppliers"]],
+    pillars:[["P1","184","real device identities"],["P2","—","drivers (candidate)"],["P3","—","assay protocols"],["P4","—","cloud & edge"],["P5","—","supplier graph"]] },
+  "generalatomics.com": null, // alias -> diazyme
+  "tecan.com": { name:"Tecan", root:"candidate", prefix:"", prov:"", tier:"",
+    line:"We mapped 4,000 URLs and 67 documents from your public site onto your five-pillar spine.",
+    stats:[["4,000","URLs mapped"],["67","documents"],["114","relationship edges"]],
+    pillars:[["P1","27","products & catalog IDs"],["P2","10","instrument drivers"],["P3","68","protocols & methods"],["P4","10","cloud & edge"],["P5","23","the relationships"]] },
+};
+FLEET["generalatomics.com"] = FLEET["diazyme.com"];
+const MAXP = 526;
+
+function norm(d){ return (d||"").trim().toLowerCase().replace(/^https?:\/\//,'').replace(/^www\./,'').split('/')[0]; }
+function go(d){ document.getElementById('domain').value=d; find(); }
+function reset(){ document.getElementById('personal').style.display='none'; document.getElementById('generic').style.display='block'; window.scrollTo(0,0); }
+
+function find(){
+  const d = norm(document.getElementById('domain').value);
+  const body = document.getElementById('personalBody');
+  const co = FLEET[d];
+  if(co){
+    const rootBadge = co.root==='verified'
+      ? `<div class="root ok">✓ IDENTITY ROOT VERIFIED · <code>${co.prefix}</code> · ${co.prov}</div>`
+      : (co.prefix ? `<div class="root cand">◇ ROOT CANDIDATE · <code>${co.prefix}…</code> · ${co.prov}</div>` : `<div class="root cand">◇ CANDIDATE · sourced from your public site</div>`);
+    const stats = co.stats.map(s=>`<div class="stat"><b>${s[0]}</b><span>${s[1]}</span></div>`).join('');
+    const pills = co.pillars.map(p=>{ const n=parseInt((p[1]||'').replace(/,/g,''))||0; const w=Math.min(100,Math.round(100*n/MAXP));
+      return `<div class="pc"><div class="n">${p[0]}</div><div class="v">${p[1]}</div><div class="l">${p[2]}</div><div class="bar"><i style="width:${w}%"></i></div></div>`; }).join('');
+    body.innerHTML = `
+      <div class="reveal">
+        <div class="we">We already built your ThingSite${co.tier?` — ${co.tier}`:''}</div>
+        <h2>${co.name}</h2>
+        <p class="line">${co.line}</p>
+        ${rootBadge}
+      </div>
+      <div class="stats">${stats}</div>
+      <div class="pgrid">${pills}</div>
+      <div class="claim">
+        <button onclick="alert('Claim flow: consent-at-claim. You bring your GLN map + verified prefix; candidate becomes confirmed; R4 ratifies. (prototype)')">Claim your ThingSite</button>
+        <div class="consent"><b>Built from your own public site map — candidate until you confirm.</b> We derive nothing and mint nothing; you ratify what's true. That's the whole point of a registrar.</div>
+      </div>`;
+  } else {
+    body.innerHTML = `
+      <div class="notbuilt">
+        <h2>We haven't pre-built <b>${d||'that one'}</b> yet.</h2>
+        <p>Give us the word and we'll harvest your public footprint — products, locations, protocols, suppliers — and hand you a candidate ThingSite to ratify. No account, no blank tool.</p>
+        <button onclick="alert('Pre-build queued (prototype). We harvest your public site -> candidate ThingSite -> you ratify.')">Pre-build my ThingSite</button>
+      </div>`;
+  }
+  document.getElementById('generic').style.display='none';
+  document.getElementById('personal').style.display='block';
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>

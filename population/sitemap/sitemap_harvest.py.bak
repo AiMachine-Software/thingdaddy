@@ -1,0 +1,213 @@
+#!/usr/bin/env python3
+"""
+sitemap_harvest.py — harvest a company's REAL website sitemap and mirror its reusable
+structure onto ThingDaddy's nine GS1 slots, and hunt its "helpful content" (manuals,
+datasheets, SDS, IFUs, product PDFs) as candidate GDTI documents.
+
+Makes a ThingSite feel like the company's own site — same skeleton, resolving to our spine.
+
+Two guardrails (agreed 2026-07-19):
+  1. Structure + identity, NOT a content clone. We mirror the sitemap skeleton (sections,
+     document links, identifiers) — never their copy or design. Provenance = their URLs.
+  2. Mapping is rules-bound and CANDIDATE. Clean paths map to a slot; anything ambiguous
+     stays candidate/unmapped rather than force-fit. Nothing fabricated. No GDTI URN is
+     minted here — documents land as candidate references (a GDTI needs the company's
+     prefix, which we do not have; prefix-is-root holds).
+
+Outputs (in --outdir), both candidate + sourced:
+  sitemap_structure.csv  domain,url,section,slot,kind
+  sitemap_documents.csv  domain,url,doc_type,title,slot     (the helpful content)
+
+Runs where there's network (the Mac), same as websearch_gtin.py. Bounded + polite.
+
+Usage:
+  python3 sitemap_harvest.py --domain thermofisher.com --limit 500 --max-sitemaps 6 --outdir .
+  python3 sitemap_harvest.py --sitemap https://www.example.com/sitemap.xml --limit 300
+"""
+from __future__ import annotations
+import argparse, csv, gzip, io, os, re, sys, time
+import urllib.request, urllib.parse, urllib.error
+import xml.etree.ElementTree as ET
+
+# Browser UA — many corporate sites 403 non-browser agents on robots.txt/sitemap (public files).
+UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+      "(KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36")
+
+# --- path-keyword -> (slot, kind). Rules-bound; first match wins; else unmapped. ----------
+RULES = [
+    (r"/(product|products|catalog|catalogue|shop|store/product|sku|/p/|/pd/|item)", "GTIN", "product"),
+    (r"/(location|locations|where-to-buy|where-to-purchase|facilit|distributor|dealer|find-a)", "GLN", "location"),
+    (r"/(support|service|technical|document|documentation|manual|datasheet|data-sheet|literature|"
+     r"download|resource|sds|msds|ifu|instruction|spec|specification|coa|certificate|guide|whitepaper|"
+     r"protocol|application-note|user-guide|owner)", "GDTI", "document"),
+    (r"/(about|company|who-we-are|corporate|investor|our-|leadership|careers|contact)", "PGLN", "company"),
+    (r"/(brand|brands|solution|solutions|application|applications|industr|market)", "PGLN", "section"),
+]
+# document detection (a URL that IS a document / helpful content)
+DOC_KEYS = [
+    ("manual", r"(manual|user-guide|owner|operat|ifu|instruction)"),
+    ("datasheet", r"(datasheet|data-sheet|spec-?sheet|specification|technical-data)"),
+    ("sds", r"(sds|msds|safety-data)"),
+    ("certificate", r"(coa|certificate|conformance|declaration)"),
+    ("application-note", r"(application-note|app-note|protocol|whitepaper|white-paper)"),
+    ("driver", r"(driver|/sila|connector|firmware|software-download|device-driver)"),
+]
+
+# --- five-pillar support detection: what content feeds which pillar ----------
+# P1 IDs · P2 SiLA Driver · P3 Allotrope/Workflow · P4 Cloud & Edge · P5 AI Graph
+PILLARS = [
+    ("P1", "Identity",     r"(product|catalog|catalogue|/p/|/pd/|sku|part-?number|model|/item|/ec/)"),
+    ("P2", "SiLA Driver",  r"(driver|sila|connectivity|integration|/api|sdk|software|lims|middleware|instrument-control|plugin)"),
+    ("P3", "Workflow",     r"(protocol|method|assay|application-note|app-note|workflow|sop|procedure|allotrope|ifu|instruction|/guide|kit|reagent)"),
+    ("P4", "Cloud & Edge", r"(cloud|iot|instrumentconnect|connect-platform|digital|data-management|/edge|remote|telemetry|monitoring)"),
+    ("P5", "AI Graph",     r"(accessor|consumable|compatib|replacement|spare|works-with|related|cross-reference|selection-guide|configurator)"),
+]
+
+def pillars_for(url):
+    u = url.lower()
+    return [code for code, _name, pat in PILLARS if re.search(pat, u)]
+
+def slot_for(path):
+    p = path.lower()
+    for pat, slot, kind in RULES:
+        if re.search(pat, p):
+            return slot, kind
+    return None, "other"          # honest: ambiguous stays unmapped/candidate
+
+def doc_type_for(url):
+    u = url.lower()
+    is_pdf = u.endswith(".pdf") or ".pdf?" in u
+    for dtype, pat in DOC_KEYS:
+        if re.search(pat, u):
+            return dtype
+    return "pdf" if is_pdf else None
+
+def title_from_url(url):
+    seg = urllib.parse.urlparse(url).path.rstrip("/").split("/")[-1]
+    seg = re.sub(r"\.(pdf|html?|aspx)$", "", seg, flags=re.I)
+    seg = re.sub(r"[-_+%20]+", " ", seg).strip()
+    return seg[:160]
+
+# --- HTTP + sitemap parsing --------------------------------------------------
+def http_get_bytes(url, timeout=30):
+    host = urllib.parse.urlparse(url).netloc
+    req = urllib.request.Request(url, headers={
+        "User-Agent": UA, "Accept": "text/xml,application/xml,text/plain,*/*",
+        "Accept-Language": "en-US,en;q=0.9", "Referer": f"https://{host}/" if host else ""})
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        data = r.read()
+    if url.lower().endswith(".gz") or data[:2] == b"\x1f\x8b":
+        data = gzip.decompress(data)
+    return data
+
+def local_name(tag):
+    return tag.split("}")[-1].lower()
+
+def parse_sitemap(data):
+    """Return ('index', [child-sitemap-urls]) or ('urls', [page-urls])."""
+    root = ET.fromstring(data)
+    locs = [e.text.strip() for e in root.iter() if local_name(e.tag) == "loc" and e.text]
+    kind = "index" if local_name(root.tag) == "sitemapindex" else "urls"
+    return kind, locs
+
+def discover_sitemaps(domain):
+    """Prefer the Sitemap: lines in robots.txt (the owner's published map), else /sitemap.xml."""
+    base = domain if domain.startswith("http") else "https://" + domain
+    host = urllib.parse.urlparse(base).netloc or domain
+    found = []
+    try:
+        robots = http_get_bytes(f"https://{host}/robots.txt").decode("utf-8", "replace")
+        for line in robots.splitlines():
+            if line.lower().startswith("sitemap:"):
+                found.append(line.split(":", 1)[1].strip())
+    except Exception as e:
+        print(f"  [robots] {host}: {e}", file=sys.stderr)
+    # fallbacks — try common sitemap locations on both bare + www host (some sites 404 /sitemap.xml)
+    hosts = [host] if host.startswith("www.") else [host, "www." + host]
+    for h in hosts:
+        for path in ("/sitemap.xml", "/sitemap_index.xml", "/sitemap-index.xml", "/sitemap/sitemap.xml"):
+            u = f"https://{h}{path}"
+            if u not in found: found.append(u)
+    return host, found
+
+# --- main --------------------------------------------------------------------
+def main():
+    ap = argparse.ArgumentParser(description="Harvest a company's sitemap -> structure + helpful-content documents")
+    ap.add_argument("--domain", help="e.g. thermofisher.com")
+    ap.add_argument("--sitemap", help="a specific sitemap URL (overrides --domain discovery)")
+    ap.add_argument("--limit", type=int, default=500, help="max page URLs to classify")
+    ap.add_argument("--max-sitemaps", type=int, default=6, help="max child sitemaps to fetch from an index")
+    ap.add_argument("--sleep", type=float, default=0.4)
+    ap.add_argument("--outdir", default=".")
+    a = ap.parse_args()
+    if not a.domain and not a.sitemap:
+        raise SystemExit("need --domain or --sitemap")
+
+    os.makedirs(a.outdir, exist_ok=True)
+    if a.sitemap:
+        host = urllib.parse.urlparse(a.sitemap).netloc
+        queue = [a.sitemap]
+    else:
+        host, queue = discover_sitemaps(a.domain)
+    print(f">> sitemap harvest  host={host}  seeds={len(queue)}")
+
+    page_urls, fetched_maps = [], 0
+    # BFS through index -> child sitemaps -> page urls, bounded
+    while queue and len(page_urls) < a.limit and fetched_maps < a.max_sitemaps + len(queue):
+        sm = queue.pop(0)
+        if fetched_maps >= a.max_sitemaps and page_urls:
+            break
+        try:
+            kind, locs = parse_sitemap(http_get_bytes(sm))
+        except Exception as e:
+            print(f"  [sitemap] {sm}: {e}", file=sys.stderr); continue
+        fetched_maps += 1
+        if kind == "index":
+            queue = locs + queue            # descend
+            print(f"   index {sm} -> {len(locs)} child sitemaps")
+        else:
+            page_urls.extend(locs)
+            print(f"   urlset {sm} -> {len(locs)} urls (total {len(page_urls)})")
+        time.sleep(a.sleep)
+    page_urls = page_urls[:a.limit]
+
+    struct_path = os.path.join(a.outdir, "sitemap_structure.csv")
+    docs_path = os.path.join(a.outdir, "sitemap_documents.csv")
+    sf = open(struct_path, "w", newline=""); df = open(docs_path, "w", newline="")
+    sw, dw = csv.writer(sf), csv.writer(df)
+    sw.writerow(["domain", "url", "section", "slot", "kind", "pillars"])
+    dw.writerow(["domain", "url", "doc_type", "title", "slot", "pillars"])
+
+    slot_counts, doc_counts, pillar_counts, docs = {}, {}, {}, 0
+    for url in page_urls:
+        path = urllib.parse.urlparse(url).path
+        slot, kind = slot_for(path)
+        pil = pillars_for(url)
+        section = (path.strip("/").split("/") or ["home"])[0] or "home"
+        sw.writerow([host, url, section, slot or "", kind, "|".join(pil)])
+        slot_counts[slot or "(unmapped)"] = slot_counts.get(slot or "(unmapped)", 0) + 1
+        for pc in pil:
+            pillar_counts[pc] = pillar_counts.get(pc, 0) + 1
+        dtype = doc_type_for(url)
+        if dtype:
+            dw.writerow([host, url, dtype, title_from_url(url), "GDTI", "|".join(pil)])
+            doc_counts[dtype] = doc_counts.get(dtype, 0) + 1
+            docs += 1
+    sf.close(); df.close()
+
+    print(f">> done. {len(page_urls)} urls classified · {docs} helpful-content documents found")
+    print("   structure ->", struct_path)
+    print("   documents ->", docs_path, "(candidate GDTI refs — no URN minted; prefix-is-root holds)")
+    if slot_counts:
+        print("   slots: " + ", ".join(f"{k}={v}" for k, v in sorted(slot_counts.items(), key=lambda x:-x[1])))
+    if pillar_counts:
+        pname = {c: n for c, n, _ in PILLARS}
+        print("   pillars: " + ", ".join(f"{k}({pname.get(k,'')})={pillar_counts[k]}"
+                                          for k in sorted(pillar_counts)))
+    if doc_counts:
+        print("   docs : " + ", ".join(f"{k}={v}" for k, v in sorted(doc_counts.items(), key=lambda x:-x[1])))
+    print("   Everything CANDIDATE + sourced (provenance = the company's own URLs). Structure mirrored,")
+    print("   not cloned. Ambiguous paths left unmapped, not force-fit.")
+
+if __name__ == "__main__":
+    main()

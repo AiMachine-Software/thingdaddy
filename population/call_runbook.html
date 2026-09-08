@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Andy Call — Runbook</title>
+<style>
+  :root{--ink:#14181d;--muted:#5b6570;--line:#e4e8ec;--bg:#fbfcfd;--accent:#1f6feb;--go:#137a4c;--gobg:#e8f6ee;--warn:#9a6b00;--warnbg:#fbf3e0;--code:#0d1117;--codeink:#e6edf3}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:820px;margin:0 auto;padding:34px 22px 90px}
+  .kick{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  h1{font-size:27px;margin:6px 0 2px}
+  .sub{color:var(--muted);font-size:14px}
+  .clock{display:inline-block;background:var(--warnbg);color:var(--warn);font-weight:700;border-radius:20px;padding:3px 12px;font-size:13px;margin-top:8px}
+  .demo{border:1px solid var(--line);border-radius:12px;padding:2px 20px 16px;margin:22px 0;background:#fff}
+  .demo h2{font-size:19px;margin:18px 0 2px}
+  .demo .goal{color:var(--muted);font-size:13.5px;margin:2px 0 10px}
+  .badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;border-radius:6px;padding:2px 8px;vertical-align:middle;margin-left:8px}
+  .b-run{background:var(--gobg);color:var(--go);border:1px solid #bfe6cd}
+  .b-say{background:#eef4fe;color:var(--accent);border:1px solid #cadffb}
+  h3{font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin:16px 0 4px}
+  pre{background:#f6f8fa;color:#14181d;border:1px solid #d5dbe1;border-radius:9px;padding:13px 15px;overflow:auto;font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:13px;line-height:1.5;margin:8px 0;font-weight:500}
+  pre code{color:inherit;background:none}
+  code{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:13px;background:#eef1f4;border-radius:4px;padding:1px 5px}
+  ul{margin:6px 0 6px 2px;padding-left:20px}
+  li{margin:4px 0}
+  .say{border-left:3px solid var(--accent);background:#f4f8ff;padding:9px 14px;border-radius:0 8px 8px 0;margin:8px 0;font-style:italic}
+  .warn{border-left:3px solid var(--warn);background:var(--warnbg);padding:9px 14px;border-radius:0 8px 8px 0;margin:10px 0;font-size:13.5px}
+  .step{font-weight:700;color:var(--accent)}
+  footer{margin-top:30px;border-top:1px solid var(--line);padding-top:14px;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="kick">ThingDaddy · Operator card</div>
+<h1>Andy Call — Runbook</h1>
+<div class="sub">Three demos, in order. Everything below runs offline from already-extracted data.</div>
+<div class="clock">3:00 PM Thailand · repo: ~/thingdaddy/population</div>
+
+<div class="warn"><b>Pre-call (2 min).</b> Open Terminal, <code>cd ~/thingdaddy/population</code>, confirm the button is present: <code>ls demo_run.sh</code>. Optional dry run: <code>bash demo_run.sh</code> once before the call so browser tabs are warm. Everything is cached — no network needed.</div>
+
+<!-- DEMO 0 -->
+<div class="demo">
+  <h2>0 · The Founder's Case <span class="badge b-say">OPEN</span></h2>
+  <div class="goal">Goal: set up everything else — you're not pitching a vision, you built it. Open here, then run the demo.</div>
+  <h3>Show</h3>
+  <ul>
+    <li>Open <code>founding_story.html</code>. Walk it as beats: "conceptually sound → deployed" → the founding deck <em>is</em> the running code → the patents (granted ThingsNet configurator) → the 7.5% GDSN gap → Novartis right-pillars-wrong-foundation → the pallet cascade you built the rule for → discipline-as-moat.</li>
+    <li>Land §07, the one sentence, then pivot straight into the live build below.</li>
+  </ul>
+  <div class="say">"Before I show you it running — here's why I'm the one building it." Then §01: the founding slides and the running code are the same object, fifteen years apart.</div>
+</div>
+
+<!-- DEMO 1 -->
+<div class="demo">
+  <h2>1 · Live build — the button <span class="badge b-run">RUN</span></h2>
+  <div class="goal">Goal: Andy watches three ThingSites build from extracted data — sees it run, never waits.</div>
+  <h3>Run this</h3>
+  <pre><code>bash demo_run.sh</code></pre>
+  <h3>What happens</h3>
+  <ul>
+    <li>Prints the queue (Thermo Fisher, Tecan, Sartorius), then builds each one live — the <code>[1/4]…[4/4]</code> pipeline scrolls per company.</li>
+    <li>Updates the store catalog, then opens the three ThingSites, the fleet gallery, the store manager, and Thermo's mined graph.</li>
+    <li>Builds in seconds because the harvest was done earlier — this is the <em>render</em> from extracted candidate data.</li>
+  </ul>
+  <h3>Say</h3>
+  <div class="say">"The slow part — going out and extracting — already happened. What you're watching is the pipeline turning extracted, candidate data into a resolvable ThingSite per company. Same pipeline roots to a real 'who' when we run it against the registry."</div>
+  <div class="warn">If a tab doesn't open: the files are on disk regardless — open <code>sites/&lt;company&gt;/&lt;slug&gt;_ThingSite.html</code>. Nothing here depends on the network.</div>
+</div>
+
+<!-- DEMO 2 -->
+<div class="demo">
+  <h2>2 · How we work → engage Claude Code <span class="badge b-say">NARRATE + RUN</span></h2>
+  <div class="goal">Goal: show the loop — a directive becomes a spec with me, then Claude Code builds it. Closed loop, live.</div>
+  <h3>Beat 1 — the directive → spec (show on screen)</h3>
+  <ul>
+    <li>Open <code>insert_miner_spec.html</code> (already rendered). Walk the top: the package insert becomes a <b>GDTI</b> bound to the GTIN; safety/interactions become graph edges; candidate-until-ratified throughout.</li>
+    <li>Point: "This started as one sentence from me — 'get what's legally true inside the box' — and became a full spec in the chat. That's how KJ and Claude work: chat → agree → then build."</li>
+  </ul>
+  <h3>Beat 2 — hand the spec to Claude Code (RUN)</h3>
+  <p>In the repo, open Claude Code and paste the prompt below. It builds the spec's <b>first slice</b> — <code>section_grammar.py</code>, regime detection — the exact thing the spec recommends starting with.</p>
+  <pre><code>Read spec_insert_miner.md in this repo. Implement ONLY the first
+slice it recommends: a new file section_grammar.py that, given the
+plain text of a package insert/label, detects the labeling regime
+(Rx PI | OTC Drug Facts | EU SmPC | Supplement Facts) from its
+section headers, and returns the regime plus which required sections
+for that regime are present vs missing. Pure stdlib, no network.
+Add a __main__ that runs it on a pasted sample and prints the result.
+Do not build the miner, the GDTI binding, or the SHACL shapes yet.</code></pre>
+  <h3>Beat 3 — run what it built</h3>
+  <pre><code>python3 section_grammar.py   # on a sample Supplement Facts / Drug Facts block</code></pre>
+  <div class="say">"You just watched a directive become a spec with me, and the spec become working code with Claude Code — same repo the three engineers push to. That's the whole operating model in ninety seconds."</div>
+  <div class="warn">Keep the build scoped to <b>one file</b>. If Claude Code drifts toward the whole miner, stop it — the point is the handoff, not a finished feature. The spec is the contract.</div>
+</div>
+
+<!-- DEMO 3 -->
+<div class="demo">
+  <h2>3 · The analysis — the power of this <span class="badge b-say">SHOW</span></h2>
+  <div class="goal">Goal: land why it matters, beyond the demo.</div>
+  <ul>
+    <li>Open <code>power_analysis.html</code>. Walk the section headers as beats: metadata-not-data → spine/graph/redesign → discipline-is-the-moat → ThingSite-per-place → one-engine-every-industry → safety/medicine endgame → the honest ledger.</li>
+    <li>If short on time, read only §08, the one sentence: <em>"The website told you a company existed. The ThingSite tells you what is true, where, and what it is connected to."</em></li>
+    <li>The honest ledger (§07) is deliberate — naming the three hard parts (need the answerable parties, SPA sites don't yield, extractor discipline) reads as credibility, not weakness. Use it.</li>
+  </ul>
+</div>
+
+<footer>
+  Files on your Mac: <code>demo_run.sh</code> · <code>insert_miner_spec.html</code> · <code>power_analysis.html</code> · <code>call_runbook.html</code> (this card).
+  All demos offline. Candidate framing throughout; nothing minted, nothing fabricated.
+</footer>
+
+</div>
+</body>
+</html>

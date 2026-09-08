@@ -1,0 +1,20 @@
+{
+  "name": "thingdaddy-population-ui",
+  "private": true,
+  "version": "1.0.0",
+  "description": "ThingDaddy Population UI (Step 5). Search-backed registration interface over the population API. Separate app; imports nothing from platform/.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.4.0"
+  }
+}

@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env
+*.local
+
+# session safety backups (not source)
+src/.uibak/
+.claude/

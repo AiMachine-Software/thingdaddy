@@ -1,0 +1,51 @@
+# ThingDaddy Loops — production configuration
+# Set offline:false to pull live sources on the Mac mini.
+offline: false
+gcp_default_length: 7          # candidate company-prefix length until Verified by GS1 confirms true length
+
+# shared HTTP client
+net:
+  # SEC EDGAR REQUIRES a descriptive User-Agent WITH a contact email:
+  user_agent: "ThingDaddy Loops admin@thingdaddy.com"
+  min_interval: 0.15           # seconds between requests per host (SEC allows ~10/s)
+  max_retries: 5
+  timeout: 60
+
+# daily caps act as ceilings: clean stop + resume next cadence
+caps:
+  gleif: 5000000
+  gudid: 2000000
+  verified_by_gs1: 2000000
+  sec_edgar: 200000
+  usaspending: 500000
+  sam_gov: 200000
+
+match:
+  strong: 0.90                 # >= strong AND VbG-corroborated -> verified prefix bridge
+  probable: 0.75
+
+# ---- Loop A sources ----
+gleif:                          # free CC0 Golden Copy (whole LEI population, 3x daily + deltas)
+  lei2_url: "https://goldencopy.gleif.org/api/v2/golden-copies/publishes/lei2/latest.json"
+  lei2_delta_url: "https://goldencopy.gleif.org/api/v2/golden-copies/publishes/lei2/latest.json"
+  rr_url:   "https://goldencopy.gleif.org/api/v2/golden-copies/publishes/rr/latest.json"
+  search_api: "https://api.gleif.org/api/v1/lei-records"
+gudid:                          # openFDA / GUDID structured device records, no credentials
+  udi_url: "https://api.fda.gov/device/udi.json?limit=1000"
+  # Drop weekly GUDID/AccessGUDID delta files (.json/.ndjson) here to feed new data.
+  # When this folder has files, it takes priority over the openFDA API; ingested files
+  # move to <incoming_dir>/processed. Leave blank to pull the openFDA API instead.
+  incoming_dir: "data/incoming/gudid"
+verified_by_gs1:                # licensed MO / Data Hub path; blank keeps prefixes as candidates
+  data_hub_endpoint: ""
+
+# ---- Loop B sources ----
+loop_b:
+  edgar_seeds: []               # empty -> seed EDGAR from US apex names already in the registry
+usaspending:
+  filters:
+    time_period:
+      - {start_date: "2024-01-01", end_date: "2025-12-31"}
+sam_gov:                        # requires a free api key; blank -> SAM edges skipped, others still flow
+  api_key: ""
+  watchlist: []

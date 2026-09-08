@@ -1,0 +1,188 @@
+id,party_id,pillar,section,display_order,nm,identifier,grade,tx,doc_key,first_seen,last_updated
+932,4090838,P1,The registration record,0,Company Name,Thermo Fisher Scientific (Asheville) LLC,v,verified,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+939,4090838,P1,"The licence family — five licences, one enterprise",0,Asheville,081577302,v,verified · in our registry,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+945,4090838,P1,Root selection — assets follow their GLN,0,The rule,an asset sits under the GLN it belongs to; that GLN determines its root,b,"built · applied, not decided per asset",,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+933,4090838,P1,The registration record,1,Address,"Marietta, OH, US",v,verified,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+940,4090838,P1,"The licence family — five licences, one enterprise",1,Madison,0850000184,v,verified · in our registry,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+946,4090838,P1,Root selection — assets follow their GLN,1,KingFisher,"Asheville's, under Asheville's GLN",v,verified · 081577302,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+934,4090838,P1,The registration record,2,Website,thermofisher.com,c,agent input — launches the Harvest Agent,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+941,4090838,P1,"The licence family — five licences, one enterprise",2,CDX Fremont,0884883,v,verified · in our registry,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+947,4090838,P1,Root selection — assets follow their GLN,2,Centrifuge line,"Electron LED's, under Electron LED's GLN",e,exception · that GLN is not in our registry,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+935,4090838,P1,The registration record,3,Licence Key,081577302,v,verified · read by hand,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+942,4090838,P1,"The licence family — five licences, one enterprise",3,Thermo Electron LED GmbH,0850044,e,"exception · named, not in our registry",,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+948,4090838,P1,Root selection — assets follow their GLN,3,If the company wants a different arrangement,their configuration to change,slot,your console,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+936,4090838,P1,The registration record,4,Licence Type,GS1 Company Prefix,,,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+943,4090838,P1,"The licence family — five licences, one enterprise",4,Thermo Electron LED GmbH,0850033,e,"exception · named, not in our registry",,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+937,4090838,P1,The registration record,5,Licensing GS1 Member Organization,GS1 US,,,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+944,4090838,P1,"The licence family — five licences, one enterprise",5,Two brands on one licence family,Thermo Scientific · Fisherbrand,v,verified,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+938,4090838,P1,The registration record,6,ThingSite,thingsite.thermofisher.com,b,built for you,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+129552,4090838,P1,contact,101,Contact email,Service.led.marietta@Thermofisher.com,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129553,4090838,P1,contact,102,Contact phone,1-866-984-3766,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+949,4090838,P2,FOUND — a real driver already exists,0,RapidStak,public sila-driver-group registry,v,verified · found,,2026-08-22 17:53:43.820307+07,2026-08-27 19:30:32.744536+07
+952,4090838,P2,"BUILT — no driver existed, so we authored one",0,Chromeleon CDS,7.2.9 · September 2018,b,built,,2026-08-22 17:53:43.820307+07,2026-08-27 19:30:32.773511+07
+958,4090838,P2,"SEARCHED · EMPTY — a dated finding, not an assumption",0,Vanquish UHPLC,searched · no public SiLA driver,e,exception · a Feature we author,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+950,4090838,P2,FOUND — a real driver already exists,1,Teleshake 1536,public sila-driver-group registry,v,verified · found,,2026-08-22 17:53:43.820307+07,2026-08-27 19:30:32.761408+07
+953,4090838,P2,"BUILT — no driver existed, so we authored one",1,Chromeleon for HPLC,4828.3250A Rev 9.1,b,built,,2026-08-22 17:53:43.820307+07,2026-08-27 19:30:32.786429+07
+959,4090838,P2,"SEARCHED · EMPTY — a dated finding, not an assumption",1,ISQ EM,searched · no public SiLA driver,e,exception · a Feature we author,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+951,4090838,P2,FOUND — a real driver already exists,2,How many exist,two,v,"verified · a count, not an enumeration",,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+954,4090838,P2,"BUILT — no driver existed, so we authored one",2,247 Instrument Controller firmware,paired with Chromeleon 7.2.8,b,built · version pairing carried,,2026-08-22 17:53:43.820307+07,2026-08-27 19:30:32.799548+07
+960,4090838,P2,"SEARCHED · EMPTY — a dated finding, not an assumption",2,Orbitrap Exactive,searched · no public SiLA driver,e,exception · a Feature we author,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+955,4090838,P2,"BUILT — no driver existed, so we authored one",3,SII for Empower,1.1 / 1.2,b,built · Thermo's own bridge,,2026-08-22 17:53:43.820307+07,2026-08-27 19:30:32.811714+07
+961,4090838,P2,"SEARCHED · EMPTY — a dated finding, not an assumption",3,TSQ Quantiva,searched · no public SiLA driver,e,exception · a Feature we author,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+956,4090838,P2,"BUILT — no driver existed, so we authored one",4,What the SII row proves,"WATERS Empower controls Thermo instruments — instrument constant, controlling system swappable",b,built · the identity outlives the console,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+962,4090838,P2,"SEARCHED · EMPTY — a dated finding, not an assumption",4,Dionex ICS-6000,searched · no public SiLA driver,e,exception · a Feature we author,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+957,4090838,P2,"BUILT — no driver existed, so we authored one",5,Controlled-environment SiLA Features,12 Features · 22 Commands · 58 Properties,b,"built · counts, not enumerations",,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+963,4090838,P2,"SEARCHED · EMPTY — a dated finding, not an assumption",5,KingFisher Apex,searched · no public SiLA driver,e,exception · a Feature we author,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+964,4090838,P2,"SEARCHED · EMPTY — a dated finding, not an assumption",6,Electron LED centrifuge line,searched · no public SiLA driver,e,exception · a Feature we author,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+965,4090838,P2,"SEARCHED · EMPTY — a dated finding, not an assumption",7,Absence is a finding,"each one dated, each one recorded",b,built · searched-and-empty is not silence,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+129554,4090838,P2,devices,104,BT Sure · AY759X1 · AY759X1,10815773020264,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129555,4090838,P2,devices,105,BT Sure · AY759X8 · AY759X8,10815773020257,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129556,4090838,P2,devices,106,BT Sure · AY759X3 · AY759X3,10815773020240,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129557,4090838,P2,devices,107,Thermo Scientific Forma · 7476 · 7476,10815773020226,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129558,4090838,P2,devices,108,Thermo Scientific Forma · 7475 · 7475,10815773020219,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129559,4090838,P2,devices,109,Thermo Scientific Forma · 7459 · 7459,10815773020202,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129560,4090838,P2,devices,110,Thermo Scientific Forma · 7458 · 7458,10815773020196,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129561,4090838,P2,devices,111,Thermo Scientific Forma · 7457 · 7457,10815773020189,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129562,4090838,P2,devices,112,Thermo Scientific Forma · 7456 · 7456,10815773020172,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129563,4090838,P2,devices,113,Thermo Scientific Forma · 3141 · 3141,10815773020158,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129564,4090838,P2,devices,114,Thermo Scientific Forma · 3140 · 3140,10815773020141,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129565,4090838,P2,devices,115,Thermo Scientific Forma · 3131 · 3131,10815773020134,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+966,4090838,P3,"Ion Torrent — page-referenced, end to end",0,Ion Torrent workflow,ten steps,c,"candidate · a count, not an enumeration",,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+970,4090838,P3,"The vendor's own exclusions — preserved, not tidied",0,Stated downstreams,qPCR · labeled cDNA · RiboAmp,c,candidate · the vendor's list,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+973,4090838,P3,KingFisher Apex,0,KingFisher Apex protocol,MAN0018970,c,candidate · fetch-confirmed,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+967,4090838,P3,"Ion Torrent — page-referenced, end to end",1,PicoPure RNA Isolation,MAN1000651 pp. 11–13,c,candidate · page-referenced,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+971,4090838,P3,"The vendor's own exclusions — preserved, not tidied",1,RNA-Seq,NOT a stated downstream,e,exception · excluded by the vendor,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+974,4090838,P3,KingFisher Apex,1,BindIt software,instrument-side method authoring,c,candidate,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+968,4090838,P3,"Ion Torrent — page-referenced, end to end",2,Whole-transcriptome amplification,MAN00010654,c,candidate · page-referenced,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+972,4090838,P3,"The vendor's own exclusions — preserved, not tidied",2,FFPE,excluded,e,exception · excluded by the vendor,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+969,4090838,P3,"Ion Torrent — page-referenced, end to end",3,The join between the two guides,stated by neither guide,c,"candidate · drawn dashed, never asserted",,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+975,4090838,P4,Enterprise bindings,0,SampleManager LIMS ↔ SAP S/4HANA,NetWeaver + OData connectors,c,candidate · vendor-published,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+979,4090838,P4,What the identity does NOT become,0,The LIMS record is not the identity,SampleManager row ≠ the instrument,b,built,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+976,4090838,P4,Enterprise bindings,1,AWS Enterprise Discount Program (EDP),committed-spend agreement,c,candidate,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+980,4090838,P4,What the identity does NOT become,1,The ERP material is not the identity,SAP material master ≠ the instrument,b,built,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+977,4090838,P4,Enterprise bindings,2,Chromeleon 7,chromatography data system,b,built · driver authored,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+978,4090838,P4,Enterprise bindings,3,Customer cloud tenancy,tenant of record,slot,your console,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+981,4090838,P5,Cloud and LIMS bindings,0,Company graph,"five licences, one enterprise, gated edges",v,verified,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+984,4090838,P5,The demand gap — from their own hiring,0,Requests,609,v,"verified · a count, not an enumeration",,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+982,4090838,P5,Cloud and LIMS bindings,1,Instrument → CDS → LIMS → ERP,one identity across four systems,b,built,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+985,4090838,P5,The demand gap — from their own hiring,1,P4 · cloud and edge,1307,v,verified · count,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+983,4090838,P5,Cloud and LIMS bindings,2,"Brand is an attribute, not a root",Thermo Scientific · Fisherbrand on one licence family,b,built,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+986,4090838,P5,The demand gap — from their own hiring,2,P1 · identity,47,v,verified · count,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+987,4090838,P5,The demand gap — from their own hiring,3,The gap,"1307 against 47 — they are hiring for the runtime, not the root",c,candidate · our reading of their numbers,,2026-08-22 17:53:43.820307+07,2026-08-22 17:53:43.820307+07
+129566,4090839,P1,contact,101,Contact email,Service.led.marietta@Thermofisher.com,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129567,4090839,P1,contact,102,Contact phone,1-866-984-3766,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129568,4090839,P1,contact,103,Website,thermofisher.com,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129569,4090839,P2,devices,104,BT Sure · AY759X1 · AY759X1,10815773020264,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129570,4090839,P2,devices,105,BT Sure · AY759X8 · AY759X8,10815773020257,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129571,4090839,P2,devices,106,BT Sure · AY759X3 · AY759X3,10815773020240,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129572,4090839,P2,devices,107,Thermo Scientific Forma · 7476 · 7476,10815773020226,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129573,4090839,P2,devices,108,Thermo Scientific Forma · 7475 · 7475,10815773020219,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129574,4090839,P2,devices,109,Thermo Scientific Forma · 7459 · 7459,10815773020202,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129575,4090839,P2,devices,110,Thermo Scientific Forma · 7458 · 7458,10815773020196,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129576,4090839,P2,devices,111,Thermo Scientific Forma · 7457 · 7457,10815773020189,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129577,4090839,P2,devices,112,Thermo Scientific Forma · 7456 · 7456,10815773020172,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129578,4090839,P2,devices,113,Thermo Scientific Forma · 3141 · 3141,10815773020158,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129579,4090839,P2,devices,114,Thermo Scientific Forma · 3140 · 3140,10815773020141,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129580,4090839,P2,devices,115,Thermo Scientific Forma · 3131 · 3131,10815773020134,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+858,4090847,P1,The registration record,0,Company Name,"Illumina, Inc.",v,verified,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+866,4090847,P1,Identity board,0,Company (PGLN),pgln:081627002,v,,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+859,4090847,P1,The registration record,1,Address,"San Diego, CA, US",v,verified,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+867,4090847,P1,Identity board,1,Site (GLN),0816270020002,v,,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+860,4090847,P1,The registration record,2,Website,illumina.com,c,agent input — launches the Harvest Agent,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+868,4090847,P1,Identity board,2,NextSeq 550Dx (GTIN),00816270020125,v,verified · GUDID,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+861,4090847,P1,The registration record,3,Licence Key,081627002,v,verified · read by hand,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+869,4090847,P1,Identity board,3,MiSeqDx (GTIN),00816270020002,v,verified · GUDID,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+862,4090847,P1,The registration record,4,Licence Type,GS1 Company Prefix,,,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+870,4090847,P1,Identity board,4,NextSeq 550Dx System (GIAI),giai:081627002.11,c,candidate · operating device inside the packaging GTIN,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+863,4090847,P1,The registration record,5,Global Location Number (GLN),0816270020002,v,verified,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+871,4090847,P1,Identity board,5,Document root (GDTI),gdti:081627002.001.<serial>,b,built · 9-digit prefix → 3-digit doctype,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+864,4090847,P1,The registration record,6,Licensing GS1 Member Organization,GS1 US,,,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+865,4090847,P1,The registration record,7,ThingSite,thingsite.illumina.com,b,built for you,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+129635,4090847,P1,contact,101,Contact email,techsupport@illumina.com,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129636,4090847,P1,contact,102,Contact phone,800-809-4566,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+872,4090847,P2,"The instruments — real, from Illumina",0,NextSeq 550Dx System,giai:081627002.11 · packaging GTIN 00816270020125,c,candidate · machine,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+875,4090847,P2,NextSeq 550Dx — diagnostic stack (NSSI v1.7.0),0,NextSeqDx Operating Software (NOS),1.7.0 · gdti:081627002.001.101,c,candidate · doc 1000000081713 v05,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+882,4090847,P2,NextSeq 550 — research stack (NSSI v4.0.2),0,NextSeq Control Software (NCS),4.0.2 · gdti:081627002.001.201,c,candidate · doc 1000000132193 v00,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+889,4090847,P2,NextSeq 1000/2000 — control + analysis (v1.7.1),0,NextSeq 1000/2000 Control Software,1.7.1 · gdti:081627002.001.501,c,candidate · doc 200057014 v00,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+894,4090847,P2,DRAGEN — secondary analysis,0,DRAGEN Bio-IT Platform SW,dragen-4.1.23-9.el7/el8 · gdti:081627002.001.301,c,candidate · doc 200046067 v00,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+896,4090847,P2,SiLA 2 driver — the one piece that is ours,0,Feature · SequencingSystem,gdti:081627002.001.401,b,built · ThingDaddy-issued Feature Definition,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+873,4090847,P2,"The instruments — real, from Illumina",1,MiSeqDx System,giai:081627002.10 · packaging GTIN 00816270020002,c,candidate · machine,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+876,4090847,P2,NextSeq 550Dx — diagnostic stack (NSSI v1.7.0),1,NextSeqDx Service Software (NSSDx),1.7.0 · gdti:081627002.001.102,c,candidate · doc 1000000081713 v05,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+883,4090847,P2,NextSeq 550 — research stack (NSSI v4.0.2),1,NextSeq Service Software (NSS),4.0.1 · gdti:081627002.001.202,c,candidate · doc 1000000132193 v00,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+890,4090847,P2,NextSeq 1000/2000 — control + analysis (v1.7.1),1,Real-Time Analysis (RTA) — standard SBS,3.10.30 · gdti:081627002.001.502,c,candidate · doc 200057014 v00,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+895,4090847,P2,DRAGEN — secondary analysis,1,DRAGEN kernel driver (el7/el8 FPGA),dragen_drv 4.1.23 · gdti:081627002.001.302,c,candidate · doc 200046067 v00,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+897,4090847,P2,SiLA 2 driver — the one piece that is ours,1,Commands,CreateRun · ConfigureModule · StartSequencing · MonitorRun · RetrieveOutput,b,built · 5 commands,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+874,4090847,P2,"The instruments — real, from Illumina",2,Packaging GTIN contains the operating device,GTIN → GIAI · contains,b,built · the SKU is not the machine,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+877,4090847,P2,NextSeq 550Dx — diagnostic stack (NSSI v1.7.0),2,Local Run Manager (LRM),4.1.0 · gdti:081627002.001.103,c,candidate · doc 1000000081713 v05,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+884,4090847,P2,NextSeq 550 — research stack (NSSI v4.0.2),2,Local Run Manager (LRM),2.4.0 · gdti:081627002.001.203,c,candidate · doc 1000000132193 v00,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+891,4090847,P2,NextSeq 1000/2000 — control + analysis (v1.7.1),2,Real-Time Analysis (RTA) — XLEAP-SBS,4.12.2 · gdti:081627002.001.503,c,candidate · doc 200057014 v00,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+898,4090847,P2,SiLA 2 driver — the one piece that is ours,2,Wraps,Local Run Manager — documented remote-command surface,c,"candidate · vendor API, not vendor code",,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+878,4090847,P2,NextSeq 550Dx — diagnostic stack (NSSI v1.7.0),3,Real-Time Analysis (RTA),2.9.5 · gdti:081627002.001.104,c,candidate · doc 1000000081713 v05,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+885,4090847,P2,NextSeq 550 — research stack (NSSI v4.0.2),3,Real-Time Analysis (RTA),2.11.3 · gdti:081627002.001.204,c,candidate · doc 1000000132193 v00,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+892,4090847,P2,NextSeq 1000/2000 — control + analysis (v1.7.1),3,Instrument Analysis (IAG),1.14.5 · gdti:081627002.001.504,c,candidate · doc 200057014 v00,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+899,4090847,P2,SiLA 2 driver — the one piece that is ours,3,Transport,SiLA 2 over gRPC,b,built · SiLA 2,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+879,4090847,P2,NextSeq 550Dx — diagnostic stack (NSSI v1.7.0),4,Universal Copy Service (UCS),2.7.4 · gdti:081627002.001.105,c,candidate · doc 1000000081713 v05,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+886,4090847,P2,NextSeq 550 — research stack (NSSI v4.0.2),4,Universal Copy Service (UCS),1.6.1 · gdti:081627002.001.205,c,candidate · doc 1000000132193 v00,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+893,4090847,P2,NextSeq 1000/2000 — control + analysis (v1.7.1),4,DRAGEN (onboard NextSeq 1000/2000),4.2.7 · gdti:081627002.001.505,c,candidate · doc 200057014 v00,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+900,4090847,P2,SiLA 2 driver — the one piece that is ours,4,What we did NOT do,no invented vendor code · configuration over a real API,b,"built · config, not code",,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+880,4090847,P2,NextSeq 550Dx — diagnostic stack (NSSI v1.7.0),5,DMA Driver,4.5.3 · gdti:081627002.001.106,c,candidate · doc 1000000081713 v05,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+887,4090847,P2,NextSeq 550 — research stack (NSSI v4.0.2),5,NextSeq Recipe Fragments,4.0.0 · gdti:081627002.001.206,c,candidate · doc 1000000132193 v00,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+881,4090847,P2,NextSeq 550Dx — diagnostic stack (NSSI v1.7.0),6,Firmware,2019.2.0 · gdti:081627002.001.107,c,candidate · doc 1000000081713 v05,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+888,4090847,P2,NextSeq 550 — research stack (NSSI v4.0.2),6,DMA Driver,4.5.3 · gdti:081627002.001.207,c,candidate · doc 1000000132193 v00,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+129637,4090847,P2,devices,104,DRAGEN™ for Illumina® DNA Prep with Enrichment Dx for NovaSeq™ 6000Dx · 20074609 · 20074609,00816270020743,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129638,4090847,P2,devices,105,MiSeq™ Dx (China) · 20014053 · 20014053,00816270020699,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129639,4090847,P2,devices,106,MiSeq™Dx Reagent Kit v3 Micro · 20063860 · 20063860,00816270020668,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129640,4090847,P2,devices,107,TruSight™ Oncology DNA Control IVD · 20065041,00816270020651,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129641,4090847,P2,devices,108,TruSight™ Oncology RNA Control · 20065042,00816270020644,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129642,4090847,P2,devices,109,NovaSeq™ 6000Dx · 20068232 · 20068232,00816270020637,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129643,4090847,P2,devices,110,"NovaSeq™ 6000Dx Library Tube, 24 pack · 20062291 · 20062291",00816270020583,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129644,4090847,P2,devices,111,NovaSeq™ 6000Dx S4 Buffer Cartridge · 20062293 · 20062293,00816270020576,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129645,4090847,P2,devices,112,NovaSeq™ 6000Dx S4 Reagent v1.5 Kit (300 cycles) · 20046933 · 20046933,00816270020569,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129646,4090847,P2,devices,113,NovaSeq™ 6000Dx Library Tube · 20062290 · 20062290,00816270020552,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129647,4090847,P2,devices,114,NovaSeq™ 6000Dx S2 Buffer Cartridge · 20062292 · 20062292,00816270020545,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+129648,4090847,P2,devices,115,NovaSeq™ 6000Dx S2 Reagent v1.5 Kit (300 cycles) · 20046931 · 20046931,00816270020538,v,verified · GUDID,,2026-08-30 21:07:48.140447+07,2026-08-30 21:07:48.140447+07
+901,4090847,P3,"Assay methods — AFO-shaped, cited",0,Illumina DNA PCR-Free Prep (AFO protocol),gdti:081627002.002.101 · datasheet M-GL-00679 v2.0,c,candidate · grounded,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+906,4090847,P3,The gate,0,Every field cited or null,no field is filled by inference,b,built · fail-closed,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+902,4090847,P3,"Assay methods — AFO-shaped, cited",1,TruSight Oncology 500 (TSO500) Reference Guide,Doc 1000000067621 v13,c,candidate · fetch-confirmed,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+907,4090847,P3,The gate,1,"BOM carries catalog and REF codes, never a GTIN",catalog/REF ≠ GTIN · GTIN is the box barcode,b,built · no fabricated GTIN nodes,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+903,4090847,P3,"Assay methods — AFO-shaped, cited",2,TruSight One Sequencing Panel Reference Guide,Doc 15046431 v03,c,candidate · fetch-confirmed,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+908,4090847,P3,The gate,2,Doctype width gate,081627002 (9) + 001 (3) = 12,b,built · a 1-digit doctype fails the gate,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+904,4090847,P3,"Assay methods — AFO-shaped, cited",3,Illumina Stranded mRNA Prep Reference Guide,Doc 1000000124518 v02,c,candidate · fetch-confirmed,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+909,4090847,P3,The gate,3,FFPE compatibility,not stated for DNA PCR-Free Prep,e,exception · lights as a gap,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+905,4090847,P3,"Assay methods — AFO-shaped, cited",4,AFO shape,Equipment · Process · Material · Result,b,built · every field cited or null,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+910,4090847,P4,"One identity, many runtimes (the binding)",0,Durable identity,giai:081627002.<serial>,v,verified,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+914,4090847,P4,DRAGEN — how it actually ships,0,AWS AMI on f1 FPGA instances,12 regions,c,"candidate · count, not an enumeration",,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+920,4090847,P4,What the identity does NOT become,0,The cloud handle is not the identity,AMI / image id is disposable · the GIAI is not,b,built,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+911,4090847,P4,"One identity, many runtimes (the binding)",1,AWS endpoint,DRAGEN AMI on f1 FPGA instances,c,candidate · vendor-published,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+915,4090847,P4,DRAGEN — how it actually ships,1,RPM packages,el7 / el8,c,candidate · doc 200046067 v00,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+921,4090847,P4,What the identity does NOT become,1,"Region is a placement, not a root","12 regions, one identity",b,built,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+912,4090847,P4,"One identity, many runtimes (the binding)",2,Azure endpoint,DRAGEN image · West US 2,c,candidate · vendor-published,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+916,4090847,P4,DRAGEN — how it actually ships,2,Kernel drivers,el7 / el8 FPGA · dragen_drv,c,candidate · doc 200046067 v00,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+922,4090847,P4,What the identity does NOT become,2,Azure tenancy,customer-owned,slot,your console,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+913,4090847,P4,"One identity, many runtimes (the binding)",3,Your own console,customer cloud account · tenant of record,slot,your console,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+917,4090847,P4,DRAGEN — how it actually ships,3,Docker images,containerised DRAGEN,c,candidate · vendor-published,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+918,4090847,P4,DRAGEN — how it actually ships,4,Azure image,West US 2,c,candidate · single region stated,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+919,4090847,P4,DRAGEN — how it actually ships,5,Onboard DRAGEN,NextSeq 1000/2000 · 4.2.7,c,candidate · doc 200057014 v00,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+923,4090847,P5,"Typed, gated edges — how things connect to things",0,Company graph,nodes + gated edges,v,verified,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+929,4090847,P5,What a resolve returns,0,resolve(giai:081627002.11),NextSeq 550Dx System · drivers · protocol · edges,b,built,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+924,4090847,P5,"Typed, gated edges — how things connect to things",1,Illumina → LabCorp Genetics · designs-for,GLN 0860009842205 · prefix 08600098422,v,verified · read by hand,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+930,4090847,P5,What a resolve returns,1,resolve(gdti:081627002.001.401),the SiLA Feature we issued,b,built,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+925,4090847,P5,"Typed, gated edges — how things connect to things",2,Illumina designs the protocol,protocol owner · ratified,v,verified,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+931,4090847,P5,What a resolve returns,2,resolve(unknown lot),"→ EXCEPTION · no record · not a guess, not a null",e,exception,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+926,4090847,P5,"Typed, gated edges — how things connect to things",3,LabCorp Genetics executes,executing laboratory,v,verified,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+927,4090847,P5,"Typed, gated edges — how things connect to things",4,Both ends rooted,081627002 · 08600098422,v,verified,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+928,4090847,P5,"Typed, gated edges — how things connect to things",5,has_protocol · instrument → protocol,grounded-equipment binding,b,built,,2026-08-22 17:53:13.713545+07,2026-08-22 17:53:13.713545+07
+171930,4153997,P1,The registration record,0,Company Name,"DIAZYME LABORATORIES, INC.",v,"verified · GUDID labeler name, verbatim, DUNS 080507219",,2026-08-30 21:07:49.233452+07,2026-08-30 21:07:49.233452+07
+171931,4153997,P1,Identity board,0,Issuing agency,GS1 184,v,verified · counted across this company's own device records,,2026-08-30 21:07:49.233452+07,2026-08-30 21:07:49.233452+07
+171932,4153997,P1,The registration record,1,DUNS,080507219,v,"verified · GUDID labeler identifier, issued by Dun & Bradstreet",,2026-08-30 21:07:49.233452+07,2026-08-30 21:07:49.233452+07
+171933,4153997,P1,Identity board,1,Prefix,081708902,v,"verified · cut with gcp_cut from this company's own GUDID DIs, indicator stripped, GCP Length Table 2026-02-17 · 192,979 entries. A GUDID filing attests the DI and the labeler together under 21 CFR 830 (KJ ruling 2026-08-30)",,2026-08-30 21:07:49.233452+07,2026-08-30 21:07:49.233452+07
+171934,4153997,P1,The registration record,2,Website,no door resolved,slot,"slot · the url ladder resolved nothing: no usable contact email (or the domain was refused as free-mail or shared), no register website, and search discovery is not automated. QUEUED FOR CHROME — not a dead end",,2026-08-30 21:07:49.233452+07,2026-08-30 21:07:49.233452+07
+171935,4153997,P1,Identity board,2,Prefix grade,rooted,v,"verified · attested path. The uniqueness guard applies where a prefix arrives with no attesting filer, and not here",,2026-08-30 21:07:49.233452+07,2026-08-30 21:07:49.233452+07
+171936,4153997,P1,Identity board,3,Device records,184,v,"verified · gudid_devices.csv, DUNS 080507219",,2026-08-30 21:07:49.233452+07,2026-08-30 21:07:49.233452+07
+171937,4153997,P1,Identity board,4,Distinct device models,184,v,"verified · distinct version_model, GUDID",,2026-08-30 21:07:49.233452+07,2026-08-30 21:07:49.233452+07
+171938,4153997,P1,Identity board,5,Brands filed under the licence,6,v,"verified · distinct brand_name, GUDID",,2026-08-30 21:07:49.233452+07,2026-08-30 21:07:49.233452+07
+171939,4153997,P1,Identity board,6,Company (PGLN),not minted,slot,"slot · a PGLN is minted, not derived. Nothing here mints",,2026-08-30 21:07:49.233452+07,2026-08-30 21:07:49.233452+07
+171940,4153997,P2,"SiLA 2 driver — the voice (config, not code)",0,Pillar 2 · SiLA Drivers,0 instrument-class of 184 devices,slot,"slot · no instrument-class device is filed under this licence, so there is nothing for a driver to speak for. Products are identity and live in P1",,2026-08-30 21:07:49.233452+07,2026-08-30 21:07:49.233452+07
+171941,4153997,P3,"Grounded methods — AFO-shaped, cited",0,Pillar 3 · Allotrope Workflows,no method document read,slot,"slot · a method is Equipment + Process + Material + Result with the steps page-referenced. No IFU, user guide or package insert has been read for this company",,2026-08-30 21:07:49.233452+07,2026-08-30 21:07:49.233452+07
+171942,4153997,P4,"One identity, many runtimes (the binding)",0,Pillar 4 · Cloud Bindings,your console,slot,"slot · a binding is created in the customer console. ThingDaddy records it, never invents it",,2026-08-30 21:07:49.233452+07,2026-08-30 21:07:49.233452+07
+171943,4153997,P5,"Carriers — one GIAI, every wire",0,Pillar 5 · AI Graph,0 edges asserted,slot,slot · an edge is a friending event with two real endpoints. No second endpoint has been read for this company,,2026-08-30 21:07:49.233452+07,2026-08-30 21:07:49.233452+07

@@ -1,0 +1,10 @@
+from_type,edge_type,to_type,pillar
+instrument(GTIN),has_driver,SiLA Feature,P2
+instrument(GTIN),runs,AFO process/method,P3
+AFO process,has_equipment,AFO equipment,P3
+AFO process,has_input,AFO material,P3
+AFO process,has_output,AFO result,P5
+instrument(GTIN),uses,AFO material (reagent/consumable),P5
+SiLA Feature,exposes,SiLA Command,P2
+SiLA Feature,exposes,SiLA Property,P2
+document(GDTI),describes,instrument(GTIN),P1

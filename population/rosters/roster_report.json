@@ -1,0 +1,11 @@
+{
+  "parties": 3,
+  "db": "thingdaddy_population",
+  "rooting": {
+    "registry_match": 0,
+    "registry_candidate": 1,
+    "gleif_only": 1,
+    "unrooted": 1
+  },
+  "note": "Candidate roots only \u2014 nothing minted. registry_match = named party carries a verified GS1 prefix; registry_candidate = in registry, no prefix yet; gleif_only = legal entity anchored by LEI, prefix unknown; unrooted = candidate, nothing guessed. Each vendor's domain seeds website_agent. R4 ratifies."
+}

@@ -1,0 +1,18 @@
+A DATED SNAPSHOT OF REAL PRODUCTION ROWS, FOR LOCAL DEVELOPMENT.
+
+  taken        2026-09-05T03:31:01Z
+  source       thingdaddy_population on the Mac mini
+  generator    make_seed.sh
+  parties      4153997,4090838,4090839,4090847
+
+  party            4
+  content_claim    187
+  party_event      4
+
+seed_up.sh checks the loaded database against these three numbers and fails
+loudly on a mismatch. A silent partial load renders an empty screen and looks
+like a bug in the screens.
+
+REGENERATE, NEVER EDIT. If this file is more than a week old, remake the seed.
+A stale seed that still loads is worse than one that fails, because it looks
+current.

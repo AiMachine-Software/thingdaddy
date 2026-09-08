@@ -1,0 +1,1004 @@
+[
+ {
+  "artefact": "meta_configurator.py",
+  "first_claimed": "2026-07-09",
+  "last_claimed": "2026-07-29",
+  "claimed_in": [
+   "GA_Book_Build_and_Story_Plan.md",
+   "TAPE_APPEND_2026-07-29_v2.md",
+   "claude_meta_configurator_BUILT_2026-07-20.md"
+  ],
+  "n_files": 3,
+  "context": [
+   "- **P4 \u2014 where it runs.** The binding: `giai:0817089.SERIAL \u2192 { aws:arn, azure:deviceId, edge:node }`. AWS's own facts turned into the thesi",
+   "- **Engine** \u2014 `meta_configurator.py` exists \u2192 \"configuration, not code\" is a built fact."
+  ]
+ },
+ {
+  "artefact": "thingdaddy.html",
+  "first_claimed": "2026-07-09",
+  "last_claimed": "2026-07-09",
+  "claimed_in": [
+   "ThingDaddy_Prototype_Walkthrough.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "**What this is:** a clickable, single\u2011file prototype of the ThingDaddy ThingSite, built on the real GoDaddy shell and populated end\u2011to\u2011end w"
+  ]
+ },
+ {
+  "artefact": "website_agent.py",
+  "first_claimed": "2026-07-09",
+  "last_claimed": "2026-08-05",
+  "claimed_in": [
+   "claude_00_CONTINUE_HERE_2026-07-20_andy_call_prep.md",
+   "claude_REVIEW_harvester_all_versions_and_next_level_2026-08-05.md",
+   "claude_plan_website_agent_content_engine.md"
+  ],
+  "n_files": 3,
+  "context": [
+   "CSVs. rm's the rendered HTML then runs `website_agent.py --fast` per company ->",
+   "**Gen 2 \u2014 site-crawl + orchestration.** website_agent.py (255, \"orchestrates the built stages into"
+  ]
+ },
+ {
+  "artefact": "project_thingsite.py",
+  "first_claimed": "2026-07-09",
+  "last_claimed": "2026-07-22",
+  "claimed_in": [
+   "claude_00_CONTINUE_HERE_2026-07-22_capture_and_seam_built.md",
+   "claude_00_CONTINUE_HERE_2026-07-22_scaffold_tiles_built.md",
+   "claude_plan_thingsite_richness_and_serving.md",
+   "claude_plan_website_agent_content_engine.md"
+  ],
+  "n_files": 4,
+  "context": [
+   "BUILT (7 green tiles): 001 schema+gate \u00b7 002 classify/admit \u00b7 003 promote_prefix/promote_thing/_is_named_actor \u00b7 004 sandbox+wall+migrate_to",
+   "## Files (session, ephemeral): /home/claude/scaffold/{001..004,test_*}.sql, harvest_extract.py, load_router.py, project_thingsite.py, diazym"
+  ]
+ },
+ {
+  "artefact": "gap_map.py",
+  "first_claimed": "2026-07-09",
+  "last_claimed": "2026-07-09",
+  "claimed_in": [
+   "claude_00_MISSION.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "2. Gap-map scorer (on pillar_gate) \u2014 makes routing + the auto:manual ratio real. [BUILT: gap_map.py]"
+  ]
+ },
+ {
+  "artefact": "jobs_harvest.py",
+  "first_claimed": "2026-07-09",
+  "last_claimed": "2026-08-11",
+  "claimed_in": [
+   "claude_00_MISSION.md",
+   "claude_JOBS_demand_signal_harvester_and_global_validation_2026-08-11.md"
+  ],
+  "n_files": 2,
+  "context": [
+   "3. Wire jobs (ATS-API / spa_extract) into harvest \u2014 close the jobs pillar. [BUILT: jobs_harvest.py]",
+   "## The harvester (`jobs_harvest.py`, delivered)"
+  ]
+ },
+ {
+  "artefact": "gudid_rolling_ingest.py",
+  "first_claimed": "2026-07-09",
+  "last_claimed": "2026-07-09",
+  "claimed_in": [
+   "claude_00_MISSION.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "5. Rolling GUDID ingest (weekly) + one-time history backfill. [BUILT: gudid_rolling_ingest.py,"
+  ]
+ },
+ {
+  "artefact": "atlas_resolve.py",
+  "first_claimed": "2026-07-09",
+  "last_claimed": "2026-07-09",
+  "claimed_in": [
+   "claude_THINGDADDY_PHASE_LOG.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "| 16 | A GTIN band that clears the agreement threshold (\u22652 DIs) means the company is single\u2011prefix \u2014 a false\u2011multi \"recovered\" | **Over\u2011reco",
+   "- **N28 \u2014 the multi\u2011prefix fold OVER\u2011RECOVERED on thin evidence** (now corrections\u2011tape #16). The first inline fold declared a company `sing"
+  ]
+ },
+ {
+  "artefact": "gudid_multiprefix_reopened_enriched.csv",
+  "first_claimed": "2026-07-09",
+  "last_claimed": "2026-07-09",
+  "claimed_in": [
+   "claude_THINGDADDY_PHASE_LOG.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "- **N29 \u2014 `n_distinct_prefix_regions` was never actually computed \u2014 it is the literal placeholder `PENDING_FULL_REPARSE` for all 1,934 reope"
+  ]
+ },
+ {
+  "artefact": "batch_fold.py",
+  "first_claimed": "2026-07-09",
+  "last_claimed": "2026-07-09",
+  "claimed_in": [
+   "claude_THINGDADDY_PHASE_LOG.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "- **N29 \u2014 `n_distinct_prefix_regions` was never actually computed \u2014 it is the literal placeholder `PENDING_FULL_REPARSE` for all 1,934 reope",
+   "- **N29 \u2014 `n_distinct_prefix_regions` was never actually computed \u2014 it is the literal placeholder `PENDING_FULL_REPARSE` for all 1,934 reope"
+  ]
+ },
+ {
+  "artefact": "recipe_device.py",
+  "first_claimed": "2026-07-09",
+  "last_claimed": "2026-07-09",
+  "claimed_in": [
+   "claude_THINGDADDY_PHASE_LOG.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "- **BUILT (cloud plane; delivered to Mac `thingdaddy-gh/population/`, live\u2011confirmed):** (1) **consolidated `DeviceRecipe`** (`recipe_device",
+   "Prefix resolution (GEPIR / Verify\u2011by\u2011GS1) for every candidate prefix run; **rotation cursor: Labcorp next**, then CVS/Walgreens/ODFL + Diazy"
+  ]
+ },
+ {
+  "artefact": "gleif_atlas.py",
+  "first_claimed": "2026-07-09",
+  "last_claimed": "2026-07-09",
+  "claimed_in": [
+   "claude_THINGDADDY_PHASE_LOG.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "- **BUILT (cloud plane; delivered to Mac `thingdaddy-gh/population/`, live\u2011confirmed):** (1) **consolidated `DeviceRecipe`** (`recipe_device",
+   "Prefix resolution (GEPIR / Verify\u2011by\u2011GS1) for every candidate prefix run; **rotation cursor: Labcorp next**, then CVS/Walgreens/ODFL + Diazy"
+  ]
+ },
+ {
+  "artefact": "gs1_key_types.json",
+  "first_claimed": "2026-07-09",
+  "last_claimed": "2026-07-09",
+  "claimed_in": [
+   "claude_THINGDADDY_PHASE_LOG.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "- **Canonical key\u2011type reference built** (`ThingDaddy_Prototype/gs1_key_types.json`): all nine ThingDaddy keys + six other GS1 keys, each wi",
+   "Prefix resolution (GEPIR / Verify\u2011by\u2011GS1) for every candidate prefix run; **rotation cursor: Labcorp next**, then CVS/Walgreens/ODFL + Diazy"
+  ]
+ },
+ {
+  "artefact": "opcua_giai_sim.py",
+  "first_claimed": "2026-07-09",
+  "last_claimed": "2026-07-09",
+  "claimed_in": [
+   "claude_THINGDADDY_PHASE_LOG.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "- **OT tile BUILT (R3):** working `asyncua` OPC\u2011UA server where **NodeId \u2261 GIAI** (`ns=2;s=giai:0817089.2`), read back live over `opc.tcp` w"
+  ]
+ },
+ {
+  "artefact": "gleif_prep.py",
+  "first_claimed": "2026-07-09",
+  "last_claimed": "2026-07-09",
+  "claimed_in": [
+   "claude_THINGDADDY_WORK_PLAN.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "- **D3 \u00b7 GLEIF 1000-sample pilot** \u2014 `gleif_prep.py` + `gleif_experiment.py` built + self-tested;"
+  ]
+ },
+ {
+  "artefact": "gleif_experiment.py",
+  "first_claimed": "2026-07-09",
+  "last_claimed": "2026-07-09",
+  "claimed_in": [
+   "claude_THINGDADDY_WORK_PLAN.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "- **D3 \u00b7 GLEIF 1000-sample pilot** \u2014 `gleif_prep.py` + `gleif_experiment.py` built + self-tested;"
+  ]
+ },
+ {
+  "artefact": "render_harvest_site.py",
+  "first_claimed": "2026-07-09",
+  "last_claimed": "2026-07-20",
+  "claimed_in": [
+   "claude_built_diazyme_mined_our_way_and_sitemap_fix_2026-07-20.md",
+   "claude_plan_website_agent_content_engine.md"
+  ],
+  "n_files": 2,
+  "context": [
+   "standalone, then `render_harvest_site.py` on the populated CSVs (that's how this one shipped).",
+   "| 7 Assemble \u2014 the ThingSite + the graph | `render_harvest_site.py` \u00b7 `project_thingsite.py` | BUILT |"
+  ]
+ },
+ {
+  "artefact": "websearch_gtin.py",
+  "first_claimed": "2026-07-09",
+  "last_claimed": "2026-07-09",
+  "claimed_in": [
+   "claude_plan_thingsite_richness_and_serving.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "- `websearch_gtin.py` \u2014 BUILT, proven (100 web GTINs to scratch). In `population/websearch/`."
+  ]
+ },
+ {
+  "artefact": "sitemap_harvest.py",
+  "first_claimed": "2026-07-09",
+  "last_claimed": "2026-07-22",
+  "claimed_in": [
+   "claude_plan_website_agent_content_engine.md",
+   "claude_prestructure_thingsite_scaffold_and_full_artifact_typing_2026-07-22.md",
+   "claude_runbook_store_serve_80k_and_binding.md"
+  ],
+  "n_files": 3,
+  "context": [
+   "| 1 Discover \u2014 the company's sitemap | `sitemap/sitemap_harvest.py` | BUILT |",
+   "| 2 Classify \u2014 structure \u2192 9 slots + 5 pillars | `sitemap_harvest.py` | BUILT |"
+  ]
+ },
+ {
+  "artefact": "page_reader.py",
+  "first_claimed": "2026-07-09",
+  "last_claimed": "2026-07-22",
+  "claimed_in": [
+   "claude_plan_website_agent_content_engine.md",
+   "claude_prestructure_thingsite_scaffold_and_full_artifact_typing_2026-07-22.md"
+  ],
+  "n_files": 2,
+  "context": [
+   "| 3 Harvest documents \u2014 manuals/drivers/SDS/PDFs \u2192 candidate GDTIs | `sitemap_harvest.py` + `pagereader/page_reader.py` | BUILT |",
+   "| 4 Read pages \u2014 real PDF files \u00b7 GTINs \u00b7 edges | `page_reader.py` | BUILT (edge-filter patch pending) |"
+  ]
+ },
+ {
+  "artefact": "standards_pull.py",
+  "first_claimed": "2026-07-09",
+  "last_claimed": "2026-07-09",
+  "claimed_in": [
+   "claude_plan_website_agent_content_engine.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "| 6 Map to standards \u2014 SiLA features + AFO protocols \u2192 P5 graph | `standards/standards_pull.py` + `render_p5_graph.py` | BUILT |"
+  ]
+ },
+ {
+  "artefact": "render_p5_graph.py",
+  "first_claimed": "2026-07-09",
+  "last_claimed": "2026-07-09",
+  "claimed_in": [
+   "claude_plan_website_agent_content_engine.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "| 6 Map to standards \u2014 SiLA features + AFO protocols \u2192 P5 graph | `standards/standards_pull.py` + `render_p5_graph.py` | BUILT |"
+  ]
+ },
+ {
+  "artefact": "asset_tier.mjs",
+  "first_claimed": "2026-07-16",
+  "last_claimed": "2026-07-16",
+  "claimed_in": [
+   "claude_platform_buildout_plan_2026-07-16.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "1. **Asset (GIAI) tier \u2014 DONE (76c3bd2), asset_tier.mjs 10/10.** `asset` table (migration 005), `POST /party/:id/asset`, `mintGiai()` shim. "
+  ]
+ },
+ {
+  "artefact": "mint_cli.py",
+  "first_claimed": "2026-07-16",
+  "last_claimed": "2026-07-16",
+  "claimed_in": [
+   "claude_platform_buildout_plan_2026-07-16.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "1. **Asset (GIAI) tier \u2014 DONE (76c3bd2), asset_tier.mjs 10/10.** `asset` table (migration 005), `POST /party/:id/asset`, `mintGiai()` shim. "
+  ]
+ },
+ {
+  "artefact": "td_engine_ref.py",
+  "first_claimed": "2026-07-16",
+  "last_claimed": "2026-07-16",
+  "claimed_in": [
+   "claude_platform_buildout_plan_2026-07-16.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "1. **Asset (GIAI) tier \u2014 DONE (76c3bd2), asset_tier.mjs 10/10.** `asset` table (migration 005), `POST /party/:id/asset`, `mintGiai()` shim. "
+  ]
+ },
+ {
+  "artefact": "server.js",
+  "first_claimed": "2026-07-16",
+  "last_claimed": "2026-07-16",
+  "claimed_in": [
+   "claude_platform_buildout_plan_2026-07-16.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "2. **Build Cycle 2 \u00b7 UI** \u2014 the p5-*/g* graph/event/store views wired to `GET /party/:id/epcis` + the asset/carrier reads. Touches `populati"
+  ]
+ },
+ {
+  "artefact": "viewer_server.py",
+  "first_claimed": "2026-07-18",
+  "last_claimed": "2026-07-18",
+  "claimed_in": [
+   "claude_00_START_HERE_2026-07-18_graph_base_ga.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "- Viewer runs: `python3 viewer_server.py gudid_xml.db`."
+  ]
+ },
+ {
+  "artefact": "companies_gudid.json",
+  "first_claimed": "2026-07-18",
+  "last_claimed": "2026-07-18",
+  "claimed_in": [
+   "claude_session_2026-07-18_multicompany_demos_papers.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "`companies_gudid.json`; runs the loop on real harvested GUDID DIs, projects the"
+  ]
+ },
+ {
+  "artefact": "_Mined_Graph.html",
+  "first_claimed": "2026-07-19",
+  "last_claimed": "2026-07-19",
+  "claimed_in": [
+   "claude_builds_mined_graph_and_binding_sets_2026-07-19.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "- Auto-runs under `website_agent --mine` \u2192 `<slug>_Mined_Graph.html`."
+  ]
+ },
+ {
+  "artefact": "page_edges.csv",
+  "first_claimed": "2026-07-19",
+  "last_claimed": "2026-07-19",
+  "claimed_in": [
+   "claude_builds_mined_graph_and_binding_sets_2026-07-19.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "Turns the REAL published edges (page_edges.csv: has_driver P2 / runs P3 / uses P5) into candidate",
+   "- Auto-runs in `website_agent` (stage 2.5, cheap/no-network) whenever page_edges.csv exists."
+  ]
+ },
+ {
+  "artefact": "demo_run.sh",
+  "first_claimed": "2026-07-20",
+  "last_claimed": "2026-07-20",
+  "claimed_in": [
+   "claude_00_CONTINUE_HERE_2026-07-20_andy_call_prep.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "## 1. Live-build button \u2014 demo_run.sh  (SHIPPED, de-risked)",
+   "\u2014 but KJ's REAL Terminal can rm, and every component is proven. Run: `bash demo_run.sh`."
+  ]
+ },
+ {
+  "artefact": "power_analysis.html",
+  "first_claimed": "2026-07-20",
+  "last_claimed": "2026-07-20",
+  "claimed_in": [
+   "claude_00_CONTINUE_HERE_2026-07-20_andy_call_prep.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "## 3. Analysis \u2014 power_analysis.html  (SHIPPED)"
+  ]
+ },
+ {
+  "artefact": "thingsite_store.py",
+  "first_claimed": "2026-07-20",
+  "last_claimed": "2026-07-20",
+  "claimed_in": [
+   "claude_00_CONTINUE_HERE_2026-07-20_ga_paper_and_sap.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "thingsite_store.py (already shipped to Mac population/)."
+  ]
+ },
+ {
+  "artefact": "section_grammar.py",
+  "first_claimed": "2026-07-20",
+  "last_claimed": "2026-07-23",
+  "claimed_in": [
+   "claude_00_CONTINUE_HERE_2026-07-20_thingsite_deep_fleet_and_insert_miner.md",
+   "claude_vision_agents_pillar_GSRN_and_compliance_rules_MSDS_2026-07-23.md"
+  ],
+  "n_files": 2,
+  "context": [
+   "## Insert-miner \u2014 slice 1 BUILT (section_grammar.py)",
+   "- Reuses the registrar-strict required-section logic already built: `section_grammar.py`"
+  ]
+ },
+ {
+  "artefact": "founding_story.html",
+  "first_claimed": "2026-07-20",
+  "last_claimed": "2026-07-20",
+  "claimed_in": [
+   "claude_founding_deck_patents_and_canonical_model_2026-07-20.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "## For the Andy call (origin-story / credibility section) \u2014 BUILT (founding_story.html)"
+  ]
+ },
+ {
+  "artefact": "test_gate.sql",
+  "first_claimed": "2026-07-20",
+  "last_claimed": "2026-07-20",
+  "claimed_in": [
+   "claude_population_loop_architecture_and_assembly_2026-07-20.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "`/claim/:id`, `/verified`, `/record/prefix/:prefix`, asset/carrier/node/epcis. Gate proven by `db/test_gate.sql`."
+  ]
+ },
+ {
+  "artefact": "edge_thingsite.html",
+  "first_claimed": "2026-07-20",
+  "last_claimed": "2026-07-20",
+  "claimed_in": [
+   "claude_spec_input_edge_thingsite_prior_architecture_2026-07-20.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "connections\" is exactly the edge behavior we built into `edge_thingsite.html`: resolve"
+  ]
+ },
+ {
+  "artefact": "gdsn_party_hunter.py",
+  "first_claimed": "2026-07-21",
+  "last_claimed": "2026-07-21",
+  "claimed_in": [
+   "claude_00_CONTINUE_HERE_2026-07-21_gudid_base_grown_and_hunters_built.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "Two scripts built this stretch \u2014 `gdsn_party_hunter.py` and `verified_by_gs1_hunter.py` \u2014"
+  ]
+ },
+ {
+  "artefact": "verified_by_gs1_hunter.py",
+  "first_claimed": "2026-07-21",
+  "last_claimed": "2026-07-21",
+  "claimed_in": [
+   "claude_00_CONTINUE_HERE_2026-07-21_gudid_base_grown_and_hunters_built.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "Two scripts built this stretch \u2014 `gdsn_party_hunter.py` and `verified_by_gs1_hunter.py` \u2014"
+  ]
+ },
+ {
+  "artefact": "thingdaddy_surface_to_structure.html",
+  "first_claimed": "2026-07-22",
+  "last_claimed": "2026-07-22",
+  "claimed_in": [
+   "claude_00_CONTINUE_HERE_2026-07-22_capture_and_seam_built.md",
+   "claude_brief_pom_ant_build_under_the_hood_2026-07-22.md"
+  ],
+  "n_files": 2,
+  "context": [
+   "3. **thingdaddy_surface_to_structure.html** (artifact: `thingdaddy-surface-to-structure`) \u2014 the SEAM for Pom & Ant: each screen/badge/law wi",
+   "| `thingdaddy_surface_to_structure.html` | \u0e41\u0e1c\u0e19\u0e17\u0e35\u0e48\u0e42\u0e22\u0e07\u0e17\u0e38\u0e01\u0e2b\u0e19\u0e49\u0e32\u0e08\u0e2d/\u0e1b\u0e49\u0e32\u0e22/\u0e01\u0e0e \u0e14\u0e49\u0e32\u0e19\u0e1a\u0e19 \u0e25\u0e07\u0e44\u0e1b\u0e22\u0e31\u0e07\u0e15\u0e32\u0e23\u0e32\u0e07/\u0e1f\u0e31\u0e07\u0e01\u0e4c\u0e0a\u0e31\u0e19/tile \u0e17\u0e35\u0e48\u0e17\u0e33\u0e43\u0e2b\u0e49\u0e21\u0e31\u0e19\u0e08\u0e23\u0e34\u0e07 \u0e1a\u0e2d\u0e01\u0e27\u0e48\u0e32\u0e2d\u0e31\u0e19\u0e44\u0e2b\u0e19 built /"
+  ]
+ },
+ {
+  "artefact": "harvest_extract.py",
+  "first_claimed": "2026-07-22",
+  "last_claimed": "2026-07-22",
+  "claimed_in": [
+   "claude_00_CONTINUE_HERE_2026-07-22_capture_and_seam_built.md",
+   "claude_00_CONTINUE_HERE_2026-07-22_scaffold_tiles_built.md"
+  ],
+  "n_files": 2,
+  "context": [
+   "BUILT (7 green tiles): 001 schema+gate \u00b7 002 classify/admit \u00b7 003 promote_prefix/promote_thing/_is_named_actor \u00b7 004 sandbox+wall+migrate_to",
+   "## Files (session, ephemeral): /home/claude/scaffold/{001..004,test_*}.sql, harvest_extract.py, load_router.py, project_thingsite.py, diazym"
+  ]
+ },
+ {
+  "artefact": "load_router.py",
+  "first_claimed": "2026-07-22",
+  "last_claimed": "2026-07-22",
+  "claimed_in": [
+   "claude_00_CONTINUE_HERE_2026-07-22_capture_and_seam_built.md",
+   "claude_00_CONTINUE_HERE_2026-07-22_scaffold_tiles_built.md"
+  ],
+  "n_files": 2,
+  "context": [
+   "BUILT (7 green tiles): 001 schema+gate \u00b7 002 classify/admit \u00b7 003 promote_prefix/promote_thing/_is_named_actor \u00b7 004 sandbox+wall+migrate_to",
+   "## Files (session, ephemeral): /home/claude/scaffold/{001..004,test_*}.sql, harvest_extract.py, load_router.py, project_thingsite.py, diazym"
+  ]
+ },
+ {
+  "artefact": "fleet_index.html",
+  "first_claimed": "2026-07-22",
+  "last_claimed": "2026-07-22",
+  "claimed_in": [
+   "claude_00_CONTINUE_HERE_2026-07-22_enter_company_magic.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "self-contained build delivered; artifact `thingdaddy-fleet-51`; `sites/fleet_index.html`"
+  ]
+ },
+ {
+  "artefact": "thingdaddy_public_frontdoor.html",
+  "first_claimed": "2026-07-22",
+  "last_claimed": "2026-07-22",
+  "claimed_in": [
+   "claude_positioning_physical_ai_graph_no_hallucinations_2026-07-22.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "## The money shot (built in thingdaddy_public_frontdoor.html \u2192 ThingSite)"
+  ]
+ },
+ {
+  "artefact": "commons_load.py",
+  "first_claimed": "2026-07-23",
+  "last_claimed": "2026-07-23",
+  "claimed_in": [
+   "claude_00_CONTINUE_HERE_2026-07-23_commons_drillable_phase1_done.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "`commons_load.py` \u00b7 `bake_top_companies.py` \u00b7 `commons_step1.sh` (runs both) \u00b7 `company_depth.py`"
+  ]
+ },
+ {
+  "artefact": "bake_top_companies.py",
+  "first_claimed": "2026-07-23",
+  "last_claimed": "2026-07-23",
+  "claimed_in": [
+   "claude_00_CONTINUE_HERE_2026-07-23_commons_drillable_phase1_done.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "`commons_load.py` \u00b7 `bake_top_companies.py` \u00b7 `commons_step1.sh` (runs both) \u00b7 `company_depth.py`"
+  ]
+ },
+ {
+  "artefact": "commons_step1.sh",
+  "first_claimed": "2026-07-23",
+  "last_claimed": "2026-07-23",
+  "claimed_in": [
+   "claude_00_CONTINUE_HERE_2026-07-23_commons_drillable_phase1_done.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "`commons_load.py` \u00b7 `bake_top_companies.py` \u00b7 `commons_step1.sh` (runs both) \u00b7 `company_depth.py`"
+  ]
+ },
+ {
+  "artefact": "company_depth.py",
+  "first_claimed": "2026-07-23",
+  "last_claimed": "2026-07-23",
+  "claimed_in": [
+   "claude_00_CONTINUE_HERE_2026-07-23_commons_drillable_phase1_done.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "`commons_load.py` \u00b7 `bake_top_companies.py` \u00b7 `commons_step1.sh` (runs both) \u00b7 `company_depth.py`"
+  ]
+ },
+ {
+  "artefact": "verified_prefixes.json",
+  "first_claimed": "2026-07-23",
+  "last_claimed": "2026-07-23",
+  "claimed_in": [
+   "claude_00_CONTINUE_HERE_2026-07-23_edge_verified_and_edi_dictionary_L0_built.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "New files, delivered + validated on the Mac (`standards/edi/`, the verified_prefixes.json pattern):"
+  ]
+ },
+ {
+  "artefact": "project_graph.py",
+  "first_claimed": "2026-07-23",
+  "last_claimed": "2026-07-23",
+  "claimed_in": [
+   "claude_00_CONTINUE_HERE_2026-07-23_frontdoor_wired_two_verticals.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "(GS1 URN created from real barcodes) + proposals. Data baked from `project_graph.py --from-json`."
+  ]
+ },
+ {
+  "artefact": "td_away_hunt.sh",
+  "first_claimed": "2026-07-24",
+  "last_claimed": "2026-07-24",
+  "claimed_in": [
+   "claude_00_AWAY_HUNT_RUNBOOK_2026-07-24.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "- **MAC plane (terminal / launchd):** the DB writers. Anything that runs `psql \u2192 thingdaddy_population` (GLEIF cross-ref, GUDID consensus, w",
+   "**Unattended on the Mac:** install `td_away_hunt.sh` + `com.thingdaddy.awayhunt.plist` (delivered to KJ for approval). The runner does the R"
+  ]
+ },
+ {
+  "artefact": "urn_check.py",
+  "first_claimed": "2026-07-25",
+  "last_claimed": "2026-07-25",
+  "claimed_in": [
+   "claude_THINGDADDY_CONFORMANCE_AUDIT_2026-07-25.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "- **`urn_check.py`** (new; supersedes `gdti_check.py`, which is retired to `_to_delete/`). Validates all six schemes (gdti/sgln/pgln/gsrn/gi"
+  ]
+ },
+ {
+  "artefact": "gdti_check.py",
+  "first_claimed": "2026-07-25",
+  "last_claimed": "2026-07-25",
+  "claimed_in": [
+   "claude_THINGDADDY_CONFORMANCE_AUDIT_2026-07-25.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "- **`urn_check.py`** (new; supersedes `gdti_check.py`, which is retired to `_to_delete/`). Validates all six schemes (gdti/sgln/pgln/gsrn/gi"
+  ]
+ },
+ {
+  "artefact": "diazyme_hcy_deep.sql",
+  "first_claimed": "2026-07-26",
+  "last_claimed": "2026-07-26",
+  "claimed_in": [
+   "claude_00_CONTINUE_HERE_2026-07-26_diazyme_deep_and_five_pillar.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "- **Step 2 deep-HCY: script DELIVERED + on the Mac, NOT yet run/verified.** `diazyme_hcy_deep.sql` (candidate, idempotent, reversible via `s"
+  ]
+ },
+ {
+  "artefact": "gleif_fetch.sh",
+  "first_claimed": "2026-07-26",
+  "last_claimed": "2026-07-26",
+  "claimed_in": [
+   "claude_00_CONTINUE_HERE_2026-07-26_diazyme_deep_and_five_pillar.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "5. **Nightly GLEIF launchd job** (`gleif_fetch.sh` edits + `com.thingdaddy.gleif.nightly.plist`) \u2014 drafted in the cloud sandbox, **never del"
+  ]
+ },
+ {
+  "artefact": "diazyme_state_check.sql",
+  "first_claimed": "2026-07-26",
+  "last_claimed": "2026-07-26",
+  "claimed_in": [
+   "claude_DIAZYME_SOLID_TEMPLATE_BUILD_PLAN_2026-07-26.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "**State: AGREED to start. KJ chose \"Step 0 \u2014 state-check first.\" Step 0 delivered (`diazyme_state_check.sql`, also written to the Mac), awai",
+   "**0 \u00b7 Know the state (no build on assumptions).** `diazyme_state_check.sql` \u2014 READ-ONLY, enhanced from the prior-session script (kept its sc"
+  ]
+ },
+ {
+  "artefact": "gleif_lei_crosswalk_prep.py",
+  "first_claimed": "2026-07-26",
+  "last_claimed": "2026-07-26",
+  "claimed_in": [
+   "claude_GLEIF_PROCESS_LANE_2026-07-26.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "Files delivered: `gleif_lei_crosswalk_prep.py`, `legacy_id_crosswalk_load.sql`"
+  ]
+ },
+ {
+  "artefact": "legacy_id_crosswalk_load.sql",
+  "first_claimed": "2026-07-26",
+  "last_claimed": "2026-07-26",
+  "claimed_in": [
+   "claude_GLEIF_PROCESS_LANE_2026-07-26.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "Files delivered: `gleif_lei_crosswalk_prep.py`, `legacy_id_crosswalk_load.sql`"
+  ]
+ },
+ {
+  "artefact": "td_check_digit.py",
+  "first_claimed": "2026-07-28",
+  "last_claimed": "2026-07-28",
+  "claimed_in": [
+   "claude_00_CONTINUE_HERE_2026-07-28_standards_grounded_and_validator.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "- **`td_check_digit.py`** \u2014 GS1 mod-10 (GenSpecs \u00a77.9, Table 7-9). PROVEN vs the standard's worked"
+  ]
+ },
+ {
+  "artefact": "install_edi_ontology.py",
+  "first_claimed": "2026-07-29",
+  "last_claimed": "2026-07-29",
+  "claimed_in": [
+   "TAPE_APPEND_2026-07-29_v2.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "| **N26** | EDI can't be modeled by the Allotrope/SHACL engine \u2014 it's not a lab measurement ontology (a wrong call, corrected) | **REFUTED b"
+  ]
+ },
+ {
+  "artefact": "patch_three.py",
+  "first_claimed": "2026-07-29",
+  "last_claimed": "2026-07-29",
+  "claimed_in": [
+   "TAPE_APPEND_2026-07-29_v2.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "| **N26** | EDI can't be modeled by the Allotrope/SHACL engine \u2014 it's not a lab measurement ontology (a wrong call, corrected) | **REFUTED b"
+  ]
+ },
+ {
+  "artefact": "aws_ot_giai_cloudshell.sh",
+  "first_claimed": "2026-08-03",
+  "last_claimed": "2026-08-03",
+  "claimed_in": [
+   "claude_aws_ot_milestone_2026-08-03.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "Install a Greengrass core on any small device \u2192 deploy `com.thingdaddy.giai-identity` \u2192 add the SiteWise Edge gateway (OPC-UA source, NodeId"
+  ]
+ },
+ {
+  "artefact": "thingsite_book_render_v4.py",
+  "first_claimed": "2026-08-04",
+  "last_claimed": "2026-08-04",
+  "claimed_in": [
+   "claude_00_HANDOFF_2026-08-04.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "- **UPDATE 2026-08-05 \u2014 (a) and (b) BUILT** (\u00a79.1, `thingsite_book_render_v4.py`): walk split into a shared"
+  ]
+ },
+ {
+  "artefact": "vocabulary_packs.json",
+  "first_claimed": "2026-08-04",
+  "last_claimed": "2026-08-06",
+  "claimed_in": [
+   "claude_00_HANDOFF_2026-08-04.md",
+   "claude_VOCAB_PACK_ALLOTROPE_AFO_ADM_ADF_grounded_2026-08-06.md",
+   "claude_VOCAB_PACK_EIDX_business_models_inventory_2026-08-06.md"
+  ],
+  "n_files": 3,
+  "context": [
+   "FOLD BUILT: `vocabulary_packs.json` now carries `key_type_carriers` (AI + URN + state per key,",
+   "Beside **SiLA** (drivers), **EIDX/AIA/AIAG/CIDX/PIDX** (EDI process), in `vocabulary_packs.json`. AFO = the **methods** pillar across every "
+  ]
+ },
+ {
+  "artefact": "gleif_full.csv",
+  "first_claimed": "2026-08-05",
+  "last_claimed": "2026-08-05",
+  "claimed_in": [
+   "claude_REVIEW_harvester_all_versions_and_next_level_2026-08-05.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "consensus, candidate-only), the NDC->GTIN bridge in edi_linker_v2 (287). Roster on disk: gleif_full.csv"
+  ]
+ },
+ {
+  "artefact": "blocks.json",
+  "first_claimed": "2026-08-05",
+  "last_claimed": "2026-08-05",
+  "claimed_in": [
+   "claude_build_consistency_sweep_2026-08-05.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "exact #15 case (a bare CPI key label), left over because the book was built before `blocks.json` was",
+   "book was the only delivered-prose artifact still carrying it; `blocks.json`, the white paper, the MCP"
+  ]
+ },
+ {
+  "artefact": "harvest_plan.html",
+  "first_claimed": "2026-08-06",
+  "last_claimed": "2026-08-06",
+  "claimed_in": [
+   "claude_PLAN_harvest_civilization_chess_and_IP_claim_2026-08-06.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "`harvest_plan.html` (delivered + persisted to the gallery). Extends the harvest-dispatch matrix"
+  ]
+ },
+ {
+  "artefact": "td_controller.py",
+  "first_claimed": "2026-08-07",
+  "last_claimed": "2026-08-07",
+  "claimed_in": [
+   "claude_00_HANDOFF_2026-08-07.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "- `td_controller.py` \u2014 the runner. **Bidirectional** (two workers eat the queue from opposite ends and meet in the middle), **atomic claim**"
+  ]
+ },
+ {
+  "artefact": "td_weekly.py",
+  "first_claimed": "2026-08-07",
+  "last_claimed": "2026-08-07",
+  "claimed_in": [
+   "claude_00_HANDOFF_2026-08-07.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "- `td_weekly.py` \u2014 the \"grab every new week\" engine. openFDA watermark incremental (new 510(k)s + UDI listings since last run) \u2192 enqueues in"
+  ]
+ },
+ {
+  "artefact": "gepir_roots.json",
+  "first_claimed": "2026-08-07",
+  "last_claimed": "2026-08-07",
+  "claimed_in": [
+   "claude_00_HANDOFF_2026-08-07.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "- **GEPIR grounding** (`gepir_roots.json`, now 3 verified): **MHC** (038496, HIBC MHC1\u2192GS1 crosswalk), **Royal Knit** (0742010 \u2014 GEPIR party"
+  ]
+ },
+ {
+  "artefact": "td_worklist.py",
+  "first_claimed": "2026-08-07",
+  "last_claimed": "2026-08-07",
+  "claimed_in": [
+   "claude_00_HANDOFF_2026-08-07.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "- `td_worklist.py` \u2014 emit the **live GEPIR worklist from the ledger** at full 2,486 scale (replaces the static 307 file, stays current as th"
+  ]
+ },
+ {
+  "artefact": "run_harvest_unattended.sh",
+  "first_claimed": "2026-08-10",
+  "last_claimed": "2026-08-10",
+  "claimed_in": [
+   "claude_RUN_harvest_live_full_universe_2026-08-10.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "`GO.sh` runs `run_harvest_unattended.sh` (MAX_PASSES=50, `--reset-claimed` then `--dir both`,"
+  ]
+ },
+ {
+  "artefact": "binding_sets.py",
+  "first_claimed": "2026-08-12",
+  "last_claimed": "2026-08-12",
+  "claimed_in": [
+   "claude_PLAN_driver_library_the_winning_hand_2026-08-12.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "Reuses the built three-layer binding manifest + `binding_sets.py`."
+  ]
+ },
+ {
+  "artefact": "thingsite_illumina_genomics_ivd_2026-08-16.html",
+  "first_claimed": "2026-08-16",
+  "last_claimed": "2026-08-17",
+  "claimed_in": [
+   "claude_nightly_sweep_2026-08-16.md",
+   "claude_nightly_sweep_2026-08-17.md"
+  ],
+  "n_files": 2,
+  "context": [
+   "| **R-27** *(new \u2014 draft)* | **Illumina genomics-IVD node** \u2014 one clinical NGS assay shipped as instrument + reagent kit + SaMD module; **th",
+   "| **R-27** *(carried)* | **Illumina genomics-IVD node** \u2014 one clinical NGS assay shipped as instrument + reagent kit + SaMD module; the soft"
+  ]
+ },
+ {
+  "artefact": "thingsite_novartis_kymriah_cgt_2026-08-17.html",
+  "first_claimed": "2026-08-17",
+  "last_claimed": "2026-08-17",
+  "claimed_in": [
+   "claude_nightly_sweep_2026-08-17.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "| **R-28** *(new \u2014 draft delivered)* | **Novartis KYMRIAH autologous CAR-T node** \u2014 one therapy carries identity on **two disjoint registrie"
+  ]
+ },
+ {
+  "artefact": "thermal-analysis-system-TGA-DSC-3-plus.html",
+  "first_claimed": "2026-08-18",
+  "last_claimed": "2026-08-18",
+  "claimed_in": [
+   "claude_thingsite_book_2026-08-18-0101-UTC.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "**Documents.** *Thermal Analysis System TGA/DSC 3+ \u2014 Overview* \u00b7 `https://www.mt.com/us/en/home/products/Laboratory_Analytics_Browse/TA_Fami"
+  ]
+ },
+ {
+  "artefact": "TGA_DSC_3Plus_brochure.html",
+  "first_claimed": "2026-08-18",
+  "last_claimed": "2026-08-18",
+  "claimed_in": [
+   "claude_thingsite_book_2026-08-18-0101-UTC.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "**Documents.** *Thermal Analysis System TGA/DSC 3+ \u2014 Overview* \u00b7 `https://www.mt.com/us/en/home/products/Laboratory_Analytics_Browse/TA_Fami"
+  ]
+ },
+ {
+  "artefact": "first_document_bridge.csv",
+  "first_claimed": "2026-09-04",
+  "last_claimed": "2026-09-04",
+  "claimed_in": [
+   "PROJECT_PLAN_2026-09-04.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "first_document_bridge.csv     2,672 rows, key_space named, committed 66a1cc5"
+  ]
+ },
+ {
+  "artefact": "make_seed.sh",
+  "first_claimed": "2026-09-05",
+  "last_claimed": "2026-09-05",
+  "claimed_in": [
+   "SPEC_dev_seed_2026-09-05.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "make_seed.sh       KJ runs this on the Mac to regenerate"
+  ]
+ },
+ {
+  "artefact": "seed_up.sh",
+  "first_claimed": "2026-09-05",
+  "last_claimed": "2026-09-05",
+  "claimed_in": [
+   "SPEC_dev_seed_2026-09-05.md"
+  ],
+  "n_files": 1,
+  "context": [
+   "seed_up.sh         Pom runs this to build his local database"
+  ]
+ }
+]

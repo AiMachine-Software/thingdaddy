@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ThingDaddy — the Configurator</title>
+<style>
+:root{
+  --td-navy:#12344D; --td-bg:#F5F7F9; --td-surface:#fff; --td-rule:#DBE2E8;
+  --td-ink:#1a1a1a; --td-mut:#6b7178; --td-char:#1d1d1d; --td-teal:#118a8c;
+  --v:#0f7a34; --c:#a2660a; --e:#b3261e; --slot:#6b7178;
+  --vbg:#eaf6ee; --cbg:#fdf5e6; --ebg:#fdeceb; --sbg:#F5F7F9;
+  --rail:236px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--td-surface);color:var(--td-ink);
+  font-family:"Source Sans Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px}
+nav.top{background:var(--td-char);height:56px;display:flex;align-items:center;
+  gap:14px;padding:0 20px;position:sticky;top:0;z-index:60}
+nav.top .logo{color:#fff;font-weight:800;font-size:21px;letter-spacing:-.3px}
+nav.top .logo span{color:var(--td-teal)}
+nav.top .r{margin-left:auto;color:#9aa3ab;font-size:12.5px}
+.prov{background:var(--td-navy);color:#fff;padding:9px 20px;font-size:12.5px;line-height:1.6}
+.prov b{color:#9fe4e5}
+.wrap{display:flex;align-items:flex-start}
+.rail{width:var(--rail);flex:0 0 var(--rail);border-right:1px solid var(--td-rule);
+  padding:14px 0 60px;position:sticky;top:56px;max-height:calc(100vh - 56px);overflow:auto}
+.rail h4{margin:16px 20px 6px;font-size:11px;letter-spacing:.9px;text-transform:uppercase;
+  color:var(--td-mut);font-weight:700}
+.rail a{display:block;padding:8px 20px;cursor:pointer;font-size:14px}
+.rail a:hover{background:var(--td-bg)}
+.rail a.on{background:var(--td-navy);color:#fff}
+.main{flex:1;min-width:0;padding:24px 28px 90px;max-width:1180px}
+h1{font-size:28px;letter-spacing:-.6px;margin:0 0 6px}
+h2{font-size:18px;margin:28px 0 10px}
+h3{font-size:15.5px;margin:0 0 5px}
+p.lede{color:var(--td-mut);font-size:15px;margin:0 0 16px;max-width:80ch;line-height:1.55}
+.src{font-size:11.5px;color:var(--td-mut);margin:0 0 16px;padding:6px 10px;background:var(--td-bg);
+  border-left:3px solid var(--td-rule);display:inline-block}
+.src b{color:var(--td-ink);font-family:ui-monospace,monospace}
+.badge{display:inline-block;padding:1px 8px;border-radius:11px;font-size:11px;font-weight:700;
+  border:1px solid;margin-left:5px;vertical-align:1px}
+.badge.v{color:var(--v);border-color:var(--v);background:var(--vbg)}
+.badge.c{color:var(--c);border-color:var(--c);background:var(--cbg)}
+.badge.e{color:var(--e);border-color:var(--e);background:var(--ebg)}
+.badge.slot{color:var(--slot);border-color:var(--td-rule);background:var(--sbg)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;margin:0 0 16px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--td-rule);vertical-align:top}
+th{font-size:11px;letter-spacing:.7px;text-transform:uppercase;color:var(--td-mut);font-weight:700}
+.matrix td,.matrix th{text-align:center;padding:0;border:1px solid var(--td-rule)}
+.matrix th.rowh,.matrix td.rowh{text-align:left;padding:9px 11px;font-weight:600;font-size:13px;
+  background:var(--td-bg)}
+.matrix th{padding:9px 7px;font-size:10.5px;line-height:1.3;background:var(--td-bg);vertical-align:bottom}
+.cell{display:block;width:100%;border:none;padding:13px 6px;cursor:pointer;font:inherit;
+  font-size:11.5px;font-weight:700;letter-spacing:.4px}
+.cell.v{background:var(--vbg);color:var(--v)}
+.cell.c{background:var(--cbg);color:var(--c)}
+.cell.e{background:var(--ebg);color:var(--e)}
+.cell.slot{background:var(--sbg);color:var(--slot)}
+.cell:hover{outline:2px solid var(--td-navy);outline-offset:-2px}
+.card{border:1px solid var(--td-rule);border-radius:9px;padding:14px 16px;margin:0 0 10px}
+.card.v{border-left:4px solid var(--v)} .card.c{border-left:4px solid var(--c)}
+.card.e{border-left:4px solid var(--e)} .card.slot{border-left:4px solid var(--td-rule)}
+.meta{font-size:13px;color:var(--td-mut);line-height:1.65;margin-top:6px}
+.meta b{color:var(--td-ink)}
+.note{background:var(--td-bg);border-left:3px solid var(--td-teal);padding:11px 14px;
+  font-size:13.5px;color:#41505c;margin:14px 0;line-height:1.6;max-width:84ch}
+.warn{background:var(--ebg);border-left:3px solid var(--e);padding:11px 14px;font-size:13.5px;
+  margin:14px 0;line-height:1.6;max-width:84ch}
+.axis{display:grid;grid-template-columns:130px 1fr 1fr;gap:0;font-size:13px;border:1px solid var(--td-rule);
+  border-radius:8px;overflow:hidden;margin:10px 0}
+.axis>div{padding:9px 11px;border-bottom:1px solid var(--td-rule)}
+.axis .h{background:var(--td-bg);font-size:10.5px;letter-spacing:.7px;text-transform:uppercase;
+  color:var(--td-mut);font-weight:700}
+.axis .ok{color:var(--v);font-weight:700} .axis .no{color:var(--e);font-weight:700}
+.axis .un{color:var(--c);font-weight:700}
+button.act{border:1px solid var(--td-navy);background:#fff;color:var(--td-navy);border-radius:6px;
+  padding:7px 14px;font-size:13.5px;font-weight:600;cursor:pointer;margin:3px 6px 3px 0;font-family:inherit}
+button.act.pri{background:var(--td-navy);color:#fff}
+button.act.inert{opacity:.4;cursor:not-allowed;border-style:dashed}
+.demo{background:#b3261e;color:#fff;padding:10px 14px;border-radius:7px;font-size:13px;
+  margin:0 0 16px;line-height:1.6;max-width:84ch}
+.layer{border:1px solid var(--td-rule);border-radius:8px;margin:0 0 9px;overflow:hidden}
+.layer .lh{background:var(--td-bg);padding:9px 12px;font-weight:700;font-size:13.5px;
+  display:flex;align-items:center;gap:8px}
+.layer .lb{padding:4px 12px 10px}
+footer{border-top:1px solid var(--td-rule);margin-top:40px;padding:16px 0;font-size:12.5px;
+  color:var(--td-mut);line-height:1.7}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="logo">Thing<span>Daddy</span>.</div>
+  <div class="r">the Configurator · read-only · nothing here writes</div>
+</nav>
+
+<div class="prov" id="prov"></div>
+
+<div class="wrap">
+  <div class="rail" id="rail"></div>
+  <div class="main" id="view"></div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════════════
+   THE CONFIGURATOR
+
+   EVERY ROW CARRIES ITS SOURCE. Composition data is read from the project's
+   own artefacts and from first-party published documents — NOT from the
+   population API, which does not hold methods or capability surfaces.
+   That is stated on screen rather than implied.
+
+   THE FOUR VERDICTS ARE COMPUTED, NOT WRITTEN. compose() compares a method's
+   declared requirements against an instrument's declared surface and returns
+   the axis that decided. Change a declaration and the verdict changes.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+const esc = s => String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+  .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+/* ── INSTRUMENTS ────────────────────────────────────────────────────────── */
+const INSTRUMENTS = [
+  { id:'dz3000', name:'DZ-Lite 3000 Plus', maker:'Diazyme Laboratories',
+    prefix:'0817089', giai:'urn:epc:id:giai:0817089.2',
+    detection:'chemiluminescence', photometric:false, wavelengths:[],
+    sila:'urn:epc:id:gdti:0817089.1.2', silaState:'issued',
+    commands:['RunAssay','Calibrate','QC'],
+    properties:[['Throughput','Integer','rated up to 180 tests/hr per brochure'],
+                ['Temp','Real','current incubation temperature, °C']],
+    surfaceSource:'DZLite_3000Plus_ChemiluminescenceImmunoassayAnalyzer_sila.xml — ThingDaddy-issued SiLA 2 Feature, candidate',
+    detectionSource:'the Feature identifier and description: chemiluminescence immunoassay, ABEI + magnetic microbead',
+    limits:[{ what:'throughput', value:'≤ 180 tests/hr', enforceable:false,
+              src:'a Description string in the SiLA Feature — PROSE, not a Constrained data type. A machine cannot check against it.'}] },
+
+  { id:'c270', name:'DZ-Lite c270', maker:'Diazyme Laboratories',
+    prefix:'0817089', giai:'urn:epc:id:giai:0817089.1',
+    detection:null, photometric:null, wavelengths:[],
+    sila:null, silaState:'not issued', commands:[], properties:[],
+    surfaceSource:'NO SiLA Feature issued. The instrument is in the graph (node, GIAI .1) and its control surface has not been read.',
+    detectionSource:'NOT READ — the detection principle is not sourced. It is not guessed.',
+    limits:[] },
+
+  { id:'c502', name:'Roche cobas c502', maker:'Roche Diagnostics',
+    prefix:null, giai:null,
+    detection:'photometric', photometric:true, wavelengths:[340,376,415,450,480,505,546,570,600,660,700,800],
+    sila:null, silaState:'not issued', commands:[], properties:[],
+    surfaceSource:'named by Mayo Clinic Laboratories as the module the testing is performed on. The instrument itself is not in our estate and holds no prefix here.',
+    detectionSource:'a photometric clinical-chemistry module — grounded by the method Mayo runs on it being a photometric assay',
+    limits:[] },
+
+  { id:'au680', name:'Beckman Coulter AU680', maker:'Beckman Coulter',
+    prefix:null, giai:null,
+    detection:'photometric', photometric:true, wavelengths:[340,380,410,450,480,520,540,570,600,660,700,800],
+    sila:null, silaState:'not issued', commands:[], properties:[],
+    surfaceSource:'named on the Beckman Coulter PCT assay product page as an analyzer the assay is for use on',
+    detectionSource:'a photometric clinical-chemistry analyzer — grounded by a homogeneous immunoturbidimetric assay being declared for it',
+    limits:[] },
+
+  { id:'dxc700', name:'Beckman DxC 700 AU', maker:'Beckman Coulter',
+    prefix:null, giai:null,
+    detection:'photometric', photometric:true, wavelengths:[340,380,410,450,480,520,540,570,600,660,700,800],
+    sila:null, silaState:'not issued', commands:[], properties:[],
+    surfaceSource:'named on the Beckman Coulter PCT assay product page',
+    detectionSource:'photometric clinical chemistry, as above',
+    limits:[] },
+
+  { id:'h917', name:'Hitachi 917', maker:'Roche / Hitachi',
+    prefix:null, giai:null,
+    detection:'photometric', photometric:true, wavelengths:[340,376,415,450,480,505,546,570,600,660,700,800],
+    sila:null, silaState:'not issued', commands:[], properties:[],
+    surfaceSource:'named in the Diazyme Ferritin IFU intended-use statement',
+    detectionSource:'a photometric clinical-chemistry analyzer',
+    limits:[] },
+];
+
+/* ── PROTOCOLS ──────────────────────────────────────────────────────────── */
+const PROTOCOLS = [
+  { id:'ferritin', name:'Ferritin', sku:'DZ526A', gdti:'urn:epc:id:gdti:0817089.2.1',
+    technique:'latex-enhanced immunoturbidimetric', needsPhotometric:true, wavelength:560,
+    tempC:37, sampleUL:10, samples:['serum','K2EDTA plasma','Li-heparin plasma'],
+    named:{ h917:'the 510(k) IFU intended-use names the Hitachi 917' },
+    src:'diazyme_afo_methods.json — grade STRONGEST, full Diazyme package insert' },
+
+  { id:'nt5', name:"5'-Nucleotidase", sku:'5\'NT', gdti:null,
+    technique:'coupled enzyme kinetic, photometric endpoint', needsPhotometric:true, wavelength:null,
+    tempC:37, sampleUL:null, samples:['serum'],
+    named:{ c502:'Mayo Clinic Laboratories states the testing is performed on the Roche cobas c502 module' },
+    src:'mayocliniclabs.com test catalog 622835 (executor) + diazyme.com product page (maker)' },
+
+  { id:'pct', name:'Procalcitonin', sku:'PCT', gdti:null,
+    technique:'homogeneous latex immunoturbidimetric', needsPhotometric:true, wavelength:null,
+    tempC:null, sampleUL:null, samples:['serum','EDTA plasma','Li-heparin plasma'],
+    named:{ au680:'Beckman Coulter declares the assay for use on the AU680',
+            dxc700:'Beckman Coulter declares the assay for use on the DxC 700 AU' },
+    src:'beckmancoulter.com PCT assay product page — names AU480, AU680, AU5800 and DxC 700 AU' },
+
+  { id:'hcy', name:'Homocysteine', sku:'DZ568B', gdti:'urn:epc:id:gdti:0817089.2.2',
+    technique:'enzyme-cycling colorimetric', needsPhotometric:true, wavelength:null,
+    tempC:null, sampleUL:13, samples:['serum','EDTA plasma','Li-heparin plasma'],
+    named:{},
+    src:'diazyme_afo_methods.json — grade GOOD. The Olympus AU400 appears in a precision study only and is NOT mandated, so no analyzer is named.' },
+];
+
+/* ── LABS ───────────────────────────────────────────────────────────────── */
+const LABS = [
+  { id:'mayo', name:'Mayo Clinic Laboratories', holds:['c502'], grade:'v',
+    src:'its own test catalog states the analyzer the testing is performed on. THE EXECUTOR PUBLISHED IT — the strongest class of evidence for a composition, because a test catalog is a clinical commitment rather than a sales surface.' },
+  { id:'labcorp', name:'Labcorp', holds:[], grade:'c',
+    src:'the commercial relationship with Diazyme was confirmed by KJ in direct enquiry at a GA/Diazyme meeting — a hand-read, asserter KJ. WHICH ANALYZER MODEL IS NOT STATED, so the instrument stays UNASSIGNED rather than assumed.' },
+  { id:'cchmc', name:"Cincinnati Children's Hospital", holds:['dz3000'], grade:'c',
+    src:'reported to hold a DZ-Lite 3000 Plus in its Nephrology Diagnostic Laboratory. CANDIDATE until harvest task T4 fetches the page and a claim carries its span and page.' },
+];
+
+/* ══ THE CHECKER — verdicts are COMPUTED ═════════════════════════════════ */
+function compose(proto, inst){
+  const axes = [];
+  let verdict = 'c';
+
+  // FUNCTION — detection principle
+  if (inst.photometric === null){
+    axes.push(['function', proto.needsPhotometric ? 'a photometric detection channel' : '—',
+      'NOT READ — no capability surface has been issued for this instrument', 'un']);
+    verdict = 'slot';
+  } else if (proto.needsPhotometric && !inst.photometric){
+    axes.push(['function', 'a photometric detection channel',
+      `${inst.detection} only — no photometric channel`, 'no']);
+    verdict = 'e';
+  } else {
+    axes.push(['function', proto.needsPhotometric ? 'a photometric detection channel' : '—',
+      `${inst.detection} — satisfied`, 'ok']);
+  }
+
+  // CONDITION — wavelength
+  if (verdict !== 'e' && proto.wavelength){
+    if (inst.photometric === null){
+      axes.push(['condition', `absorbance at ${proto.wavelength} nm`, 'NOT READ', 'un']);
+    } else if (inst.wavelengths.length && !inst.wavelengths.includes(proto.wavelength)){
+      const near = inst.wavelengths.reduce((a,b)=>Math.abs(b-proto.wavelength)<Math.abs(a-proto.wavelength)?b:a);
+      axes.push(['condition', `absorbance at ${proto.wavelength} nm`,
+        `nearest declared filter ${near} nm — NOT AN EXACT MATCH`, 'un']);
+    } else if (inst.wavelengths.length){
+      axes.push(['condition', `absorbance at ${proto.wavelength} nm`,
+        `${proto.wavelength} nm is in the declared filter set`, 'ok']);
+    }
+  } else if (verdict !== 'e'){
+    axes.push(['condition', proto.wavelength ? `${proto.wavelength} nm` : 'no wavelength declared by the method',
+      'nothing to check — the method does not declare one, and a wavelength is not invented for it', 'un']);
+  }
+
+  // MATERIAL — the axis that cannot fire yet, and says so
+  axes.push(['material', proto.samples.join(' · '),
+    'the instrument declares NO wetted-path materials and NO pH range. THIS AXIS CANNOT FIRE. A user-guide bounds pass is owed.', 'un']);
+
+  // NAMED BINDING — the grounding
+  if (proto.named[inst.id]){
+    axes.push(['intended use', 'a first-party statement naming this equipment',
+      proto.named[inst.id], 'ok']);
+    if (verdict !== 'e') verdict = 'v';
+  } else {
+    axes.push(['intended use', 'a first-party statement naming this equipment',
+      'NONE FOUND. Technique compatibility is not intended use.', 'un']);
+  }
+  return { verdict, axes };
+}
+
+const V = { v:'VERIFIED', c:'CANDIDATE', e:'REFUSED', slot:'UNCHECKABLE' };
+
+/* ── views ──────────────────────────────────────────────────────────────── */
+const NAV = [
+  ['compose','Compose — the matrix'],
+  ['instruments','Instruments & surfaces'],
+  ['mhs','MHS reference file'],
+  ['labs','Labs & estates'],
+  ['deploy','Deploy'],
+];
+
+function rail(cur){
+  document.getElementById('rail').innerHTML =
+    '<h4>Configurator</h4>' + NAV.map(([id,t]) =>
+      `<a href="#${id}" class="${id===cur?'on':''}">${esc(t)}</a>`).join('');
+}
+
+document.getElementById('prov').innerHTML =
+  `<b>PROVENANCE.</b> Composition data is read from this project's own artefacts and from
+   first-party published documents — the issued SiLA Feature, the AFO method file, and the
+   makers' and executors' own pages. <b>It is NOT read from the population API</b>, which holds
+   parties and claims and does not hold methods or capability surfaces. Every row below names
+   its source. <b>The four verdicts are computed, not written.</b>`;
+
+function viewCompose(){
+  let h = `<h1>Compose</h1>
+    <p class="lede">Four protocols against six instruments. Each cell is checked on four axes —
+      function, condition, material, and whether any first party has named the pairing.
+      <b>Click a cell for the reasoning.</b></p>
+    <table class="matrix"><tr><th class="rowh">protocol \\ instrument</th>`;
+  for (const i of INSTRUMENTS) h += `<th>${esc(i.name)}<br><span style="font-weight:400;color:var(--td-mut)">${esc(i.maker.split(' ')[0])}</span></th>`;
+  h += `</tr>`;
+  const tally = {v:0,c:0,e:0,slot:0};
+  for (const p of PROTOCOLS){
+    h += `<tr><td class="rowh">${esc(p.name)}<br><span class="mono" style="color:var(--td-mut)">${esc(p.sku)}</span></td>`;
+    for (const i of INSTRUMENTS){
+      const r = compose(p,i); tally[r.verdict]++;
+      h += `<td><button class="cell ${r.verdict}" onclick="location.hash='cell/${p.id}/${i.id}'">${V[r.verdict]}</button></td>`;
+    }
+    h += `</tr>`;
+  }
+  h += `</table>
+    <div class="note"><b>${tally.v} verified · ${tally.c} candidate · ${tally.e} refused ·
+      ${tally.slot} uncheckable.</b> A matrix where everything fits proves nothing — it is a
+      picture. The refusals are the evidence that the check is real, and each one names the axis
+      that decided it.</div>
+    <div class="warn"><b>The DZ-Lite 3000 Plus refuses all four, and that is CORRECT.</b>
+      Diazyme runs two product lines: chemiluminescence kits for its own analyzer, and open
+      clinical-chemistry reagents for third-party photometric analyzers. All four protocols here
+      are photometric. <b>The checker separated two product lines from two declarations, without
+      being told they existed.</b></div>
+    <div class="note"><b>The material axis cannot fire on any cell.</b> No instrument here
+      declares a wetted-path material or a pH range — those live in user guides and have not
+      been harvested as bounds. Reported as an owed pass, not hidden behind a green cell.</div>`;
+  return h;
+}
+
+function viewCell(pid, iid){
+  const p = PROTOCOLS.find(x=>x.id===pid), i = INSTRUMENTS.find(x=>x.id===iid);
+  if (!p || !i) return viewCompose();
+  const r = compose(p,i);
+  let h = `<p><a href="#compose" style="color:var(--td-teal)">← the matrix</a></p>
+    <h1>${esc(p.name)} <span style="color:var(--td-mut);font-weight:400">on</span> ${esc(i.name)}
+      <span class="badge ${r.verdict}">${V[r.verdict]}</span></h1>
+    <p class="lede">${esc(p.technique)} · proposed for a ${esc(i.detection || 'detection principle not read')} instrument.</p>
+    <div class="axis"><div class="h">axis</div><div class="h">the method requires</div><div class="h">the instrument declares</div>`;
+  for (const [ax,req,dec,st] of r.axes)
+    h += `<div><b>${esc(ax)}</b></div><div>${esc(req)}</div>
+          <div class="${st}">${esc(dec)}</div>`;
+  h += `</div>`;
+
+  if (r.verdict === 'e'){
+    h += `<div class="warn"><b>REFUSED before anything runs.</b> ${esc(p.name)} is
+      ${esc(p.technique)}${p.wavelength?` and reads absorbance at ${p.wavelength} nm`:''}.
+      The ${esc(i.name)} declares ${esc(i.detection)} detection and no photometric channel —
+      its capability surface declares no wavelength property at all.
+      <b>Category mismatch, not a near miss.</b></div>`;
+  } else if (r.verdict === 'v'){
+    h += `<div class="note"><b>VERIFIED by a first-party statement.</b>
+      ${esc(p.named[i.id])}<br><br>An intended-use statement is a regulated claim.
+      "Compatible with" would not be enough, and technique compatibility alone is
+      <b>candidate</b>, never verified.</div>`;
+  } else if (r.verdict === 'slot'){
+    h += `<div class="note"><b>UNCHECKABLE — and that is a real state, not a failure.</b>
+      No capability surface has been issued for the ${esc(i.name)}. The instrument exists in the
+      graph with a GIAI; its control surface has not been read.
+      <b>A declared gap, never a guess.</b></div>`;
+  } else {
+    h += `<div class="note"><b>CANDIDATE.</b> The technique class is compatible and nobody has
+      named this pairing. That is exactly the rule the method file already carries:
+      <i>the method-to-analyzer binding is candidate unless a 510(k) intended-use names the
+      analyzer.</i> A laboratory may validate it locally — and that validation, published,
+      is what would move it to verified.</div>`;
+  }
+
+  h += `<h2>What each side declared, and where it came from</h2>
+    <div class="card"><h3>The method — ${esc(p.name)} ${esc(p.sku)}</h3><div class="meta">
+      ${p.gdti?`<span class="mono">${esc(p.gdti)}</span><br>`:''}
+      technique <b>${esc(p.technique)}</b>
+      ${p.wavelength?` · wavelength <b>${p.wavelength} nm</b>`:' · wavelength <b>not declared</b>'}
+      ${p.tempC?` · <b>${p.tempC} °C</b>`:''}
+      ${p.sampleUL?` · sample <b>${p.sampleUL} µL</b>`:''}<br>
+      specimens ${esc(p.samples.join(' · '))}<br><br>
+      <b>source</b> ${esc(p.src)}</div></div>
+    <div class="card"><h3>The instrument — ${esc(i.name)}</h3><div class="meta">
+      ${i.giai?`<span class="mono">${esc(i.giai)}</span> · prefix ${esc(i.prefix)}<br>`:
+        '<b>no prefix in our estate</b> — this instrument is named by others and is not rooted here<br>'}
+      detection <b>${esc(i.detection||'NOT READ')}</b> ·
+      capability surface <b>${esc(i.silaState)}</b>
+      ${i.sila?`<br><span class="mono">${esc(i.sila)}</span>`:''}<br><br>
+      <b>surface</b> ${esc(i.surfaceSource)}<br>
+      <b>detection</b> ${esc(i.detectionSource)}</div></div>`;
+  return h;
+}
+
+function viewInstruments(){
+  let h = `<h1>Instruments &amp; surfaces</h1>
+    <p class="lede">What each instrument declares, and on whose authority. <b>Only the maker may
+      declare a capability surface</b> — nobody else is entitled to.</p>`;
+  for (const i of INSTRUMENTS){
+    const st = i.silaState === 'issued' ? 'c' : 'slot';
+    h += `<div class="card ${st}"><h3>${esc(i.name)} <span class="badge ${st}">${esc(i.silaState)}</span></h3>
+      <div class="meta">${esc(i.maker)}
+        ${i.prefix?` · prefix <b class="mono">${esc(i.prefix)}</b>`:' · <b>not rooted in our estate</b>'}
+        ${i.giai?`<br><span class="mono">${esc(i.giai)}</span>`:''}<br>
+        detection <b>${esc(i.detection||'NOT READ')}</b>
+        ${i.wavelengths.length?`<br>declared filters ${i.wavelengths.join(' · ')} nm`:''}
+        ${i.commands.length?`<br>commands <b>${i.commands.join(' · ')}</b>`:''}
+        ${i.properties.length?`<br>properties ${i.properties.map(p=>`<b>${esc(p[0])}</b> (${esc(p[1])})`).join(' · ')}`:''}
+        <br><br><b>source</b> ${esc(i.surfaceSource)}</div>`;
+    if (i.limits.length){
+      h += `<div class="warn" style="margin:10px 0 0"><b>Declared limits, and whether a machine
+        can act on them:</b><br>` + i.limits.map(l =>
+        `<b>${esc(l.what)}</b> ${esc(l.value)} — <b style="color:var(--e)">${l.enforceable?'ENFORCEABLE':'NOT ENFORCEABLE'}</b><br>
+         <span style="font-size:12.5px">${esc(l.src)}</span>`).join('<br>') + `</div>`;
+    }
+    h += `</div>`;
+  }
+  return h + `<div class="note"><b>Four of six instruments have no capability surface at all.</b>
+    They are named by other parties — a maker's product page, an executor's test catalog, an IFU —
+    which grounds a BINDING but not a SURFACE. Naming what an instrument runs is not the same as
+    declaring what it can do.</div>`;
+}
+
+function viewMHS(){
+  const i = INSTRUMENTS[0];
+  return `<h1>MHS reference file</h1>
+    <p class="lede">Anthropic's Model Hardware Standard gives every connected device an
+      auto-generated reference file in three layers — <b>what it measures, what can be adjusted,
+      and its enforced safety limits</b> — with the limits enforced at the driver, below the
+      agent. This is that file for the ${esc(i.name)}, assembled from what the register holds.</p>
+    <p class="src">MHS described from Anthropic's announcement of <b>27 August 2026</b> and
+      partner reports. <b>The full specification is not public.</b> The three-layer structure is
+      reconstructed from those sources, not read from a spec — stated here rather than implied.</p>
+
+    <div class="layer"><div class="lh">1 · What it measures <span class="badge c">from the SiLA Feature</span></div>
+      <div class="lb"><table><tr><th>Name</th><th>Type</th><th>Source</th></tr>
+        ${i.properties.map(p=>`<tr><td class="mono">${esc(p[0])}</td><td>${esc(p[1])}</td>
+          <td>issued SiLA Feature, ThingDaddy-authored, candidate</td></tr>`).join('')}
+      </table></div></div>
+
+    <div class="layer"><div class="lh">2 · What can be adjusted <span class="badge c">from the SiLA Feature</span></div>
+      <div class="lb"><table><tr><th>Command</th><th>Parameters</th><th>Source</th></tr>
+        <tr><td class="mono">RunAssay</td><td>AssayId · SampleId</td><td>issued SiLA Feature</td></tr>
+        <tr><td class="mono">Calibrate</td><td>AssayId</td><td>issued SiLA Feature</td></tr>
+        <tr><td class="mono">QC</td><td>AssayId · ControlLevel</td><td>issued SiLA Feature</td></tr>
+      </table></div></div>
+
+    <div class="layer"><div class="lh">3 · Enforced safety limits <span class="badge e">THE GAP</span></div>
+      <div class="lb"><table><tr><th>Limit</th><th>Value</th><th>Machine-checkable?</th></tr>
+        <tr><td>throughput</td><td>≤ 180 tests/hr</td>
+          <td style="color:var(--e)"><b>NO</b> — it is prose in a Description string, not a
+            Constrained data type</td></tr>
+        <tr><td>wetted-path materials</td><td class="mono">—</td><td class="mono">slot</td></tr>
+        <tr><td>pH range</td><td class="mono">—</td><td class="mono">slot</td></tr>
+        <tr><td>temperature bounds</td><td class="mono">—</td>
+          <td class="mono">slot — Temp is READABLE, it is not BOUNDED</td></tr>
+      </table>
+      <div class="warn" style="margin:4px 0 0"><b>SiLA declares the verbs. It does not declare the
+        envelope.</b> SiLA 2 does have Constrained data types with minimum, maximum and unit — so a
+        <i>parameter</i> can be bounded. But material is not a parameter. It arrives in a bottle.
+        SiLA cannot see it, so SiLA can never refuse it.</div></div></div>
+
+    <div class="layer"><div class="lh">4 · Who is acting <span class="badge e">ABSENT FROM MHS</span></div>
+      <div class="lb"><table><tr><th>Field</th><th>Held</th><th>Why it matters</th></tr>
+        <tr><td>agent persona</td><td class="mono">slot — no GSRN</td>
+          <td>an enforced limit stops an unsafe <b>value</b>. It cannot stop an unauthorised
+            <b>actor</b>, and it cannot say "not on this instrument, which belongs to someone else"</td></tr>
+        <tr><td>running revision</td><td class="mono">slot — no SRIN</td>
+          <td>MHS is model-agnostic, so the mind changes underneath. Without a version dimension an
+            audit trail cannot say which mind acted</td></tr>
+        <tr><td>session</td><td class="mono">slot</td>
+          <td>"an agent set the temperature to 42" is not an answer to <i>who performed this
+            action</i>, and cannot be made into one afterwards</td></tr>
+      </table></div></div>
+
+    <div class="note"><b>MHS's reference file is authored by a human at the rig, in natural
+      language, at setup.</b> Anthropic's own framing of the problem is exact: until now this
+      information has lived in PDF manuals, on a colleague's computer, or nowhere at all.
+      <br><br><b>The limit is genuinely enforced — below the agent, which is the right place.</b>
+      The gap is not enforcement. It is provenance: the same instrument model gets a different
+      reference file at every site, nothing records where a limit came from, a wrong limit is
+      enforced exactly as hard as a right one, and none of it survives the machine being sold.
+      <br><br>A reference file resolved from an authority-issued identity, page-cited to the
+      manufacturer's own guide, versioned with it, and travelling on custody transfer — is the
+      same artefact with a source.</div>`;
+}
+
+function viewLabs(){
+  let h = `<h1>Labs &amp; estates</h1>
+    <p class="lede">What each laboratory holds — and how we know. <b>An operator does not
+      manufacture, so it never files to a manufacturer registry.</b> Its instruments are invisible
+      to GUDID, EUDAMED and NMPA by construction. Only the owner can say.</p>`;
+  for (const l of LABS){
+    h += `<div class="card ${l.grade}"><h3>${esc(l.name)} <span class="badge ${l.grade}">${l.grade==='v'?'verified':'candidate'}</span></h3>
+      <div class="meta">`;
+    if (!l.holds.length){
+      h += `<b style="color:var(--c)">instrument UNASSIGNED</b> — the relationship is sourced;
+        the equipment model is not stated, and is not supplied.<br><br>`;
+    } else {
+      h += l.holds.map(id=>{
+        const i = INSTRUMENTS.find(x=>x.id===id);
+        return `holds <b>${esc(i.name)}</b> (${esc(i.maker)})`;
+      }).join('<br>') + '<br><br>';
+    }
+    h += `<b>how we know</b> ${esc(l.src)}</div></div>`;
+  }
+  return h + `<div class="note"><b>This is the strongest argument for the owner-side ThingSite.</b>
+    The register cannot answer <i>what do you run</i> until the owner declares it. A published test
+    catalog gets us one instrument at Mayo. Everything else is a candidate or an honest blank —
+    and the blank is a reason for that laboratory to claim its page.</div>`;
+}
+
+function viewDeploy(){
+  return `<h1>Deploy</h1>
+    <div class="demo"><b>DEMO SHELL — NOT WIRED.</b> Provisioning requires per-user
+      authentication and cloud credentials, neither of which exists. Every action here is inert.</div>
+    <p class="lede">A composition reaches a runtime <b>only after it validates</b>. The cloud
+      identity is one endpoint beneath the durable URN — never a new identity.</p>
+    <div class="note"><b>P1 + P2 + P3 = P4.</b> The deployment is not a fourth thing; it is the
+      composition of identity, capability and method, deployed. Swap AWS for Azure for an edge
+      node and P1+P2+P3 are unchanged — only the endpoint moves. That is what cloud-agnostic
+      means.</div>
+    <table><tr><th>Layer</th><th>What ships</th><th>State</th></tr>
+      <tr><td>P1 identity</td><td class="mono">urn:epc:id:giai:0817089.2</td><td><span class="badge c">candidate</span></td></tr>
+      <tr><td>P2 capability</td><td class="mono">urn:epc:id:gdti:0817089.1.2</td><td><span class="badge c">issued, candidate</span></td></tr>
+      <tr><td>P2 envelope</td><td class="mono">—</td><td><span class="badge slot">slot</span></td></tr>
+      <tr><td>P3 method</td><td class="mono">urn:epc:id:gdti:0817089.2.1</td><td><span class="badge c">candidate</span></td></tr>
+      <tr><td>P4 endpoint</td><td>AWS IoT thing + shadow, ARN beneath the URN</td><td><span class="badge slot">not provisioned</span></td></tr>
+      <tr><td>actor</td><td class="mono">GSRN · SRIN</td><td><span class="badge slot">slot</span></td></tr>
+    </table>
+    <div class="warn"><b>Nothing here would provision today, and the reason is the envelope.</b>
+      A validated composition needs a machine-checkable envelope to validate against. Three of the
+      four axes can fire; the material axis cannot, because no instrument in this set declares a
+      wetted-path material or a pH range. <b>That is the owed user-guide bounds pass, and it is
+      the difference between a configurator and a checker.</b></div>
+    <div><button class="act pri inert" disabled>Provision to AWS IoT</button>
+      <button class="act inert" disabled>Export the composition as a GDTI</button></div>`;
+}
+
+function route(){
+  const raw = (location.hash||'#compose').slice(1);
+  const parts = raw.split('/');
+  const id = parts[0] || 'compose';
+  rail(id === 'cell' ? 'compose' : id);
+  let html;
+  if (id === 'cell') html = viewCell(parts[1], parts[2]);
+  else if (id === 'instruments') html = viewInstruments();
+  else if (id === 'mhs') html = viewMHS();
+  else if (id === 'labs') html = viewLabs();
+  else if (id === 'deploy') html = viewDeploy();
+  else html = viewCompose();
+  document.getElementById('view').innerHTML = html + `<footer><b>ThingDaddy.</b>
+    The registrar for the physical internet. You own your IDs; we operate.<br>
+    Every fact is <b>verified</b>, <b>candidate</b>, or an <b>exception</b> — never a guess.
+    Nothing on this page writes, and nothing is minted here.</footer>`;
+  window.scrollTo(0,0);
+}
+window.addEventListener('hashchange', route);
+route();
+</script>
+</body>
+</html>

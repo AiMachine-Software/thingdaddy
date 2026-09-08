@@ -1,0 +1,33 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+__pycache__/
+*.pyc
+.env
+# keep data/ exports but ignore transient generated ledgers:
+data/agent_fleet_run_ledger.json
+data/agent_fleet_loopB_ledger.json
+
+# raw GDSN/GUDID source feeds (large binaries, ingested via loaders/, not tracked)
+population/data/
+
+# agent test artifacts
+agents/**/*.db
+agents/**/*.backup
+agents/**/config.yaml.backup
+
+# --- generated deliverables (delivered via Cowork / regenerable) ---
+*.zip
+*.docx
+*.xlsx
+*.pptx
+fig_*.png
+ThingDaddy_Package/
+thingdaddy_level1/
+# generated ThingSite pages (regenerable via render_*; not source)
+population/sites/*/*_ThingSite.html
+# --- local-only ---
+.claude/settings.local.json
+BRIDGE_TEST.txt
+.git-worktree-pointer.bak.txt

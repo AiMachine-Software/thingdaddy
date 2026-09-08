@@ -1,0 +1,62 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>ThingDaddy · P5 AI Graph</title>
+<style>
+html,body{margin:0;height:100%;background:#070b12;color:#e8eef7;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;overflow:hidden}
+#hud{position:fixed;top:0;left:0;right:0;padding:14px 18px;pointer-events:none;z-index:5}
+#hud .t{font-size:15px;font-weight:800;letter-spacing:.5px}
+#hud .s{font-size:12px;color:#8fa3bd;margin-top:2px;max-width:640px}
+#legend{position:fixed;bottom:14px;left:18px;font-size:12px;z-index:5;background:rgba(10,16,26,.6);border:1px solid #1c2a3b;border-radius:10px;padding:9px 12px}
+#legend span{display:inline-flex;align-items:center;margin-right:12px}
+#legend i{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:5px;box-shadow:0 0 8px currentColor}
+#foot{position:fixed;bottom:14px;right:18px;font-size:11px;color:#5b6b82;z-index:5}
+svg{width:100vw;height:100vh;display:block}
+.edge{stroke-opacity:.28}
+.node circle{cursor:grab}
+.node text{font-size:10.5px;fill:#c7d4e6;paint-order:stroke;stroke:#070b12;stroke-width:3px;pointer-events:none}
+.node.instrument text{font-size:13px;fill:#fff;font-weight:800}
+</style></head><body>
+<div id=hud><div class=t>ThingDaddy · P5 AI Graph <span style="color:#8fa3bd;font-weight:600">— the score, playing</span></div>
+<div class=s>Instrument → SiLA driver → AFO protocol → equipment · material · result. Each protocol a subgraph, all merged on the shared identity — woven from the real AFO ontology + SiLA standard features by the configurator rules. Candidate; nothing minted. Drag a node.</div></div>
+<div id=legend></div>
+<div id=foot>real standards · configuration, not code · protocol-legal only</div>
+<svg id=svg></svg>
+<script>
+const DATA={"nodes": [{"id": "instrument", "label": "DZ-Lite c270 (GTIN \u00b7 candidate)", "group": "instrument"}, {"id": "sila:SiLAService", "label": "SiLAService", "group": "sila"}, {"id": "sila:LockController", "label": "LockController", "group": "sila"}, {"id": "sila:ObservableCommandController", "label": "ObservableCommandController", "group": "sila"}, {"id": "sila:SimulationController", "label": "SimulationController", "group": "sila"}, {"id": "sila:AuditTrailService", "label": "AuditTrailService", "group": "sila"}, {"id": "sila:InitializationController", "label": "InitializationController", "group": "sila"}, {"id": "sila:ErrorRecoveryService", "label": "ErrorRecoveryService", "group": "sila"}, {"id": "sila:AuthenticationService", "label": "AuthenticationService", "group": "sila"}, {"id": "proc:0", "label": "volumetry", "group": "process"}, {"id": "eq:ion source", "label": "ion source", "group": "equipment"}, {"id": "mat:solution", "label": "solution", "group": "material"}, {"id": "res:Auger spectrum", "label": "Auger spectrum", "group": "result"}, {"id": "proc:1", "label": "voltammetry", "group": "process"}, {"id": "eq:thermal conductivity detector", "label": "thermal conductivity detector", "group": "equipment"}, {"id": "mat:plasma", "label": "plasma", "group": "material"}, {"id": "res:2-tuple", "label": "2-tuple", "group": "result"}, {"id": "proc:2", "label": "imaging assay", "group": "process"}, {"id": "eq:degasser", "label": "degasser", "group": "equipment"}, {"id": "mat:pneumatic energy", "label": "pneumatic energy", "group": "material"}, {"id": "res:class coordination", "label": "class coordination", "group": "result"}, {"id": "proc:3", "label": "vapor generation", "group": "process"}, {"id": "eq:heating device", "label": "heating device", "group": "equipment"}, {"id": "mat:sol", "label": "sol", "group": "material"}, {"id": "res:order two parameter", "label": "order two parameter", "group": "result"}, {"id": "proc:4", "label": "dividing", "group": "process"}, {"id": "eq:transferring device", "label": "transferring device", "group": "equipment"}, {"id": "mat:gas in liquid solution", "label": "gas in liquid solution", "group": "material"}, {"id": "res:instrument suspension media", "label": "instrument suspension media", "group": "result"}, {"id": "proc:5", "label": "tracking", "group": "process"}, {"id": "eq:chromatography data system", "label": "chromatography data system", "group": "equipment"}, {"id": "mat:zero grade air", "label": "zero grade air", "group": "material"}, {"id": "res:detector wavelength setting", "label": "detector wavelength setting", "group": "result"}, {"id": "proc:6", "label": "cell density measurement", "group": "process"}, {"id": "mat:nitrogen gas", "label": "nitrogen gas", "group": "material"}, {"id": "res:linear velocity", "label": "linear velocity", "group": "result"}, {"id": "proc:7", "label": "chemical reaction (molecular)", "group": "process"}, {"id": "res:probe volume", "label": "probe volume", "group": "result"}, {"id": "proc:8", "label": "luminescence process profile", "group": "process"}, {"id": "res:vertex", "label": "vertex", "group": "result"}], "edges": [{"s": "instrument", "t": "sila:SiLAService", "ty": "has_driver"}, {"s": "instrument", "t": "sila:LockController", "ty": "has_driver"}, {"s": "instrument", "t": "sila:ObservableCommandController", "ty": "has_driver"}, {"s": "instrument", "t": "sila:SimulationController", "ty": "has_driver"}, {"s": "instrument", "t": "sila:AuditTrailService", "ty": "has_driver"}, {"s": "instrument", "t": "sila:InitializationController", "ty": "has_driver"}, {"s": "instrument", "t": "sila:ErrorRecoveryService", "ty": "has_driver"}, {"s": "instrument", "t": "sila:AuthenticationService", "ty": "has_driver"}, {"s": "instrument", "t": "proc:0", "ty": "runs"}, {"s": "proc:0", "t": "eq:ion source", "ty": "has_equipment"}, {"s": "proc:0", "t": "mat:solution", "ty": "has_input"}, {"s": "proc:0", "t": "res:Auger spectrum", "ty": "has_output"}, {"s": "instrument", "t": "proc:1", "ty": "runs"}, {"s": "proc:1", "t": "eq:thermal conductivity detector", "ty": "has_equipment"}, {"s": "proc:1", "t": "mat:plasma", "ty": "has_input"}, {"s": "proc:1", "t": "res:2-tuple", "ty": "has_output"}, {"s": "instrument", "t": "proc:2", "ty": "runs"}, {"s": "proc:2", "t": "eq:degasser", "ty": "has_equipment"}, {"s": "proc:2", "t": "mat:pneumatic energy", "ty": "has_input"}, {"s": "proc:2", "t": "res:class coordination", "ty": "has_output"}, {"s": "instrument", "t": "proc:3", "ty": "runs"}, {"s": "proc:3", "t": "eq:heating device", "ty": "has_equipment"}, {"s": "proc:3", "t": "mat:sol", "ty": "has_input"}, {"s": "proc:3", "t": "res:order two parameter", "ty": "has_output"}, {"s": "instrument", "t": "proc:4", "ty": "runs"}, {"s": "proc:4", "t": "eq:transferring device", "ty": "has_equipment"}, {"s": "proc:4", "t": "mat:gas in liquid solution", "ty": "has_input"}, {"s": "proc:4", "t": "res:instrument suspension media", "ty": "has_output"}, {"s": "instrument", "t": "proc:5", "ty": "runs"}, {"s": "proc:5", "t": "eq:chromatography data system", "ty": "has_equipment"}, {"s": "proc:5", "t": "mat:zero grade air", "ty": "has_input"}, {"s": "proc:5", "t": "res:detector wavelength setting", "ty": "has_output"}, {"s": "instrument", "t": "proc:6", "ty": "runs"}, {"s": "proc:6", "t": "eq:ion source", "ty": "has_equipment"}, {"s": "proc:6", "t": "mat:nitrogen gas", "ty": "has_input"}, {"s": "proc:6", "t": "res:linear velocity", "ty": "has_output"}, {"s": "instrument", "t": "proc:7", "ty": "runs"}, {"s": "proc:7", "t": "eq:thermal conductivity detector", "ty": "has_equipment"}, {"s": "proc:7", "t": "mat:solution", "ty": "has_input"}, {"s": "proc:7", "t": "res:probe volume", "ty": "has_output"}, {"s": "instrument", "t": "proc:8", "ty": "runs"}, {"s": "proc:8", "t": "eq:degasser", "ty": "has_equipment"}, {"s": "proc:8", "t": "mat:plasma", "ty": "has_input"}, {"s": "proc:8", "t": "res:vertex", "ty": "has_output"}, {"s": "instrument", "t": "mat:solution", "ty": "uses"}, {"s": "instrument", "t": "mat:plasma", "ty": "uses"}, {"s": "instrument", "t": "mat:pneumatic energy", "ty": "uses"}], "colors": {"instrument": "#f5b301", "sila": "#22c1c3", "process": "#c98bff", "equipment": "#39d98a", "material": "#ff9f43", "result": "#ff6b9d", "document": "#2dd4bf"}};
+const svg=document.getElementById('svg'), NS='http://www.w3.org/2000/svg';
+let W=innerWidth,H=innerHeight;
+const nodes=DATA.nodes, edges=DATA.edges, C=DATA.colors;
+const byId={}; nodes.forEach((n,i)=>{byId[n.id]=n; n.x=W/2+Math.cos(i*2.3)*(120+i*7); n.y=H/2+Math.sin(i*2.3)*(120+i*5); n.vx=0; n.vy=0;});
+edges.forEach(e=>{e.S=byId[e.s]; e.T=byId[e.t];});
+// legend
+const L=document.getElementById('legend'); const names={instrument:'Instrument (GTIN)',sila:'SiLA driver (P2)',process:'AFO protocol (P3)',equipment:'Equipment',material:'Material',result:'Result (P5)'};
+Object.keys(names).forEach(k=>{const s=document.createElement('span');s.innerHTML='<i style="color:'+C[k]+'"></i>'+names[k];L.appendChild(s);});
+// build svg elements
+const gE=document.createElementNS(NS,'g'), gN=document.createElementNS(NS,'g'); svg.appendChild(gE); svg.appendChild(gN);
+const eEls=edges.map(e=>{const l=document.createElementNS(NS,'line');l.setAttribute('class','edge');l.setAttribute('stroke',C[e.T.group]||'#3a5878');l.setAttribute('stroke-width', e.ty==='runs'||e.ty==='has_driver'?1.6:1);gE.appendChild(l);return l;});
+const nEls=nodes.map(n=>{const g=document.createElementNS(NS,'g');g.setAttribute('class','node '+n.group);
+  const c=document.createElementNS(NS,'circle');const r=n.group==='instrument'?13:(n.group==='process'?8:6);
+  c.setAttribute('r',r);c.setAttribute('fill',C[n.group]);c.setAttribute('stroke',C[n.group]);c.setAttribute('stroke-opacity',.35);c.setAttribute('stroke-width',6);c.style.filter='drop-shadow(0 0 6px '+C[n.group]+')';
+  const t=document.createElementNS(NS,'text');t.setAttribute('x',r+4);t.setAttribute('y',4);t.textContent=n.label;
+  g.appendChild(c);g.appendChild(t);gN.appendChild(g);
+  // drag
+  let drag=false;
+  c.addEventListener('pointerdown',ev=>{drag=true;n.fixed=true;c.setPointerCapture(ev.pointerId);c.style.cursor='grabbing';});
+  c.addEventListener('pointermove',ev=>{if(drag){const pt=svg.createSVGPoint();pt.x=ev.clientX;pt.y=ev.clientY;n.x=pt.x;n.y=pt.y;}});
+  c.addEventListener('pointerup',ev=>{drag=false;n.fixed=false;c.style.cursor='grab';});
+  return g;});
+function tick(){
+  // repulsion (O(n^2), fine for this size)
+  for(let i=0;i<nodes.length;i++){const a=nodes[i];for(let j=i+1;j<nodes.length;j++){const b=nodes[j];
+    let dx=a.x-b.x,dy=a.y-b.y,d2=dx*dx+dy*dy+.01,d=Math.sqrt(d2);const f=2600/d2;const fx=dx/d*f,fy=dy/d*f;
+    a.vx+=fx;a.vy+=fy;b.vx-=fx;b.vy-=fy;}}
+  // springs
+  edges.forEach(e=>{const a=e.S,b=e.T;let dx=b.x-a.x,dy=b.y-a.y,d=Math.sqrt(dx*dx+dy*dy)+.01;const L0=(a.group==='instrument'||b.group==='instrument')?150:90;const f=(d-L0)*0.02;const fx=dx/d*f,fy=dy/d*f;a.vx+=fx;a.vy+=fy;b.vx-=fx;b.vy-=fy;});
+  // gravity + integrate
+  nodes.forEach(n=>{n.vx+=(W/2-n.x)*0.0016;n.vy+=(H/2-n.y)*0.0016;if(!n.fixed){n.vx*=0.86;n.vy*=0.86;n.x+=n.vx;n.y+=n.vy;}});
+  edges.forEach((e,i)=>{eEls[i].setAttribute('x1',e.S.x);eEls[i].setAttribute('y1',e.S.y);eEls[i].setAttribute('x2',e.T.x);eEls[i].setAttribute('y2',e.T.y);});
+  nodes.forEach((n,i)=>{nEls[i].setAttribute('transform','translate('+n.x+','+n.y+')');});
+  requestAnimationFrame(tick);
+}
+addEventListener('resize',()=>{W=innerWidth;H=innerHeight;});
+tick();
+</script></body></html>

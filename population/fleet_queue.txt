@@ -1,0 +1,69 @@
+pfizer.com|Pfizer
+novartis.com|Novartis
+roche.com|Roche
+merck.com|Merck
+gsk.com|GSK
+sanofi.com|Sanofi
+astrazeneca.com|AstraZeneca
+bayer.com|Bayer
+abbvie.com|AbbVie
+lilly.com|Eli Lilly
+amgen.com|Amgen
+gilead.com|Gilead
+takeda.com|Takeda
+teva.com|Teva
+biogen.com|Biogen
+regeneron.com|Regeneron
+abbott.com|Abbott
+medtronic.com|Medtronic
+bd.com|Becton Dickinson
+gehealthcare.com|GE HealthCare
+stryker.com|Stryker
+bostonscientific.com|Boston Scientific
+baxter.com|Baxter
+terumo.com|Terumo
+hologic.com|Hologic
+dexcom.com|Dexcom
+resmed.com|ResMed
+nestle.com|Nestle
+unilever.com|Unilever
+pepsico.com|PepsiCo
+kraftheinz.com|Kraft Heinz
+generalmills.com|General Mills
+kelloggs.com|Kelloggs
+mondelezinternational.com|Mondelez
+danone.com|Danone
+mars.com|Mars
+conagrabrands.com|Conagra
+tysonfoods.com|Tyson Foods
+cargill.com|Cargill
+adm.com|ADM
+pg.com|Procter & Gamble
+colgate.com|Colgate-Palmolive
+kimberly-clark.com|Kimberly-Clark
+reckitt.com|Reckitt
+henkel.com|Henkel
+loreal.com|LOreal
+basf.com|BASF
+dow.com|Dow
+dupont.com|DuPont
+3m.com|3M
+ecolab.com|Ecolab
+evonik.com|Evonik
+siemens.com|Siemens
+abb.com|ABB
+schneider-electric.com|Schneider Electric
+emerson.com|Emerson
+rockwellautomation.com|Rockwell Automation
+kuehne-nagel.com|Kuehne + Nagel
+dbschenker.com|DB Schenker
+dsv.com|DSV
+kerrylogistics.com|Kerry Logistics
+dhl.com|DHL
+expeditors.com|Expeditors
+chrobinson.com|CH Robinson
+lineagelogistics.com|Lineage Logistics
+americold.com|Americold
+bosch.com|Bosch
+denso.com|Denso
+continental.com|Continental

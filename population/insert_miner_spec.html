@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Insert-Miner — Spec</title>
+<style>
+  :root{
+    --ink:#14181d; --muted:#5b6570; --line:#e4e8ec; --bg:#fbfcfd;
+    --accent:#1f6feb; --safety:#c0362c; --cand:#8a5a00; --candbg:#fff6e5;
+    --ok:#137a4c; --okbg:#e8f6ee; --code:#0d1117; --codeink:#e6edf3;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.62 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+  .wrap{max-width:860px;margin:0 auto;padding:40px 22px 90px}
+  header.doc{border-bottom:2px solid var(--ink);padding-bottom:18px;margin-bottom:8px}
+  .kick{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  h1{font-size:30px;line-height:1.15;margin:8px 0 6px}
+  .sub{color:var(--muted);font-size:15px}
+  .meta{color:var(--muted);font-size:13px;margin-top:10px}
+  h2{font-size:20px;margin:38px 0 6px;padding-top:10px;border-top:1px solid var(--line)}
+  h3{font-size:16px;margin:22px 0 4px}
+  p{margin:10px 0}
+  ul{margin:8px 0 8px 2px;padding-left:20px}
+  li{margin:5px 0}
+  code{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;
+    background:#eef1f4;border-radius:4px;padding:1px 5px}
+  pre{background:var(--code);color:var(--codeink);border-radius:9px;padding:15px 16px;overflow:auto;
+    font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:13px;line-height:1.5}
+  pre code{background:none;padding:0;color:inherit}
+  .lead{font-size:17px;color:#2a3138}
+  .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.03em;
+    padding:2px 8px;border-radius:20px;vertical-align:middle}
+  .t-cand{background:var(--candbg);color:var(--cand);border:1px solid #ecd9a8}
+  .t-ok{background:var(--okbg);color:var(--ok);border:1px solid #bfe6cd}
+  .t-safety{background:#fbeae8;color:var(--safety);border:1px solid #f0c4bd}
+  table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:#f2f5f8;font-weight:600}
+  .callout{border-left:4px solid var(--accent);background:#eef4fe;padding:12px 16px;border-radius:0 8px 8px 0;margin:16px 0}
+  .rule{border-left:4px solid var(--safety);background:#fdf0ee;padding:12px 16px;border-radius:0 8px 8px 0;margin:16px 0}
+  .rule b,.callout b{font-weight:700}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0;font-size:13.5px}
+  .flow .node{background:#fff;border:1px solid var(--line);border-radius:7px;padding:7px 11px;font-weight:600}
+  .flow .arr{color:var(--muted)}
+  .small{font-size:13px;color:var(--muted)}
+  footer{margin-top:46px;border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="doc">
+  <div class="kick">ThingDaddy · Extractor spec · WS2</div>
+  <h1>The Insert-Miner</h1>
+  <div class="sub">From “what is this product” to “what is legally true inside the box.”</div>
+  <div class="meta">Spec only — Chat → Agree → <b>Cowork</b> → Code. No build until you say go. · 2026-07-20</div>
+</header>
+
+<p class="lead">The package insert is not a page — it is a <b>document with its own identity</b>. In GS1 terms a document carries a <b>GDTI</b> (Global Document Type Identifier). The insert-miner extends <code>docmine</code> to mint a <span class="tag t-cand">CANDIDATE</span> GDTI for the insert, bind it to the product’s GTIN, segment the regulated sections that its labeling regime requires, and lift the safety content — adverse reactions, contraindications, allergens, interactions — into a first-class binding set the graph can query.</p>
+
+<h2>1 · What we are identifying</h2>
+<p>Two identities and one binding, all issued by one party.</p>
+<table>
+  <tr><th>Thing</th><th>ID type</th><th>URN</th><th>Status</th></tr>
+  <tr><td>The product (the box)</td><td>GTIN / SGTIN</td><td><code>urn:epc:id:sgtin:…</code></td><td>candidate leading-substring (prefix never derived)</td></tr>
+  <tr><td>The insert (the leaflet)</td><td><b>GDTI</b></td><td><code>urn:epc:id:gdti:CompanyPrefix.DocType.Serial</code></td><td><span class="tag t-cand">CANDIDATE</span></td></tr>
+  <tr><td>Issuer</td><td>PGLN</td><td><code>urn:epc:id:pgln:…</code></td><td>the party holding the prefix</td></tr>
+</table>
+<div class="flow">
+  <span class="node">PGLN (issuer)</span><span class="arr">──issues──▶</span>
+  <span class="node">GTIN (product)</span><span class="arr">──has_regulated_document──▶</span>
+  <span class="node">GDTI (insert)</span>
+</div>
+
+<div class="rule">
+  <b>Hard rule carried through.</b> The insert is issued by the <i>same registrant</i> that holds the product’s company prefix. So the GDTI’s company prefix <b>equals</b> the GTIN’s company prefix — which we hold only as a candidate leading substring (variable-length, never derived). Therefore the whole GDTI — prefix, doc-type code, serial — is <b>candidate until R4 ratification</b> by the answerable party. Absence of a known serial is a CANDIDATE, never a fabricated one.
+</div>
+
+<h2>2 · The insert is not one format — it is a regime</h2>
+<p>“Less regulation” for supplements doesn’t mean a different tool. It means a <b>smaller required-section set</b>. The miner detects the labeling regime and applies the matching section grammar. Build the strict pharma case; relax down to supplements. Pharma is the hard case that generalizes.</p>
+<table>
+  <tr><th>Regime</th><th>Basis</th><th>Required sections (registrar-strict subset)</th></tr>
+  <tr><td>Rx Prescribing Information (PI)</td><td>US PLR (21 CFR 201.56/57)</td><td>Indications, Dosage &amp; Admin, Dosage Forms/Strengths, Contraindications, Warnings &amp; Precautions, <b>Adverse Reactions</b>, Drug Interactions, Use in Specific Populations, How Supplied/Storage</td></tr>
+  <tr><td>OTC Drug Facts</td><td>21 CFR 201.66</td><td>Active ingredient, Purpose, Uses, <b>Warnings</b>, Directions, Other information, Inactive ingredients</td></tr>
+  <tr><td>EU SmPC</td><td>QRD template</td><td>§4.1 Indications, §4.3 Contraindications, §4.5 Interactions, §4.8 Undesirable effects, §4.9 Overdose</td></tr>
+  <tr><td>Supplement Facts</td><td>DSHEA / 21 CFR 101.36</td><td>Serving size, Servings/container, Amount per serving + %DV, Other ingredients, <b>“Contains:” allergen line</b>, DSHEA disclaimer</td></tr>
+</table>
+<div class="callout">
+  <b>This is the meta-configurator, not a fork.</b> Each regime is a SHACL shape set over one “regulated-document” template. The insert-miner is our meta-configurator engine pointed at documents instead of protocols — same <code>shape_*</code> machinery that already made the mfg workcell and the afo-lab protocol CONFORM on one engine.
+</div>
+
+<h2>3 · The SAFETY binding set <span class="tag t-safety">first-class</span></h2>
+<p><code>binding_sets.py</code> already renders binding sets. We add one type: <b>SAFETY</b> — the highest-liability, highest-value binding, and the reason a ThingSite becomes legally load-bearing.</p>
+<table>
+  <tr><th>Member</th><th>Extracted as</th><th>Candidate coding (never fabricated)</th></tr>
+  <tr><td>Adverse reactions</td><td>entity list per section</td><td>candidate → MedDRA (unmapped = candidate)</td></tr>
+  <tr><td>Contraindications</td><td>entity list</td><td>candidate condition terms</td></tr>
+  <tr><td>Allergens</td><td>the “Contains:” statement</td><td>candidate → controlled allergen list (US big-9)</td></tr>
+  <tr><td><b>Interactions</b></td><td><b>edges to other substances/GTINs</b></td><td>candidate substance identity</td></tr>
+</table>
+<div class="callout">
+  The interaction row is the payoff. A drug/supplement interaction is an <b>edge between two identified things</b> → once bound, the graph answers <i>“what interacts with what”</i> across products. That is a capability off the graph, not a document lookup — and it is exactly the semantic-restoration thesis applied to safety.
+</div>
+
+<h2>4 · Conformance — registrar stricter than the regulator</h2>
+<p>GenSpecs / FDA say what a label <i>may</i> contain. ThingDaddy says what is <i>issuable</i>. Four shapes on the regulated-document template:</p>
+<table>
+  <tr><th>Shape</th><th>Constraint</th><th>Violation → </th></tr>
+  <tr><td><code>shape_regime_required_sections</code></td><td>every required section for the detected regime is present</td><td>INCOMPLETE (flagged, not issued)</td></tr>
+  <tr><td><code>shape_gdti_prefix_matches_gtin</code></td><td>GDTI company prefix is consistent with the bound GTIN’s prefix</td><td>REJECT (cross-registrant insert)</td></tr>
+  <tr><td><code>shape_safety_binding_present</code></td><td>an Rx product’s PI has a non-empty SAFETY set</td><td>INCOMPLETE</td></tr>
+  <tr><td><code>shape_allergen_controlled</code></td><td>allergen maps to the controlled vocabulary</td><td>free-text allergen stays CANDIDATE, not ratified</td></tr>
+</table>
+<p class="small">A PI missing Contraindications is <b>incomplete</b>, not a valid registry entry. Stricter than the standard, never looser.</p>
+
+<h2>5 · Inputs — and your rare asset</h2>
+<p>Three input adapters feed one miner, mirroring how <code>roster_harvest</code> and <code>docmine</code> already feed <code>website_agent</code>:</p>
+<ul>
+  <li><b>PDF</b> — existing <code>docmine</code> extractor (PyMuPDF → pdfminer).</li>
+  <li><b>URL pointer</b> — sanctioned fetch only; no bot-block engineering; map-to-nothing (hold the pointer, not the payload).</li>
+  <li><b>Image (OCR)</b> — <span class="tag t-cand">follow-on capability</span>, needs an OCR dependency. This is where your corpus lands.</li>
+</ul>
+<div class="callout">
+  <b>NutriFacts / PharmaFacts / SupplementFacts.</b> Your teams photographed every GTIN-labeled product across Canada, Belgium, Switzerland, Mexico. That is a <b>GTIN ↔ physical label ↔ insert</b> ground-truth corpus almost no registrar can assemble. The photo does double duty: it feeds the miner <i>and</i> it <b>verifies</b> the extracted insert against the physical artifact — machine ground truth (WS4). The barcode, the label, and the leaflet in one frame is the binding evidence.
+</div>
+
+<h2>6 · Outputs — ingest-ready, no spreadsheet</h2>
+<p>Per insert, candidate records carrying <code>status</code> (candidate | ratified) and provenance (source, extractor version, timestamp):</p>
+<pre><code>gdti_candidate   { gdti_urn, doc_type?, regime, issuer_pgln?, bound_gtin, status:"candidate" }
+section[]        { section_code, regime, heading_verbatim, text_pointer, fields{…} }
+binding_set      { type:"SAFETY",
+                   adverse_reactions[], contraindications[], allergens[],
+                   interactions[ {subject_gtin, object_substance?, candidate:true} ] }
+provenance       { source_url|photo_asset_id, extractor_ver, ts, sanctioned:true }</code></pre>
+
+<h2>7 · Integration &amp; shape of the code</h2>
+<ul>
+  <li>Extend <code>docmine.py</code> with an <code>--insert</code> mode + a shared <code>section_grammar.py</code> (regime detection + per-regime headers). Don’t fork the PDF extraction.</li>
+  <li>Reuse the meta-configurator engine for the four shapes — the regulated-document template is a new entry in <code>TEMPLATES</code>, not new engine code.</li>
+  <li>Wire into <code>website_agent</code> as <b>stage I</b>: documents that stage M classifies as inserts route to the insert-miner.</li>
+  <li>Emit to the same ingest-ready record path Stage B/5 already uses.</li>
+</ul>
+<div class="flow">
+  <span class="node">harvest</span><span class="arr">▶</span>
+  <span class="node">stage M · docmine</span><span class="arr">▶</span>
+  <span class="node">is-insert?</span><span class="arr">▶</span>
+  <span class="node">stage I · insert-miner</span><span class="arr">▶</span>
+  <span class="node">SAFETY binding</span><span class="arr">▶</span>
+  <span class="node">stage 5 · root</span>
+</div>
+
+<h2>8 · IP to flag <span class="small">(standing task — route through counsel before reliance)</span></h2>
+<ul>
+  <li><b>Prefix-inheritance constraint:</b> a GDTI insert inherits the bound product’s company prefix as a candidate; cross-registrant inserts are rejected. (TD-M candidate.)</li>
+  <li><b>Safety binding as graph edges:</b> interactions become substance↔substance edges enabling cross-product interaction queries. <b>Sketch core claim.</b></li>
+  <li><b>Regime-detection → SHACL-shape selection</b> for regulated documents (meta-configurator specialization).</li>
+  <li><b>Photographed-label as machine ground truth</b> verifying an extracted insert against the physical artifact. <b>Sketch core claim.</b></li>
+</ul>
+
+<h2>9 · Boundaries — what it will not do</h2>
+<ul>
+  <li>Never fabricate a GDTI prefix, doc-type code, or MedDRA/allergen code — all candidate.</li>
+  <li>No medical advice, no interpretation of the insert — extract and bind structure only.</li>
+  <li>Simulated inserts stay sim-lane; never enter the registry as truth.</li>
+  <li>No engineering around bot-blocks — sanctioned fetch or provided assets only.</li>
+  <li>Copyright: hold pointers + structured fields, not full-text republication (map-to-nothing).</li>
+</ul>
+
+<footer>
+  Insert-miner spec · ThingDaddy WS2 extractor · candidate-until-ratified throughout ·
+  awaiting go to move Cowork → Code. Recommended first slice: <b>section_grammar.py + docmine --insert on one Supplement Facts + one OTC Drug Facts document</b>, prove regime detection and the SAFETY binding before the Rx PI shapes.
+</footer>
+
+</div>
+</body>
+</html>

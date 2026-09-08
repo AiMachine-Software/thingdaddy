@@ -1,0 +1,472 @@
+
+promote_harvest_to_stage   DRY   2026-09-06 11:39:11
+  thingdaddy_harvest (gudid)  ->  thingdaddy_run
+  ONE PREFIX = ONE THINGSITE. This promotes a prefix, never a company.
+  It does not create or merge party rows, and the harvest is read only.
+
+PREFLIGHT
+  party_event    present · 9 columns
+  party_origin   present · 8 columns
+  company_key    present · 6 columns
+  harvest_row.grade ABSENT — grade is read from doc_claim.grade only
+  doc_claim      present · 16 columns
+  constraints on party: 5
+  constraints on company_prefix: 6
+
+QUEUE  300 register (duns, prefix) row(s)
+
+REFUSALS BY GATE          (the gate refusing is the product)
+  length     0
+  licence    40  (mixed-issuing-agency 40)
+  gln        0
+  prefix     140  (held-elsewhere 67 · shared-on-register 73)
+  party      26  (holds-other-prefix 26)
+  slot       0
+
+  REFUSED  9067981      gudid:081049410              party/holds-other-prefix
+           party 4148276 was admitted for prefix 9302340 earlier in this queue. A party may hold several prefixes, but each is its own row — this promote would overwrite one.
+  REFUSED  081726602    gudid:180587883              party/holds-other-prefix
+           party 4081692 already holds prefix 0817266020. A party may hold several prefixes, but each is its own row — this promote would overwrite one.
+  REFUSED  081000566    gudid:047486041              party/holds-other-prefix
+           party 4148285 was admitted for prefix 081400802 earlier in this queue. A party may hold several prefixes, but each is its own row — this promote would overwrite one.
+  REFUSED  8302340      gudid:081049410              party/holds-other-prefix
+           party 4148276 was admitted for prefix 9302340 earlier in this queue. A party may hold several prefixes, but each is its own row — this promote would overwrite one.
+  REFUSED  8067981      gudid:081049410              party/holds-other-prefix
+           party 4148276 was admitted for prefix 9302340 earlier in this queue. A party may hold several prefixes, but each is its own row — this promote would overwrite one.
+  REFUSED  4617503106   gudid:680004711              party/holds-other-prefix
+           party 4154013 was admitted for prefix 4617503109 earlier in this queue. A party may hold several prefixes, but each is its own row — this promote would overwrite one.
+  REFUSED  4617503105   gudid:680004711              party/holds-other-prefix
+           party 4154013 was admitted for prefix 4617503109 earlier in this queue. A party may hold several prefixes, but each is its own row — this promote would overwrite one.
+  REFUSED  4617503104   gudid:680004711              party/holds-other-prefix
+           party 4154013 was admitted for prefix 4617503109 earlier in this queue. A party may hold several prefixes, but each is its own row — this promote would overwrite one.
+  REFUSED  4617503103   gudid:680004711              party/holds-other-prefix
+           party 4154013 was admitted for prefix 4617503109 earlier in this queue. A party may hold several prefixes, but each is its own row — this promote would overwrite one.
+  REFUSED  4617503102   gudid:680004711              party/holds-other-prefix
+           party 4154013 was admitted for prefix 4617503109 earlier in this queue. A party may hold several prefixes, but each is its own row — this promote would overwrite one.
+  REFUSED  4617503100   gudid:680004711              party/holds-other-prefix
+           party 4154013 was admitted for prefix 4617503109 earlier in this queue. A party may hold several prefixes, but each is its own row — this promote would overwrite one.
+  REFUSED  0001807      gudid:421286946              party/holds-other-prefix
+           party 4081796 was admitted for prefix 457200311 earlier in this queue. A party may hold several prefixes, but each is its own row — this promote would overwrite one.
+  ... 14 more under party
+  REFUSED  697456774    gudid:542972552              prefix/held-elsewhere
+           prefix 697456774 is already on party 4081163 (Wuxi Emsrun Technology Co., Ltd.) via party.prefix, no harvest key points there. This company is 'gudid:542972552' -> party 4153972. One prefix, one row. Not resolved here — this is KJ's.
+  REFUSED  697352187    gudid:544328369              prefix/held-elsewhere
+           prefix 697352187 is already on party 4083196 (Shenzhen Vistar Medical Supplies Co.,Ltd.) via party.prefix, no harvest key points there. This company is 'gudid:544328369' -> party 4153973. One prefix, one row. Not resolved here — this is KJ's.
+  REFUSED  37003869     gudid:260324876              prefix/held-elsewhere
+           prefix 37003869 is already on party 4163258 (瑞士史赛克有限公司) via company_prefix, no harvest key points there. This company is 'gudid:260324876' -> party 4148278. One prefix, one row. Not resolved here — this is KJ's.
+  REFUSED  0884521      gudid:058614483              prefix/shared-on-register
+           prefix 0884521 is held by 11 companies on the register itself. One prefix, one row applies before it reaches the run; a shared cut is not a root. Not resolved here — this is KJ's.
+  REFUSED  0884521      gudid:080935429              prefix/shared-on-register
+           prefix 0884521 is held by 11 companies on the register itself. One prefix, one row applies before it reaches the run; a shared cut is not a root. Not resolved here — this is KJ's.
+  REFUSED  08652920001  gudid:611739603              prefix/held-elsewhere
+           prefix 08652920001 is already on party 4089610 (AED BRANDS, LLC) via party.prefix, no harvest key points there. This company is 'gudid:611739603' -> party 4153976. One prefix, one row. Not resolved here — this is KJ's.
+  REFUSED  08621460003  gudid:109509435              prefix/held-elsewhere
+           prefix 08621460003 is already on party 4088264 (AIRWAYS DEVELOPMENT COMPANY LLC) via party.prefix, no harvest key points there. This company is 'gudid:109509435' -> party 4153977. One prefix, one row. Not resolved here — this is KJ's.
+  REFUSED  08600079606  gudid:079148338              prefix/held-elsewhere
+           prefix 08600079606 is already on party 4090370 (Nirmidas Biotech, Inc.) via party.prefix, no harvest key points there. This company is 'gudid:079148338' -> party 4153978. One prefix, one row. Not resolved here — this is KJ's.
+  REFUSED  08600064154  gudid:081162949              prefix/held-elsewhere
+           prefix 08600064154 is already on party 4089670 (U Smile Dental LLC) via party.prefix, no harvest key points there. This company is 'gudid:081162949' -> party 4153979. One prefix, one row. Not resolved here — this is KJ's.
+  REFUSED  08600024419  gudid:030868250              prefix/held-elsewhere
+           prefix 08600024419 is already on party 4089078 (CAGENIX, INC.) via party.prefix, no harvest key points there. This company is 'gudid:030868250' -> party 4153980. One prefix, one row. Not resolved here — this is KJ's.
+  REFUSED  08600023070  gudid:128532707              prefix/held-elsewhere
+           prefix 08600023070 is already on party 4089052 (DDC TECHNOLOGIES, INC.) via party.prefix, no harvest key points there. This company is 'gudid:128532707' -> party 4153981. One prefix, one row. Not resolved here — this is KJ's.
+  REFUSED  0859598007   gudid:032086267              prefix/held-elsewhere
+           prefix 0859598007 is already on party 4086895 (CONTOUR HEALER, LLC) via party.prefix, no harvest key points there. This company is 'gudid:032086267' -> party 4153983. One prefix, one row. Not resolved here — this is KJ's.
+  ... 128 more under prefix
+  REFUSED  0850470007   gudid:627212587              licence/mixed-issuing-agency
+           prefix 0850470007: the labeler's devices name more than one issuing agency — NMPA GS1=300, MA码（IDcode）=2. A licence is read whole or not at all.
+           also prefix/held-elsewhere: prefix 0850470007 is already on party 4084873 (RESTORATION ROBOTICS, INC.) via party.prefix, no harvest key points there. This company is 'gudid:627212587' -> party 4153989. One prefix, one row. Not resolved here — this is KJ's.
+  REFUSED  08432101     gudid:078331322              licence/mixed-issuing-agency
+           prefix 08432101: the labeler's devices name more than one issuing agency — GUDID GS1=4293, HIBCC=1870. A licence is read whole or not at all.
+           also prefix/shared-on-register: prefix 08432101 is held by 2 companies on the register itself. One prefix, one row applies before it reaches the run; a shared cut is not a root. Not resolved here — this is KJ's.
+  REFUSED  0697660      gudid:257382580              licence/mixed-issuing-agency
+           prefix 0697660: the labeler's devices name more than one issuing agency — GUDID GS1=227, HIBCC=53. A licence is read whole or not at all.
+           also prefix/held-elsewhere: prefix 0697660 is already on party 4152365 (Oculo-Plastik, Inc.) via company_prefix, no harvest key points there. This company is 'gudid:257382580' -> party 4152646. One prefix, one row. Not resolved here — this is KJ's.
+  REFUSED  030404       gudid:012430880              licence/mixed-issuing-agency
+           prefix 030404: the labeler's devices name more than one issuing agency — GUDID GS1=9311, HIBCC=2479. A licence is read whole or not at all.
+           also prefix/shared-on-register: prefix 030404 is held by 2 companies on the register itself. One prefix, one row applies before it reaches the run; a shared cut is not a root. Not resolved here — this is KJ's.
+  REFUSED  69474624     gudid:529309049              licence/mixed-issuing-agency
+           prefix 69474624: the labeler's devices name more than one issuing agency — GUDID GS1=454, HIBCC=16. A licence is read whole or not at all.
+           also prefix/shared-on-register: prefix 69474624 is held by 2 companies on the register itself. One prefix, one row applies before it reaches the run; a shared cut is not a root. Not resolved here — this is KJ's.
+  REFUSED  590799609    gudid:422528088              licence/mixed-issuing-agency
+           prefix 590799609: the labeler's devices name more than one issuing agency — NMPA GS1=300, MA码（IDcode）=2. A licence is read whole or not at all.
+  REFUSED  59039996     gudid:422528088              licence/mixed-issuing-agency
+           prefix 59039996: the labeler's devices name more than one issuing agency — NMPA GS1=300, MA码（IDcode）=2. A licence is read whole or not at all.
+  REFUSED  0888277      gudid:025460908              licence/mixed-issuing-agency
+           prefix 0888277: the labeler's devices name more than one issuing agency — GUDID GS1=264002, HIBCC=61. A licence is read whole or not at all.
+           also prefix/shared-on-register: prefix 0888277 is held by 4 companies on the register itself. One prefix, one row applies before it reaches the run; a shared cut is not a root. Not resolved here — this is KJ's.
+  REFUSED  0884389      gudid:025460908              licence/mixed-issuing-agency
+           prefix 0884389: the labeler's devices name more than one issuing agency — GUDID GS1=262613, HIBCC=61. A licence is read whole or not at all.
+           also prefix/shared-on-register: prefix 0884389 is held by 3 companies on the register itself. One prefix, one row applies before it reaches the run; a shared cut is not a root. Not resolved here — this is KJ's.
+  REFUSED  0080196      gudid:025460908              licence/mixed-issuing-agency
+           prefix 0080196: the labeler's devices name more than one issuing agency — GUDID GS1=262841, HIBCC=61. A licence is read whole or not at all.
+           also prefix/shared-on-register: prefix 0080196 is held by 5 companies on the register itself. One prefix, one row applies before it reaches the run; a shared cut is not a root. Not resolved here — this is KJ's.
+  REFUSED  08464460     gudid:830432451              licence/mixed-issuing-agency
+           prefix 08464460: the labeler's devices name more than one issuing agency — NMPA GS1=68, MA码（IDcode）=1. A licence is read whole or not at all.
+           also prefix/shared-on-register: prefix 08464460 is held by 2 companies on the register itself. One prefix, one row applies before it reaches the run; a shared cut is not a root. Not resolved here — this is KJ's.
+  REFUSED  08401613     gudid:064783913              licence/mixed-issuing-agency
+           prefix 08401613: the labeler's devices name more than one issuing agency — GUDID GS1=730, HIBCC=239. A licence is read whole or not at all.
+           also prefix/held-elsewhere: prefix 08401613 is already on party 4082454 (ZIRC DENTAL PRODUCTS, INC.) via party.prefix, no harvest key points there. This company is 'gudid:064783913' -> party 4148249. One prefix, one row. Not resolved here — this is KJ's.
+  ... 28 more under licence
+
+ADMITTED   89
+  9302340      gudid:081049410              -> party 4148276 (company_key:duns) candidate  gcp-length-table  0 kind(s)  2 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=99) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  8717213      gudid:415269930              -> party 4148277 (company_key:duns) candidate  gcp-length-table  0 kind(s)  2146 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID+NMPA (GUDID GS1=2147; NMPA GS1=190) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  697930325    gudid:703747799              -> party 4153971 (company_key:duns) candidate  gcp-length-table  0 kind(s)  30 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=30) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  457200311    gudid:421286946              -> party 4081796 (company_key:duns) candidate  gcp-length-table  0 kind(s)  1 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=547) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  309001       gudid:748499503              -> party 4153974 (company_key:duns) candidate  gcp-length-table  0 kind(s)  1 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=1) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  08600009060  gudid:013799942              -> party 4153982 (company_key:duns) candidate  gcp-length-table  0 kind(s)  7 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=20) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0855113008   gudid:070659539              -> party 4148279 (company_key:duns) candidate  gcp-length-table  0 kind(s)  52 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=54) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0851629008   gudid:606696123              -> party 4153988 (company_key:duns) candidate  gcp-length-table  0 kind(s)  4 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=4) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0850025473   gudid:080448429              -> party 4153990 (company_key:duns) candidate  gcp-length-table  0 kind(s)  75 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=161) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0850010779   gudid:002182269              -> party 4148280 (company_key:duns) candidate  gcp-length-table  0 kind(s)  32 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=33) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  08420001     gudid:065626069              -> party 4148282 (company_key:duns) candidate  gcp-length-table  0 kind(s)  81 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=81) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  08417471     gudid:623191137              -> party 4148283 (company_key:duns) candidate  gcp-length-table  0 kind(s)  557 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=21926) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  08401069     gudid:063142533              -> party 4153994 (company_key:duns) candidate  gcp-length-table  0 kind(s)  178 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=192) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  081780002    gudid:968188644              -> party 4153996 (company_key:duns) candidate  gcp-length-table  0 kind(s)  46 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=46) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  081769802    gudid:079452927              -> party 4148284 (company_key:duns) candidate  gcp-length-table  0 kind(s)  41 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=41) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  081518702    gudid:147035427              -> party 4154000 (company_key:duns) candidate  gcp-length-table  0 kind(s)  55 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=55) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  081427702    gudid:019677418              -> party 4154001 (company_key:duns) candidate  gcp-length-table  0 kind(s)  16 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=44) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  081400802    gudid:047486041              -> party 4148285 (company_key:duns) candidate  gcp-length-table  0 kind(s)  980 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=1777) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  081383002    gudid:088302096              -> party 4154002 (company_key:duns) candidate  gcp-length-table  0 kind(s)  649 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=661) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  081218503    gudid:051437143              -> party 4154003 (company_key:duns) candidate  gcp-length-table  0 kind(s)  518 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=582) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  809943110001 gudid:695541211              -> party 4154005 (company_key:duns) candidate  gcp-length-table  0 kind(s)  1 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=1) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  8000571      gudid:689848555              -> party 4154006 (company_key:duns) candidate  gcp-length-table  0 kind(s)  1 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=3204) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  8000427      gudid:688360116              -> party 4148287 (company_key:duns) candidate  gcp-length-table  0 kind(s)  2 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=284) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  8000163      gudid:689605712              -> party 4154007 (company_key:duns) candidate  gcp-length-table  0 kind(s)  63 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=63) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  600059       gudid:079142095              -> party 4154012 (company_key:duns) candidate  gcp-length-table  0 kind(s)  1 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=2) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  4617503109   gudid:680004711              -> party 4154013 (company_key:duns) candidate  gcp-length-table  0 kind(s)  1 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=7) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  4127718      gudid:004072158              -> party 4081898 (company_key:duns) candidate  gcp-length-table  0 kind(s)  1 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=351) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0850034007   gudid:061455809              -> party 4148291 (company_key:duns) candidate  gcp-length-table  0 kind(s)  38 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=66) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0850031761   gudid:081523806              -> party 4081456 (company_key:duns) candidate  gcp-length-table  0 kind(s)  99 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=114) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0850015266   gudid:969842715              -> party 4154020 (company_key:duns) candidate  gcp-length-table  0 kind(s)  111 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=226) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  08453570     gudid:060467826              -> party 4081558 (company_key:duns) candidate  gcp-length-table  0 kind(s)  1787 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=1846) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  081315002    gudid:002111896              -> party 4081770 (company_key:duns) candidate  gcp-length-table  0 kind(s)  284 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=785) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  038627       gudid:123160736              -> party 4148292 (company_key:duns) candidate  gcp-length-table  0 kind(s)  151 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=152) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  030536       gudid:079246066              -> party 4154022 (company_key:duns) candidate  gcp-length-table  0 kind(s)  2 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=3) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  8600000      gudid:082013897              -> party 4154026 (company_key:duns) candidate  gcp-length-table  0 kind(s)  7 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=7) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  7290018240   gudid:600627621              -> party 4154028 (company_key:duns) candidate  gcp-length-table  0 kind(s)  8 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=8) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  640214       gudid:480035934              -> party 4154029 (company_key:duns) candidate  gcp-length-table  0 kind(s)  2 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=17) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  540295       gudid:203297635              -> party 4154030 (company_key:duns) candidate  gcp-length-table  0 kind(s)  55 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=101) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  5401622      gudid:243267198              -> party 4154031 (company_key:duns) candidate  gcp-length-table  0 kind(s)  12 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=12) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  506043219    gudid:219706976              -> party 4154032 (company_key:duns) candidate  gcp-length-table  0 kind(s)  8 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=8) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  50560304     gudid:504799313              -> party 4154033 (company_key:duns) candidate  gcp-length-table  0 kind(s)  171 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=172) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  471987491    gudid:658605845              -> party 4154036 (company_key:duns) candidate  gcp-length-table  0 kind(s)  2 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=2) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  4665329793   gudid:817435655              -> party 4081829 (company_key:duns) candidate  gcp-length-table  0 kind(s)  1 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=115) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  42501792     gudid:330956525              -> party 4154037 (company_key:duns) candidate  gcp-length-table  0 kind(s)  2 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=2) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0885672      gudid:101835833              -> party 4081236 (company_key:duns) candidate  gcp-length-table  0 kind(s)  868 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID+NMPA (GUDID GS1=1229; NMPA GS1=16355) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0857182006   gudid:792740578              -> party 4148297 (company_key:duns) candidate  gcp-length-table  0 kind(s)  44 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=56) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0188151000   gudid:038838914              -> party 4154049 (company_key:duns) candidate  gcp-length-table  0 kind(s)  4 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=4) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  805188704    gudid:338430324              -> party 4081071 (company_key:duns) candidate  gcp-length-table  0 kind(s)  18 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=97) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  506055744    gudid:222357455              -> party 4154055 (company_key:duns) candidate  gcp-length-table  0 kind(s)  35 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=35) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  506027298    gudid:058614483              -> party 4081046 (company_key:duns) candidate  gcp-length-table  0 kind(s)  14 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID+NMPA (GUDID GS1=9768; NMPA GS1=4978) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0889978      gudid:793169512              -> party 4154059 (company_key:duns) candidate  gcp-length-table  0 kind(s)  237 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=1401) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  081017270    gudid:117617770              -> party 4154064 (company_key:duns) candidate  gcp-length-table  0 kind(s)  27 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=27) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0192156      gudid:019796106              -> party 4154065 (company_key:duns) candidate  gcp-length-table  0 kind(s)  13 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=122) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0047701      gudid:153818646              -> party 4154066 (company_key:duns) candidate  gcp-length-table  4 kind(s)  43 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=46) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  8903389      gudid:650051832              -> party 4154068 (company_key:duns) candidate  gcp-length-table  0 kind(s)  32 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=32) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  88863547     gudid:628380248              -> party 4154069 (company_key:duns) candidate  gcp-length-table  0 kind(s)  50 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=50) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  805979636    gudid:434263590              -> party 4148306 (company_key:duns) candidate  gcp-length-table  0 kind(s)  9 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=34) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  803291989    gudid:459310140              -> party 4154071 (company_key:duns) candidate  gcp-length-table  0 kind(s)  58 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID+NMPA (GUDID GS1=58; NMPA GS1=95) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  506080832    gudid:225424353              -> party 4154078 (company_key:duns) candidate  gcp-length-table  0 kind(s)  10 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=10) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  4040347      gudid:400876409              -> party 4154082 (company_key:duns) candidate  gcp-length-table  0 kind(s)  10 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=20) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0850039930   gudid:080919105              -> party 4154086 (company_key:duns) candidate  gcp-length-table  0 kind(s)  12 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=12) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  08490270     gudid:078572603              -> party 4154087 (company_key:duns) candidate  gcp-length-table  0 kind(s)  322 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=322) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  081057200    gudid:079434709              -> party 4081560 (company_key:duns) candidate  gcp-length-table  0 kind(s)  137 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=137) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0714880      gudid:157412271              -> party 4148307 (company_key:duns) candidate  gcp-length-table  0 kind(s)  1 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=12458) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0699753      gudid:177655466              -> party 4154094 (company_key:duns) candidate  gcp-length-table  0 kind(s)  5865 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID+NMPA (GUDID GS1=5991; NMPA GS1=901) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0686004      gudid:805602950              -> party 4154095 (company_key:duns) candidate  gcp-length-table  0 kind(s)  10 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=10) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0666519      gudid:031274363              -> party 4154096 (company_key:duns) candidate  gcp-length-table  4 kind(s)  2 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=2) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0608223      gudid:830016148              -> party 4081048 (company_key:duns) candidate  gcp-length-table  0 kind(s)  99 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=3259) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0607799      gudid:002092976              -> party 4154100 (company_key:duns) candidate  gcp-length-table  0 kind(s)  1 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=785) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0607514      gudid:218519521              -> party 4154101 (company_key:duns) candidate  gcp-length-table  0 kind(s)  2 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=2) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0606318      gudid:349371893              -> party 4154102 (company_key:duns) candidate  gcp-length-table  0 kind(s)  8 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=53) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0603468      gudid:216734283              -> party 4154103 (company_key:duns) candidate  gcp-length-table  0 kind(s)  18 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=18) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0601557      gudid:424382307              -> party 4148318 (company_key:duns) candidate  gcp-length-table  0 kind(s)  36 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=147) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0051119      gudid:080644849              -> party 4154098 (company_key:duns) candidate  gcp-length-table  0 kind(s)  1 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=95) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  8101419      gudid:119042597              -> party 4154108 (company_key:duns) candidate  gcp-length-table  0 kind(s)  1 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=349) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  7290013030   gudid:533390019              -> party 4154041 (company_key:duns) candidate  gcp-length-table  0 kind(s)  6 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID+NMPA (GUDID GS1=7; NMPA GS1=286) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  5999883586   gudid:427395277              -> party 4148321 (company_key:duns) candidate  gcp-length-table  0 kind(s)  27 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=35) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  456014193    gudid:692076161              -> party 4154117 (company_key:duns) candidate  gcp-length-table  0 kind(s)  57 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID+NMPA (GUDID GS1=169; NMPA GS1=3) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0859619004   gudid:078294927              -> party 4154122 (company_key:duns) candidate  gcp-length-table  0 kind(s)  15 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=69) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0857596005   gudid:832920099              -> party 4154123 (company_key:duns) candidate  gcp-length-table  0 kind(s)  11 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=11) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0854629006   gudid:079471560              -> party 4148323 (company_key:duns) candidate  gcp-length-table  0 kind(s)  70 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=88) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0852212003   gudid:199692794              -> party 4148324 (company_key:duns) candidate  gcp-length-table  0 kind(s)  63 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=859) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0850877007   gudid:011702541              -> party 4154128 (company_key:duns) candidate  gcp-length-table  0 kind(s)  4 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=4) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0850724001   gudid:075390489              -> party 4154129 (company_key:duns) candidate  gcp-length-table  0 kind(s)  59 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=60) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  08424181     gudid:806806220              -> party 4154131 (company_key:duns) candidate  gcp-length-table  0 kind(s)  458 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=458) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  08417671     gudid:154424043              -> party 4154132 (company_key:duns) candidate  gcp-length-table  4 kind(s)  386 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=390) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0797876      gudid:153880372              -> party 4154134 (company_key:duns) candidate  gcp-length-table  0 kind(s)  27 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=27) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0749915      gudid:151054954              -> party 4154135 (company_key:duns) candidate  gcp-length-table  0 kind(s)  180 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=180) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+  0704411      gudid:825673239              -> party 4154136 (company_key:duns) candidate  gcp-length-table  0 kind(s)  881 devices
+               state is candidate: root_method-gcp-length-table-is-not-a-hand-read
+               licence GS1 Company Prefix read from regulator:GUDID (GUDID GS1=881) — KJ ruling 2026-08-30
+               company_prefix row already there; party.prefix will be set
+UNCHANGED  5   (already promoted; this tool is idempotent)
+REFUSED    206
+
+DRY RUN. Nothing was written. Add --apply --i-am-kj to write.

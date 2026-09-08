@@ -1,0 +1,5 @@
+id,party_id,event_type,from_state,to_state,detail,source,actor,at
+90847,4090838,verified,,verified,"{""via"": ""GEPIR 2026-08-05"", ""prefix"": ""081577302""}",gepir_thermo,manual,2026-08-05 19:22:38.009842+07
+90848,4090839,verified,,verified,"{""via"": ""GEPIR 2026-08-05"", ""prefix"": ""081693402""}",gepir_thermo,manual,2026-08-05 19:22:38.009842+07
+90856,4090847,verified,,verified,"{""gln"": ""0816270020002"", ""via"": ""GEPIR hand-check 2026-08-05"", ""prefix"": ""081627002""}",gepir_illumina,manual,2026-08-05 20:28:46.269057+07
+90937,4153997,prefix_claimed,,,"{""state"": ""candidate"", ""prefix"": ""0817089"", ""stage_id"": 10382, ""n_devices"": 184, ""root_method"": ""hand-read""}",promote_stage_to_production,KJ,2026-09-04 16:37:42.904592+07

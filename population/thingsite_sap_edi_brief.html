@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ThingSite × SAP × EDI — Integration Brief</title>
+<style>
+  :root{--ink:#14181d;--muted:#5b6570;--line:#e2e7ec;--bg:#fbfcfd;--accent:#0a6ed1;--sap:#0a6ed1;--gs1:#f26334;--go:#137a4c;--gold:#9a6b00;--goldbg:#fbf3e0;--code:#0d1117;--codeink:#e6edf3}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.62 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:860px;margin:0 auto;padding:44px 26px 100px}
+  .kick{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  h1{font-size:30px;line-height:1.14;margin:10px 0 4px;letter-spacing:-.01em}
+  .dek{font-size:18px;color:var(--muted);font-style:italic;margin:0}
+  .meta{font-size:13px;color:var(--muted);margin-top:12px}
+  h2{font:700 13px/1.3 -apple-system,Segoe UI,Roboto,sans-serif;letter-spacing:.09em;text-transform:uppercase;margin:38px 0 6px;border-top:2px solid var(--ink);padding-top:15px}
+  h2 .n{color:var(--accent);margin-right:9px}
+  h3{font-size:16px;margin:20px 0 4px}
+  p{margin:12px 0}
+  .lead{font-size:18px;line-height:1.58}
+  strong{font-weight:700}
+  em{color:#2a2f34}
+  code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;background:#eef1f4;padding:1px 5px;border-radius:4px}
+  table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px}
+  th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+  th{background:#eef4fb;font-weight:600}
+  td code{font-size:12.5px}
+  .pull{background:var(--goldbg);border-radius:10px;padding:18px 20px;margin:22px 0;font:600 18px/1.5 Georgia,serif;color:#3a2f12}
+  .callout{border-left:4px solid var(--accent);background:#eef4fb;padding:12px 16px;border-radius:0 8px 8px 0;margin:16px 0}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0;font-size:13px}
+  .flow .node{background:#fff;border:1px solid var(--line);border-radius:7px;padding:7px 11px;font-weight:600}
+  .flow .node.sap{border-color:var(--sap);color:var(--sap)}
+  .flow .node.ts{border-color:var(--gs1);color:var(--gs1)}
+  .flow .arr{color:var(--muted)}
+  .honest{border-left:4px solid var(--go);background:#eef8f1;padding:13px 17px;border-radius:0 8px 8px 0;margin:16px 0;font-size:15px;line-height:1.55}
+  .small{font-size:13px;color:var(--muted)}
+  footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="kick">ThingDaddy · Integration Brief · for the GA conversation</div>
+<h1>The identity layer SAP doesn't have</h1>
+<p class="dek">SAP is your system of record inside your four walls. The ThingSite is the registrar that makes its identity interoperable across every trading partner — and reconcilable against the physical event.</p>
+<p class="meta">ThingSite × SAP × EDI × EPCIS · 2026-07-20</p>
+
+<p class="lead">Every object your SAP landscape lives in — material, business partner, plant, batch, handling unit — <strong>already carries a GS1 identity.</strong> SAP holds it; SAP just can't share it. Across two trading partners, two material masters describe the same product and never reconcile. That gap is measurable: on GS1's own network, data-pool interoperability sits at <strong>7.5%</strong>. The ThingSite is the vendor-neutral registrar both SAP instances map to, so the GTIN on your PO resolves to the <em>same</em> candidate-until-ratified identity your supplier's SAP sees.</p>
+
+<h2><span class="n">01</span>SAP is the identity — the ThingSite makes it portable</h2>
+<p>No new data entry. The ThingSite reads the identity that is <em>already</em> in the SAP master data and mirrors it onto one shared spine:</p>
+<table>
+  <tr><th>SAP object</th><th>Where it lives</th><th>GS1 identity</th><th>ThingSite slot</th></tr>
+  <tr><td>Material Master</td><td><code>MARA-EAN11</code> / <code>MEAN</code></td><td>GTIN / SGTIN</td><td>P1 · Product</td></tr>
+  <tr><td>Business Partner (vendor / customer)</td><td>BP / <code>LFA1</code> / <code>KNA1</code> address</td><td>PGLN / GLN</td><td>P1 · Party</td></tr>
+  <tr><td>Plant / Shipping Point</td><td><code>T001W</code> / <code>ADRC</code></td><td>GLN / SGLN</td><td>Location</td></tr>
+  <tr><td>Batch</td><td>batch master / classification</td><td>LGTIN</td><td>Product (lot)</td></tr>
+  <tr><td>Handling Unit</td><td>HU management</td><td>SSCC</td><td>Logistics</td></tr>
+  <tr><td>Component / instrument part</td><td>BOM / equipment master</td><td>CPID / GIAI</td><td>P2 · Instrument</td></tr>
+</table>
+<p class="callout"><strong>The discipline that matters to a data owner:</strong> the ThingSite never mints your identities. It <em>admits</em> what SAP already carries as a <strong>candidate</strong>, and only the answerable party (you) ratifies it. A registrar stricter than the standard, never looser — nothing fabricated, nothing guessed.</p>
+
+<h2><span class="n">02</span>The EDI event chain, resolving on one spine</h2>
+<p>Every EDI document you already exchange carries those identities. The ThingSite is where they resolve — the same key SAP posts as a transaction, the ThingSite resolves as an identity endpoint:</p>
+<table>
+  <tr><th>Transaction</th><th>SAP IDoc</th><th>X12 / EDIFACT</th><th>Identities it carries</th></tr>
+  <tr><td>Purchase Order</td><td><code>ORDERS</code></td><td>850 / ORDERS</td><td>vendor PGLN, ship-to GLN, item GTINs</td></tr>
+  <tr><td>PO Acknowledgement</td><td><code>ORDRSP</code></td><td>855 / ORDRSP</td><td>same, confirmed</td></tr>
+  <tr><td>Advance Ship Notice</td><td><code>DESADV</code></td><td>856 / DESADV</td><td><strong>SSCC</strong> (pallet/HU), GTINs, batch LGTIN, ship-from/to GLN</td></tr>
+  <tr><td>Invoice</td><td><code>INVOIC</code></td><td>810 / INVOIC</td><td>GTINs, GLNs, PGLN</td></tr>
+</table>
+<div class="flow">
+  <span class="node sap">SAP PO (ORDERS/850)</span><span class="arr">▶</span>
+  <span class="node ts">ThingSite resolves GTIN·GLN·PGLN</span><span class="arr">▶</span>
+  <span class="node sap">ASN (DESADV/856) · SSCC</span><span class="arr">▶</span>
+  <span class="node sap">Invoice (INVOIC/810)</span>
+</div>
+
+<h2><span class="n">03</span>The physical bridge SAP doesn't have — EPCIS</h2>
+<p>SAP posts a goods issue and a goods receipt. It does not, natively, reconcile those postings against the <em>physical scan</em> at the dock. Our EPCIS 2.0 engine does — the <strong>SSCC on the DESADV</strong> becomes an EPCIS <em>shipping</em> event; the scan at receiving becomes a <em>receiving</em> event; the ThingSite reconciles both against the SAP goods movement. Discrepancy surfaces as a discrepancy, not a silent mismatch.</p>
+<p class="small">The engine enforces the GS1 CBV as a closed vocabulary (unknown term throws), fails closed (a rejected post leaves the store structurally unchanged), and never defaults an event time — a defaulted timestamp in a custody chain is a guess. Registrar discipline, in the transaction layer.</p>
+<div class="flow">
+  <span class="node sap">SAP goods issue</span><span class="arr">↔</span>
+  <span class="node ts">EPCIS shipping event (SSCC)</span><span class="arr">…dock scan…</span>
+  <span class="node ts">EPCIS receiving event</span><span class="arr">↔</span>
+  <span class="node sap">SAP goods receipt</span>
+</div>
+
+<h2><span class="n">04</span>The loop closes at the pallet</h2>
+<p>The <strong>SSCC on the DESADV/856 is the smart pallet.</strong> In the EDI/SAP trading-partner agreement, the platform attribute — wood, block, plastic — is a rule that fires a <strong>repalletization</strong>. Retailer mandates (Sam's Club's 2025 block mandate, Costco) make it a ratchet. Each pallet is a GRAI; CHEP alone pools ~300 million. EDI, SAP, EPCIS, and the returnable asset are one chain — and it runs through the ThingSite.</p>
+
+<h2><span class="n">05</span>Why us — you're talking to the person who built it</h2>
+<p>This is not an SAP integration pitched to an SAP expert. The founder <strong>built the SAP trading-partner platform rule</strong> — the EDI-driven logic that reads the agreement and triggers repalletization — for PepsiCo, and it went into RedPrairie WMS. He holds the patents that link the layers you live in:</p>
+<ul>
+  <li><strong>US 2002/0049790</strong> — expressing EDI content as XML via a data dictionary (EDI ⇄ structured data)</li>
+  <li><strong>US 2008/0154656</strong> — joining RFID/EPC tag data with business documents into one structure and back</li>
+  <li><strong>US 2006/0124722</strong> — "ThingsNet": product tags, a relationship repository, and EPCIS, linked to EDI and ERP/SAP</li>
+</ul>
+<div class="pull">SAP runs the enterprise. EDI moves the documents between enterprises. The ThingSite is the identity registrar that makes them reconcile — the layer neither has, from the person who already wired it once.</div>
+
+<h2><span class="n">06</span>Worked example — GA and Diazyme</h2>
+<p>A concrete slice of GA's own supply chain: GA runs the <em>270</em> protocol; <strong>Diazyme</strong> supplies the consumables it runs on. A GA→Diazyme purchase order (<code>ORDERS</code>/850) carries Diazyme's PGLN, GA's receiving-plant GLN, and the consumable GTINs. The DESADV/856 back carries the SSCC pallet and batch LGTINs. On the ThingSite, those resolve to one graph: <em>GA's instrument (GIAI) — runs the 270 protocol (GDTI) — consumes Diazyme's SGTINs — supplied by Diazyme (PGLN) — received at GA's lab (GLN)</em>. The same purchase order SAP posts as a transaction, the ThingSite holds as a relationship — and the EPCIS scan at GA's dock reconciles it against the goods receipt.</p>
+<p class="small">This example fills with live, sourced data once we run GA's and Diazyme's domains through the harvest — candidate + sourced, nothing minted.</p>
+
+<div class="honest"><b>What to hand the Director.</b> Lead with the mapping table (§01) — it proves the ThingSite speaks SAP natively, no re-keying. Land the interoperability gap (7.5%) and the physical-reconciliation bridge (§03) — those are the two things SAP genuinely does not do across partners. Close with §05 — that the founder built the SAP trading-partner rule and holds the EDI↔ERP↔RFID patents. An SAP expert will test whether you know his world; §01 and §03 prove you do.</div>
+
+<footer>
+  ThingSite × SAP × EDI × EPCIS integration brief · SAP object names indicative (S/4HANA + ECC) ·
+  candidate-until-ratified throughout; nothing minted, nothing fabricated. Powered by ThingDaddy.
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,4 @@
+name,domain,role,claim,root_status,registry_party_id,registry_prefix,mo,lei,lei_authority,name_sim,source_url
+GitLab,gitlab.com,sila-vendor,listed SiLA supporter,gleif_only,,,,894500CFLDPKVZ5Y1621,GLEIF,0,https://sila-standard.org/
+SiLA 2 Documentation,gitlab.io,sila-vendor,listed SiLA supporter,unrooted,,,,,,0,https://sila-standard.org/
+Ddw Online,ddw-online.com,sila-vendor,listed SiLA supporter,registry_candidate,4006102,,GS1 US,,,0.39,https://sila-standard.org/

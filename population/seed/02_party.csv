@@ -1,0 +1,5 @@
+id,prefix,gln,legal_name,city,country,mo,lei,state,source,exception_reason,verified_at,first_seen,last_updated,duns,is_demo,demo_urn,licence_type,licence_type_source,url,url_source,stage_ancestor,name_fold
+4090838,081577302,,Thermo Fisher Scientific (Asheville) LLC,Marietta,US,GS1 US,,verified,gepir_thermo,,2026-08-05 19:22:38.009842+07,2026-08-05 19:22:38.009842+07,2026-09-02 22:48:14.728644+07,,f,,,,,,4090838,thermofisherscientificashevillellc
+4090839,081693402,0816934020003,Thermo Fisher Scientific (Asheville) LLC,Asheville,US,GS1 US,,verified,gepir_thermo,,2026-08-05 19:22:38.009842+07,2026-08-05 19:22:38.009842+07,2026-09-02 22:48:14.728644+07,,f,,,,,,4090839,thermofisherscientificashevillellc
+4090847,081627002,0816270020002,"Illumina, Inc.",San Diego,US,GS1 US,,verified,gepir_illumina,,2026-08-05 20:28:46.269057+07,2026-08-05 20:28:46.269057+07,2026-09-02 22:48:14.728644+07,,f,,,,,,4090847,illuminainc
+4153997,0817089,,"DIAZYME LABORATORIES, INC.",,,,,candidate,GUDID,licence_type-not-read,,2026-08-30 21:07:49.212399+07,2026-09-04 16:37:42.904592+07,,f,,,,,,10382,diazymelaboratoriesinc

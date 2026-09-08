@@ -1,0 +1,4 @@
+name,domain,role,claim,source_url,state
+GitLab,gitlab.com,sila-vendor,listed SiLA supporter,https://sila-standard.org/,candidate
+SiLA 2 Documentation,gitlab.io,sila-vendor,listed SiLA supporter,https://sila-standard.org/,candidate
+Ddw Online,ddw-online.com,sila-vendor,listed SiLA supporter,https://sila-standard.org/,candidate

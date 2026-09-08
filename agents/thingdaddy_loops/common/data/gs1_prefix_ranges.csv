@@ -1,0 +1,135 @@
+lo,hi,type,mo
+0,19,MO,GS1 US
+20,29,special,Restricted circulation (RCN)
+30,39,MO,GS1 US
+40,49,special,Restricted circulation (company internal)
+50,59,special,Coupons (GS1 US)
+60,139,MO,GS1 US
+140,199,reserved,GS1 Global Office (reserved)
+200,299,special,Restricted circulation
+300,379,MO,GS1 France
+380,380,MO,GS1 Bulgaria
+383,383,MO,GS1 Slovenia
+385,385,MO,GS1 Croatia
+387,387,MO,GS1 Bosnia and Herzegovina
+389,389,MO,GS1 Montenegro
+390,390,MO,GS1 Kosovo
+400,440,MO,GS1 Germany
+450,459,MO,GS1 Japan
+460,469,MO,GS1 Russia
+470,470,MO,GS1 Kyrgyzstan
+471,471,MO,GS1 Taiwan
+474,474,MO,GS1 Estonia
+475,475,MO,GS1 Latvia
+476,476,MO,GS1 Azerbaijan
+477,477,MO,GS1 Lithuania
+478,478,MO,GS1 Uzbekistan
+479,479,MO,GS1 Sri Lanka
+480,480,MO,GS1 Philippines
+481,481,MO,GS1 Belarus
+482,482,MO,GS1 Ukraine
+483,483,MO,GS1 Turkmenistan
+484,484,MO,GS1 Moldova
+485,485,MO,GS1 Armenia
+486,486,MO,GS1 Georgia
+487,487,MO,GS1 Kazakhstan
+488,488,MO,GS1 Tajikistan
+489,489,MO,GS1 Hong Kong
+490,499,MO,GS1 Japan
+500,509,MO,GS1 UK
+520,521,MO,GS1 Association Greece
+528,528,MO,GS1 Lebanon
+529,529,MO,GS1 Cyprus
+530,530,MO,GS1 Albania
+531,531,MO,GS1 Macedonia
+535,535,MO,GS1 Malta
+539,539,MO,GS1 Ireland
+540,549,MO,GS1 Belgium & Luxembourg
+560,560,MO,GS1 Portugal
+569,569,MO,GS1 Iceland
+570,579,MO,GS1 Denmark
+590,590,MO,GS1 Poland
+594,594,MO,GS1 Romania
+599,599,MO,GS1 Hungary
+600,601,MO,GS1 South Africa
+603,603,MO,GS1 Ghana
+604,604,MO,GS1 Senegal
+608,608,MO,GS1 Bahrain
+609,609,MO,GS1 Mauritius
+611,611,MO,GS1 Morocco
+613,613,MO,GS1 Algeria
+615,615,MO,GS1 Nigeria
+616,616,MO,GS1 Kenya
+617,617,MO,GS1 Cameroon
+618,618,MO,GS1 Ivory Coast
+619,619,MO,GS1 Tunisia
+620,620,MO,GS1 Tanzania
+621,621,MO,GS1 Syria
+622,622,MO,GS1 Egypt
+623,623,MO,GS1 Brunei
+624,624,MO,GS1 Libya
+625,625,MO,GS1 Jordan
+626,626,MO,GS1 Iran
+627,627,MO,GS1 Kuwait
+628,628,MO,GS1 Saudi Arabia
+629,629,MO,GS1 Emirates
+630,630,MO,GS1 Qatar
+631,631,MO,GS1 Namibia
+640,649,MO,GS1 Finland
+690,699,MO,GS1 China
+700,709,MO,GS1 Norway
+729,729,MO,GS1 Israel
+730,739,MO,GS1 Sweden
+740,740,MO,GS1 Guatemala
+741,741,MO,GS1 El Salvador
+742,742,MO,GS1 Honduras
+743,743,MO,GS1 Nicaragua
+744,744,MO,GS1 Costa Rica
+745,745,MO,GS1 Panama
+746,746,MO,GS1 Republica Dominicana
+750,750,MO,GS1 Mexico
+754,755,MO,GS1 Canada
+759,759,MO,GS1 Venezuela
+760,769,MO,GS1 Switzerland
+770,771,MO,GS1 Colombia
+773,773,MO,GS1 Uruguay
+775,775,MO,GS1 Peru
+777,777,MO,GS1 Bolivia
+778,779,MO,GS1 Argentina
+780,780,MO,GS1 Chile
+784,784,MO,GS1 Paraguay
+786,786,MO,GS1 Ecuador
+789,790,MO,GS1 Brazil
+800,839,MO,GS1 Italy
+840,849,MO,GS1 Spain
+850,850,MO,GS1 Cuba
+858,858,MO,GS1 Slovakia
+859,859,MO,GS1 Czech Republic
+860,860,MO,GS1 Serbia
+865,865,MO,GS1 Mongolia
+867,867,MO,GS1 North Korea
+868,869,MO,GS1 Turkey
+870,879,MO,GS1 Netherlands
+880,880,MO,GS1 South Korea
+884,884,MO,GS1 Cambodia
+885,885,MO,GS1 Thailand
+888,888,MO,GS1 Singapore
+890,890,MO,GS1 India
+893,893,MO,GS1 Vietnam
+894,894,MO,GS1 Bangladesh
+896,896,MO,GS1 Pakistan
+899,899,MO,GS1 Indonesia
+900,919,MO,GS1 Austria
+930,939,MO,GS1 Australia
+940,949,MO,GS1 New Zealand
+950,950,reserved,GS1 Global Office
+951,951,special,EPC General Identifier (GID)
+952,952,special,GS1 demonstrations/examples
+955,955,MO,GS1 Malaysia
+958,958,MO,GS1 Macau
+960,969,special,GTIN-8 allocations (GS1 Global Office)
+977,977,special,ISSN (serials)
+978,979,special,Bookland (ISBN/ISMN)
+980,980,special,Refund receipts
+981,983,special,Coupons (common currency)
+990,999,special,Coupons

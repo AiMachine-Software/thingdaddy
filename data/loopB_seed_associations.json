@@ -1,0 +1,46 @@
+[
+  {
+    "anchor_type": "PGLN",
+    "anchor_id": "urn:epc:id:pgln:8806088.000001",
+    "anchor_label": "SAMSUNG ELECTRONICS CO., LTD.",
+    "industry": "Loop-B / Relationship",
+    "associations": [
+      {
+        "rel": "PARENT_OF",
+        "type": "PGLN",
+        "id": "td:edge:samsung-semiconductor-inc-",
+        "label": "Samsung Semiconductor, Inc.",
+        "state": "candidate",
+        "source": "SEC-EDGAR-EX21",
+        "inferred": false
+      },
+      {
+        "rel": "PARENT_OF",
+        "type": "PGLN",
+        "id": "td:edge:samsung-sdi-co-ltd-",
+        "label": "Samsung SDI Co., Ltd.",
+        "state": "candidate",
+        "source": "SEC-EDGAR-EX21",
+        "inferred": false
+      },
+      {
+        "rel": "SUPPLIES",
+        "type": "GLN",
+        "id": "td:edge:some-supplier-llc",
+        "label": "Some Supplier LLC",
+        "state": "exception",
+        "source": "WEB",
+        "inferred": false
+      },
+      {
+        "rel": "RELATED_TO",
+        "type": "GLN",
+        "id": "td:edge:us-federal-chips-",
+        "label": "US Federal (CHIPS)",
+        "state": "candidate",
+        "source": "INFERRED",
+        "inferred": true
+      }
+    ]
+  }
+]

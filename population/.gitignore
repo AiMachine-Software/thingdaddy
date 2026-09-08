@@ -1,0 +1,21 @@
+# --- secrets (NEVER commit) ---
+**/.env
+# --- dependencies / build ---
+**/node_modules/
+ui/dist/
+__pycache__/
+*.pyc
+.DS_Store
+# --- generated content / pipeline outputs (regenerable; not source) ---
+sites/
+thingsite/sites/
+*.log
+sites/_log*.txt
+sites/_relog*.txt
+sites/_loop*.txt
+# --- large inputs (data, not code) ---
+data/incoming/*.zip
+data/incoming/*.xlsx
+db/scale/*.sql.out
+# --- scratch ---
+roots:

@@ -1,0 +1,68 @@
+
+promote_harvest_to_stage   DRY   2026-09-06 11:32:43
+  thingdaddy_harvest  ->  thingdaddy_run
+  ONE PREFIX = ONE THINGSITE. This promotes a prefix, never a company.
+  It does not create or merge party rows, and the harvest is read only.
+
+PREFLIGHT
+  party_event    present · 9 columns
+  party_origin   present · 8 columns
+  company_key    present · 6 columns
+  harvest_row.grade ABSENT — grade is read from doc_claim.grade only
+  doc_claim      present · 16 columns
+  constraints on party: 5
+  constraints on company_prefix: 6
+
+QUEUE  1 rooted harvest compan(ies)
+
+REFUSALS BY GATE          (the gate refusing is the product)
+  length     0
+  licence    1
+  gln        0
+  prefix     0
+  party      0
+  slot       0
+
+  REFUSED  0192629      microport-orthopedics-inc    licence/mixed-issuing-agency
+           prefix 0192629: the labeler's devices name more than one issuing agency — GUDID HIBCC=17290, GS1=6068. A licence is read whole or not at all.
+
+ADMITTED   0
+UNCHANGED  0   (already promoted; this tool is idempotent)
+REFUSED    1
+
+DRY RUN. Nothing was written. Add --apply --i-am-kj to write.
+exit=10
+
+promote_harvest_to_stage   DRY   2026-09-06 11:32:44
+  thingdaddy_harvest  ->  thingdaddy_run
+  ONE PREFIX = ONE THINGSITE. This promotes a prefix, never a company.
+  It does not create or merge party rows, and the harvest is read only.
+
+PREFLIGHT
+  party_event    present · 9 columns
+  party_origin   present · 8 columns
+  company_key    present · 6 columns
+  harvest_row.grade ABSENT — grade is read from doc_claim.grade only
+  doc_claim      present · 16 columns
+  constraints on party: 5
+  constraints on company_prefix: 6
+
+QUEUE  1 rooted harvest compan(ies)
+
+REFUSALS BY GATE          (the gate refusing is the product)
+  length     0
+  licence    1
+  gln        0
+  prefix     0
+  party      0
+  slot       0
+
+  REFUSED  4547410      jp-mf-000010401              licence/mixed-issuing-agency
+           prefix 4547410: the labeler's devices name more than one issuing agency — NMPA GS1=468, MA码（IDcode）=2. A licence is read whole or not at all.
+
+ADMITTED   0
+UNCHANGED  0   (already promoted; this tool is idempotent)
+REFUSED    1
+
+DRY RUN. Nothing was written. Add --apply --i-am-kj to write.
+exit=10

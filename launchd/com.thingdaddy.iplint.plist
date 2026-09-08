@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.thingdaddy.iplint</string>
+
+  <!-- What to run. Point ProgramArguments at your copy of run-ip-lint.sh. -->
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/REPLACE_ME/thingdaddy/scripts/run-ip-lint.sh</string>
+  </array>
+
+  <!-- launchd does not read ~/.zshrc. If you run headless and want metered API,
+       put the key here. Leave it out if you'd rather run lint interactively. -->
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>REPO</key>
+    <string>/Users/REPLACE_ME/thingdaddy</string>
+    <!-- <key>ANTHROPIC_API_KEY</key>
+         <string>sk-ant-api03-...</string> -->
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+  </dict>
+
+  <!-- Weekly: Mondays at 06:00. -->
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Weekday</key><integer>1</integer>
+    <key>Hour</key><integer>6</integer>
+    <key>Minute</key><integer>0</integer>
+  </dict>
+
+  <key>StandardOutPath</key>
+  <string>/Users/REPLACE_ME/thingdaddy/docs/ip/lint.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/REPLACE_ME/thingdaddy/docs/ip/lint.err</string>
+  <key>RunAtLoad</key>
+  <false/>
+</dict>
+</plist>

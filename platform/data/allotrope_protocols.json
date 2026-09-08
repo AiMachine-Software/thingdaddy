@@ -1,0 +1,3437 @@
+{
+  "$meta": {
+    "title": "Allotrope protocols — extracted from Build 44",
+    "source": "platform/ThingDaddy_V4_Unified.jsx (protocols: lines 7494-7858; taxonomy: lines 3758-3818)",
+    "extracted": "2026-07-05",
+    "note": "Extracted verbatim from Build 44; Build 44 was not modified. protocols[] are the 30 fully-bound Allotrope workflow templates (4 flagship + 26 catalog). techniqueFamilies[] is the ADF ontology taxonomy — reference only (name strings, one GDTI per family), NOT per-protocol bindings.",
+    "disclaimer": "All prefixes are Build-44 representative/illustrative, NOT GEPIR-verified. In particular Honeywell here is 0614141, but the verified Honeywell prefix in the root contract (CLAUDE.md §4) is 0662498 — they DO NOT match. Every protocol is stamped state=candidate, source=build-44-harvest, inferred=true, verified=false per verified-or-exception.",
+    "counts": {
+      "protocolsTotal": 30,
+      "flagship": 4,
+      "catalog": 26,
+      "protocolsWithEmbeddedSensor": 12,
+      "techniqueFamilies": 15,
+      "taxonomyConceptTotal": 2590
+    },
+    "idMintingRules": {
+      "protocol": "gdti  urn:epc:id:gdti:{owner}.PROTO.{code}",
+      "instrument": "giai  urn:epc:id:giai:{prefix}.{ref}",
+      "module": "giai  (IS_COMPONENT_OF its instrument)",
+      "sensorPart": "cpi   urn:epc:id:cpi:{prefix}.{part}.0",
+      "sensorUnit": "giai  urn:epc:id:giai:{prefix}.{ref}  (EMBEDDED_IN parent)",
+      "reagentSample": "lgtin urn:epc:class:lgtin:{prefix}.{ref}.{lot}",
+      "otherConsumable": "sgtin urn:epc:id:sgtin:{prefix}.{ref}.{serial}"
+    },
+    "prefixTable": {
+      "Agilent": {
+        "prefix": "0040753",
+        "verified": false,
+        "representative": false
+      },
+      "Thermo Fisher": {
+        "prefix": "0085126",
+        "verified": false,
+        "representative": false
+      },
+      "Waters": {
+        "prefix": "0008757",
+        "verified": false,
+        "representative": false
+      },
+      "Bruker": {
+        "prefix": "0012614",
+        "verified": false,
+        "representative": false
+      },
+      "Honeywell": {
+        "prefix": "0614141",
+        "verified": false,
+        "representative": false
+      },
+      "Mettler Toledo": {
+        "prefix": "7612100",
+        "verified": false,
+        "representative": true
+      },
+      "Illumina": {
+        "prefix": "0860001",
+        "verified": false,
+        "representative": true
+      },
+      "Hamilton": {
+        "prefix": "0860002",
+        "verified": false,
+        "representative": true
+      },
+      "SCIEX": {
+        "prefix": "0860003",
+        "verified": false,
+        "representative": true
+      },
+      "BD": {
+        "prefix": "0382903",
+        "verified": false,
+        "representative": false
+      },
+      "Malvern": {
+        "prefix": "0860004",
+        "verified": false,
+        "representative": true
+      },
+      "Roche": {
+        "prefix": "0860005",
+        "verified": false,
+        "representative": true
+      },
+      "Radiometer": {
+        "prefix": "0860006",
+        "verified": false,
+        "representative": true
+      }
+    },
+    "locationNote": "Build 44 binds no location SGLN to any protocol; ownership is expressed as a PGLN. location.sgln is null on every protocol by design, not omission.",
+    "taxonomyVendorPrefix": "0085126"
+  },
+  "protocols": [
+    {
+      "id": "urn:epc:id:gdti:0040753.PROTO.HPLC-SEP-v1",
+      "code": "HPLC-SEP-v1",
+      "name": "HPLC Separation",
+      "family": "Allotrope ADF",
+      "tier": "flagship",
+      "owner": {
+        "prefix": "0040753",
+        "name": "Agilent",
+        "verified": false,
+        "representative": false
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0040753.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "lc",
+          "giai": "urn:epc:id:giai:0040753.1260INFII",
+          "prefix": "0040753",
+          "label": "Agilent 1260 Infinity II LC",
+          "docs": [
+            "urn:epc:id:gdti:0040753.USRMAN.1260INFII"
+          ]
+        }
+      ],
+      "modules": [
+        {
+          "key": "pump",
+          "giai": "urn:epc:id:giai:0040753.G7111A",
+          "prefix": "0040753",
+          "label": "Quaternary Pump VL (600 bar)",
+          "parent": "lc",
+          "rel": "IS_COMPONENT_OF",
+          "docs": [
+            "urn:epc:id:gdti:0040753.USRMAN.G7111A"
+          ]
+        },
+        {
+          "key": "sampler",
+          "giai": "urn:epc:id:giai:0040753.G7129A",
+          "prefix": "0040753",
+          "label": "Vialsampler",
+          "parent": "lc",
+          "rel": "IS_COMPONENT_OF",
+          "docs": []
+        },
+        {
+          "key": "mct",
+          "giai": "urn:epc:id:giai:0040753.G7116A",
+          "prefix": "0040753",
+          "label": "Multicolumn Thermostat",
+          "parent": "lc",
+          "rel": "IS_COMPONENT_OF",
+          "docs": [
+            "urn:epc:id:gdti:0040753.USRMAN.G7116A"
+          ]
+        },
+        {
+          "key": "dad",
+          "giai": "urn:epc:id:giai:0040753.G7117C",
+          "prefix": "0040753",
+          "label": "Diode Array Detector HS",
+          "parent": "lc",
+          "rel": "IS_COMPONENT_OF",
+          "docs": [
+            "urn:epc:id:gdti:0040753.USRMAN.G7117C"
+          ]
+        }
+      ],
+      "sensors": [
+        {
+          "key": "psensor",
+          "cpi": "urn:epc:id:cpi:0614141.HSC030PA.0",
+          "unitGiai": "urn:epc:id:giai:0614141.HSC030PA-LC1",
+          "part": "HSC030PA",
+          "prefix": "0614141",
+          "label": "Honeywell HSC pressure sensor",
+          "embedIn": "pump",
+          "embedInRel": "EMBEDDED_IN",
+          "datasheet": "https://prod-edam.honeywell.com/.../trustability-hsc-series-50099148-a-en.pdf",
+          "driverFns": [
+            {
+              "fn": "ReadPressure",
+              "sila": "PressureProvider.ReadPressure",
+              "edge": "i2c.read(0x28,4B)->14-bit",
+              "confidence": 0.98
+            },
+            {
+              "fn": "ReadTemperature",
+              "sila": "TemperatureProvider.ReadTemperature",
+              "edge": "bytes[2..3]->11-bit",
+              "confidence": 0.97
+            },
+            {
+              "fn": "ReadStatus",
+              "sila": "DiagnosticsProvider.ReadStatus",
+              "edge": "status byte bits6-7",
+              "confidence": 0.95
+            }
+          ]
+        }
+      ],
+      "samples": [
+        {
+          "key": "column",
+          "gtin": "urn:epc:id:sgtin:0040753.POROSHELL-C18.1",
+          "gtinType": "SGTIN",
+          "kind": "column",
+          "prefix": "0040753",
+          "serial": "1",
+          "label": "InfinityLab Poroshell 120 C18 column"
+        },
+        {
+          "key": "acn",
+          "gtin": "urn:epc:class:lgtin:0040753.MP-ACN.ACN2406",
+          "gtinType": "LGTIN",
+          "kind": "reagent",
+          "prefix": "0040753",
+          "lot": "ACN2406",
+          "label": "Mobile phase: acetonitrile"
+        },
+        {
+          "key": "std",
+          "gtin": "urn:epc:class:lgtin:0040753.01080-68704.STD2406",
+          "gtinType": "LGTIN",
+          "kind": "reagent",
+          "prefix": "0040753",
+          "lot": "STD2406",
+          "label": "Isocratic checkout standard"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "SetGradient",
+          "deviceKey": "pump",
+          "sila": "PumpController.SetGradient",
+          "adf": "gradient program",
+          "edgeFn": "edge.program(pump.gradient)",
+          "cloudFn": "cloud.method.gradient"
+        },
+        {
+          "seq": 2,
+          "step": "MonitorBackpressure",
+          "deviceKey": "psensor",
+          "sila": "PressureProvider.ReadPressure",
+          "adf": "pressure trace",
+          "edgeFn": "edge.poll(psensor.ReadPressure,2Hz)",
+          "cloudFn": "cloud.ingestTimeseries(backpressure)"
+        },
+        {
+          "seq": 3,
+          "step": "InjectSample",
+          "deviceKey": "sampler",
+          "sila": "Autosampler.Inject",
+          "adf": "injection event",
+          "edgeFn": "edge.trigger(sampler.Inject)",
+          "cloudFn": "cloud.scheduleInjection"
+        },
+        {
+          "seq": 4,
+          "step": "SetColumnTemp",
+          "deviceKey": "mct",
+          "sila": "ColumnOven.SetTemperature",
+          "adf": "column temp setpoint",
+          "edgeFn": "edge.actuate(mct.SetTemp)",
+          "cloudFn": "cloud.controlLoop(columnTemp)"
+        },
+        {
+          "seq": 5,
+          "step": "AcquireSpectrum",
+          "deviceKey": "dad",
+          "sila": "Detector.AcquireSpectrum",
+          "adf": "UV-Vis spectrum datacube",
+          "edgeFn": "edge.stream(dad.spectrum)",
+          "cloudFn": "cloud.ingestSpectra(DAD)"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0085126.PROTO.QPCR-CYCLE-v1",
+      "code": "QPCR-CYCLE-v1",
+      "name": "qPCR Thermal Cycling",
+      "family": "Allotrope ADF",
+      "tier": "flagship",
+      "owner": {
+        "prefix": "0085126",
+        "name": "Thermo Fisher",
+        "verified": false,
+        "representative": false
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0085126.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "qpcr",
+          "giai": "urn:epc:id:giai:0085126.QS12KFLEX",
+          "prefix": "0085126",
+          "label": "Thermo QuantStudio 12K Flex qPCR",
+          "docs": [
+            "urn:epc:id:gdti:0085126.USRMAN.QS12KFLEX"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [
+        {
+          "key": "tsensor",
+          "cpi": "urn:epc:id:cpi:0614141.HSC030PA.0",
+          "unitGiai": "urn:epc:id:giai:0614141.HSC-QPCR-BLOCK1",
+          "part": "HSC030PA",
+          "prefix": "0614141",
+          "label": "Honeywell HSC sensor (block temp/pressure)",
+          "embedIn": "qpcr",
+          "embedInRel": "EMBEDDED_IN",
+          "datasheet": "https://prod-edam.honeywell.com/.../trustability-hsc-series-50099148-a-en.pdf",
+          "driverFns": [
+            {
+              "fn": "ReadPressure",
+              "sila": "PressureProvider.ReadPressure",
+              "edge": "i2c.read(0x28,4B)->14-bit",
+              "confidence": 0.98
+            },
+            {
+              "fn": "ReadTemperature",
+              "sila": "TemperatureProvider.ReadTemperature",
+              "edge": "bytes[2..3]->11-bit",
+              "confidence": 0.97
+            },
+            {
+              "fn": "ReadStatus",
+              "sila": "DiagnosticsProvider.ReadStatus",
+              "edge": "status byte bits6-7",
+              "confidence": 0.95
+            }
+          ]
+        }
+      ],
+      "samples": [
+        {
+          "key": "mastermix",
+          "gtin": "urn:epc:class:lgtin:0085126.TAQMIX.MM2406",
+          "gtinType": "LGTIN",
+          "kind": "reagent",
+          "prefix": "0085126",
+          "lot": "MM2406",
+          "label": "TaqMan master mix"
+        },
+        {
+          "key": "plate",
+          "gtin": "urn:epc:id:sgtin:0085126.PLATE384.1",
+          "gtinType": "SGTIN",
+          "kind": "plate",
+          "prefix": "0085126",
+          "serial": "1",
+          "label": "384-well optical plate"
+        },
+        {
+          "key": "seal",
+          "gtin": "urn:epc:id:sgtin:0085126.OPTSEAL.1",
+          "gtinType": "SGTIN",
+          "kind": "seal",
+          "prefix": "0085126",
+          "serial": "1",
+          "label": "Optical adhesive seal"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "LoadPlate",
+          "deviceKey": "qpcr",
+          "sila": "PlateHandler.Load",
+          "adf": "plate load event",
+          "edgeFn": "edge.trigger(qpcr.Load)",
+          "cloudFn": "cloud.registerPlate"
+        },
+        {
+          "seq": 2,
+          "step": "RunThermalProfile",
+          "deviceKey": "qpcr",
+          "sila": "ThermalCycler.RunProfile",
+          "adf": "thermal program",
+          "edgeFn": "edge.program(qpcr.profile)",
+          "cloudFn": "cloud.method.thermalProfile"
+        },
+        {
+          "seq": 3,
+          "step": "MonitorBlockTemp",
+          "deviceKey": "tsensor",
+          "sila": "TemperatureProvider.ReadTemperature",
+          "adf": "block-temp trace",
+          "edgeFn": "edge.poll(tsensor.ReadTemperature,5Hz)",
+          "cloudFn": "cloud.ingestTimeseries(blockTemp)"
+        },
+        {
+          "seq": 4,
+          "step": "ReadFluorescence",
+          "deviceKey": "qpcr",
+          "sila": "OpticsProvider.ReadFluorescence",
+          "adf": "amplification datacube",
+          "edgeFn": "edge.stream(qpcr.optics)",
+          "cloudFn": "cloud.ingestAmplification"
+        },
+        {
+          "seq": 5,
+          "step": "ExportADF",
+          "deviceKey": "qpcr",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.package(qpcr.adf)",
+          "cloudFn": "cloud.archiveADF"
+        }
+      ],
+      "altParents": [
+        "Illumina NovaSeq 6000 (sequencing) — same sensor part, different parent GIAI"
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0040753.PROTO.LCMSMS-BIOANALYSIS-v1",
+      "code": "LCMSMS-BIOANALYSIS-v1",
+      "name": "LC-MS/MS Bioanalysis",
+      "family": "Allotrope ADF",
+      "tier": "flagship",
+      "owner": {
+        "prefix": "0040753",
+        "name": "Agilent",
+        "verified": false,
+        "representative": false
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0040753.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "lc",
+          "giai": "urn:epc:id:giai:0040753.1290INFII",
+          "prefix": "0040753",
+          "label": "Agilent 1290 Infinity II UHPLC",
+          "docs": [
+            "urn:epc:id:gdti:0040753.USRMAN.1290INFII"
+          ]
+        },
+        {
+          "key": "ms",
+          "giai": "urn:epc:id:giai:0040753.6470TQ",
+          "prefix": "0040753",
+          "label": "Agilent 6470 Triple Quadrupole MS",
+          "docs": [
+            "urn:epc:id:gdti:0040753.USRMAN.6470TQ"
+          ]
+        }
+      ],
+      "modules": [
+        {
+          "key": "pump",
+          "giai": "urn:epc:id:giai:0040753.G7120A",
+          "prefix": "0040753",
+          "label": "1290 High Speed Pump (1300 bar)",
+          "parent": "lc",
+          "rel": "IS_COMPONENT_OF",
+          "docs": [
+            "urn:epc:id:gdti:0040753.USRMAN.G7120A"
+          ]
+        },
+        {
+          "key": "sampler",
+          "giai": "urn:epc:id:giai:0040753.G7167B",
+          "prefix": "0040753",
+          "label": "1290 Multisampler",
+          "parent": "lc",
+          "rel": "IS_COMPONENT_OF",
+          "docs": []
+        }
+      ],
+      "sensors": [
+        {
+          "key": "psensor",
+          "cpi": "urn:epc:id:cpi:0614141.MIP.0",
+          "unitGiai": "urn:epc:id:giai:0614141.MIP-UHPLC1",
+          "part": "MIP",
+          "prefix": "0614141",
+          "label": "Honeywell MIP media-isolated pressure sensor",
+          "embedIn": "pump",
+          "embedInRel": "EMBEDDED_IN",
+          "datasheet": "https://prod-edam.honeywell.com/.../trustability-hsc-series-50099148-a-en.pdf",
+          "driverFns": [
+            {
+              "fn": "ReadPressure",
+              "sila": "PressureProvider.ReadPressure",
+              "edge": "i2c.read(0x28,4B)->14-bit",
+              "confidence": 0.98
+            },
+            {
+              "fn": "ReadTemperature",
+              "sila": "TemperatureProvider.ReadTemperature",
+              "edge": "bytes[2..3]->11-bit",
+              "confidence": 0.97
+            },
+            {
+              "fn": "ReadStatus",
+              "sila": "DiagnosticsProvider.ReadStatus",
+              "edge": "status byte bits6-7",
+              "confidence": 0.95
+            }
+          ]
+        }
+      ],
+      "samples": [
+        {
+          "key": "column",
+          "gtin": "urn:epc:id:sgtin:0040753.ZORBAX-RRHD-C18.1",
+          "gtinType": "SGTIN",
+          "kind": "column",
+          "prefix": "0040753",
+          "serial": "1",
+          "label": "ZORBAX RRHD C18 column"
+        },
+        {
+          "key": "mp",
+          "gtin": "urn:epc:class:lgtin:0040753.MP-FA-ACN.FA2406",
+          "gtinType": "LGTIN",
+          "kind": "reagent",
+          "prefix": "0040753",
+          "lot": "FA2406",
+          "label": "Mobile phase: 0.1% formic acid / ACN"
+        },
+        {
+          "key": "calmix",
+          "gtin": "urn:epc:class:lgtin:0040753.CALMIX.CAL2406",
+          "gtinType": "LGTIN",
+          "kind": "reagent",
+          "prefix": "0040753",
+          "lot": "CAL2406",
+          "label": "Calibration standard mix"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "SetGradient",
+          "deviceKey": "pump",
+          "sila": "PumpController.SetGradient",
+          "adf": "gradient program",
+          "edgeFn": "edge.program(pump.gradient)",
+          "cloudFn": "cloud.method.gradient"
+        },
+        {
+          "seq": 2,
+          "step": "MonitorPressure",
+          "deviceKey": "psensor",
+          "sila": "PressureProvider.ReadPressure",
+          "adf": "pressure trace",
+          "edgeFn": "edge.poll(psensor.ReadPressure,5Hz)",
+          "cloudFn": "cloud.ingestTimeseries(uhplcPressure)"
+        },
+        {
+          "seq": 3,
+          "step": "InjectSample",
+          "deviceKey": "sampler",
+          "sila": "Autosampler.Inject",
+          "adf": "injection event",
+          "edgeFn": "edge.trigger(sampler.Inject)",
+          "cloudFn": "cloud.scheduleInjection"
+        },
+        {
+          "seq": 4,
+          "step": "AcquireMRM",
+          "deviceKey": "ms",
+          "sila": "MSController.AcquireMRM",
+          "adf": "MRM chromatogram datacube",
+          "edgeFn": "edge.stream(ms.mrm)",
+          "cloudFn": "cloud.ingestMRM"
+        },
+        {
+          "seq": 5,
+          "step": "QuantifyAnalyte",
+          "deviceKey": "ms",
+          "sila": "MSController.Quantify",
+          "adf": "quantitation result",
+          "edgeFn": "edge.compute(ms.quant)",
+          "cloudFn": "cloud.report.quant"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860001.PROTO.NGS-WGS-v1",
+      "code": "NGS-WGS-v1",
+      "name": "NGS Whole-Genome Sequencing",
+      "family": "Allotrope ADF",
+      "tier": "flagship",
+      "owner": {
+        "prefix": "0860001",
+        "name": "Illumina",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860001.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "handler",
+          "giai": "urn:epc:id:giai:0860002.MICROLAB-STAR",
+          "prefix": "0860002",
+          "label": "Hamilton Microlab STAR liquid handler",
+          "docs": []
+        },
+        {
+          "key": "cycler",
+          "giai": "urn:epc:id:giai:0085126.PROFLEX",
+          "prefix": "0085126",
+          "label": "Thermo ProFlex thermal cycler",
+          "docs": [
+            "urn:epc:id:gdti:0085126.USRMAN.PROFLEX"
+          ]
+        },
+        {
+          "key": "qubit",
+          "giai": "urn:epc:id:giai:0085126.QUBIT4",
+          "prefix": "0085126",
+          "label": "Thermo Qubit 4 fluorometer (QC)",
+          "docs": [
+            "urn:epc:id:gdti:0085126.USRMAN.QUBIT4"
+          ]
+        },
+        {
+          "key": "seq",
+          "giai": "urn:epc:id:giai:0860001.NOVASEQ6000",
+          "prefix": "0860001",
+          "label": "Illumina NovaSeq 6000 sequencer",
+          "docs": [
+            "urn:epc:id:gdti:0860001.USRMAN.NOVASEQ6000"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [
+        {
+          "key": "tsensor",
+          "cpi": "urn:epc:id:cpi:0614141.HSC030PA.0",
+          "unitGiai": "urn:epc:id:giai:0614141.HSC-NGS-FC1",
+          "part": "HSC030PA",
+          "prefix": "0614141",
+          "label": "Honeywell HSC sensor (flow-cell thermal)",
+          "embedIn": "seq",
+          "embedInRel": "EMBEDDED_IN",
+          "datasheet": "https://prod-edam.honeywell.com/.../trustability-hsc-series-50099148-a-en.pdf",
+          "driverFns": [
+            {
+              "fn": "ReadPressure",
+              "sila": "PressureProvider.ReadPressure",
+              "edge": "i2c.read(0x28,4B)->14-bit",
+              "confidence": 0.98
+            },
+            {
+              "fn": "ReadTemperature",
+              "sila": "TemperatureProvider.ReadTemperature",
+              "edge": "bytes[2..3]->11-bit",
+              "confidence": 0.97
+            },
+            {
+              "fn": "ReadStatus",
+              "sila": "DiagnosticsProvider.ReadStatus",
+              "edge": "status byte bits6-7",
+              "confidence": 0.95
+            }
+          ]
+        }
+      ],
+      "samples": [
+        {
+          "key": "libkit",
+          "gtin": "urn:epc:class:lgtin:0860001.DNAPREP.LK2406",
+          "gtinType": "LGTIN",
+          "kind": "reagent",
+          "prefix": "0860001",
+          "lot": "LK2406",
+          "label": "Illumina DNA Prep kit"
+        },
+        {
+          "key": "flowcell",
+          "gtin": "urn:epc:id:sgtin:0860001.S4FLOWCELL.1",
+          "gtinType": "SGTIN",
+          "kind": "flowcell",
+          "prefix": "0860001",
+          "serial": "1",
+          "label": "NovaSeq S4 flow cell"
+        },
+        {
+          "key": "tips",
+          "gtin": "urn:epc:id:sgtin:0860002.CORE-TIPS.1",
+          "gtinType": "SGTIN",
+          "kind": "vial",
+          "prefix": "0860002",
+          "serial": "1",
+          "label": "CO-RE filtered tips"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "PrepareLibrary",
+          "deviceKey": "handler",
+          "sila": "LiquidHandler.RunMethod",
+          "adf": "liquid-handling log",
+          "edgeFn": "edge.program(handler.method)",
+          "cloudFn": "cloud.method.libPrep"
+        },
+        {
+          "seq": 2,
+          "step": "AmplifyLibrary",
+          "deviceKey": "cycler",
+          "sila": "ThermalCycler.RunProfile",
+          "adf": "thermal program",
+          "edgeFn": "edge.program(cycler.profile)",
+          "cloudFn": "cloud.method.amplify"
+        },
+        {
+          "seq": 3,
+          "step": "QuantifyLibrary",
+          "deviceKey": "qubit",
+          "sila": "Fluorometer.Measure",
+          "adf": "concentration result",
+          "edgeFn": "edge.read(qubit.measure)",
+          "cloudFn": "cloud.qc.library"
+        },
+        {
+          "seq": 4,
+          "step": "MonitorFlowCellTemp",
+          "deviceKey": "tsensor",
+          "sila": "TemperatureProvider.ReadTemperature",
+          "adf": "flow-cell temp trace",
+          "edgeFn": "edge.poll(tsensor.ReadTemperature,1Hz)",
+          "cloudFn": "cloud.ingestTimeseries(flowCellTemp)"
+        },
+        {
+          "seq": 5,
+          "step": "Sequence",
+          "deviceKey": "seq",
+          "sila": "Sequencer.RunSBS",
+          "adf": "base-call (BCL) datacube",
+          "edgeFn": "edge.stream(seq.bcl)",
+          "cloudFn": "cloud.ingestSequencing"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860000.PROTO.GC-SEP",
+      "code": "GC-SEP",
+      "name": "Gas Chromatography",
+      "family": "Allotrope ADF",
+      "tier": "catalog",
+      "owner": {
+        "prefix": "0860000",
+        "name": "ThingDaddy protocol library (vendor-neutral)",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860000.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "main",
+          "giai": "urn:epc:id:giai:0040753.8890GC",
+          "prefix": "0040753",
+          "label": "Agilent 8890 GC",
+          "docs": [
+            "urn:epc:id:gdti:0040753.USRMAN.8890GC"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [
+        {
+          "key": "sensor",
+          "cpi": "urn:epc:id:cpi:0614141.HSC030PA.0",
+          "unitGiai": "urn:epc:id:giai:0614141.HSC-GC-SEP",
+          "part": "HSC030PA",
+          "prefix": "0614141",
+          "label": "Honeywell pressure sensor (embedded)",
+          "embedIn": "main",
+          "embedInRel": "EMBEDDED_IN",
+          "datasheet": "https://prod-edam.honeywell.com/.../trustability-hsc-series-50099148-a-en.pdf",
+          "driverFns": [
+            {
+              "fn": "ReadPressure",
+              "sila": "PressureProvider.ReadPressure",
+              "edge": "i2c.read(0x28,4B)->14-bit",
+              "confidence": 0.98
+            },
+            {
+              "fn": "ReadTemperature",
+              "sila": "TemperatureProvider.ReadTemperature",
+              "edge": "bytes[2..3]->11-bit",
+              "confidence": 0.97
+            }
+          ]
+        }
+      ],
+      "samples": [
+        {
+          "key": "c0",
+          "gtin": "urn:epc:id:sgtin:0040753.GC-COL.1",
+          "gtinType": "SGTIN",
+          "kind": "column",
+          "prefix": "0040753",
+          "serial": "1",
+          "label": "HP-5ms capillary column"
+        },
+        {
+          "key": "c1",
+          "gtin": "urn:epc:class:lgtin:0040753.CARRIER-HE.LOT2406",
+          "gtinType": "LGTIN",
+          "kind": "reagent",
+          "prefix": "0040753",
+          "lot": "LOT2406",
+          "label": "Carrier gas: helium"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "Initialize",
+          "deviceKey": "main",
+          "sila": "InstrumentController.Initialize",
+          "adf": "method setup",
+          "edgeFn": "edge.main.Initialize",
+          "cloudFn": "cloud.GC-SEP.Initialize"
+        },
+        {
+          "seq": 2,
+          "step": "Measure",
+          "deviceKey": "main",
+          "sila": "MeasurementProvider.Run",
+          "adf": "Gas Chromatography datacube",
+          "edgeFn": "edge.main.Measure",
+          "cloudFn": "cloud.GC-SEP.Measure"
+        },
+        {
+          "seq": 3,
+          "step": "Monitorpressure",
+          "deviceKey": "sensor",
+          "sila": "PressureProvider.ReadPressure",
+          "adf": "pressure trace",
+          "edgeFn": "edge.sensor.Monitorpressure",
+          "cloudFn": "cloud.GC-SEP.Monitorpressure"
+        },
+        {
+          "seq": 4,
+          "step": "ExportADF",
+          "deviceKey": "main",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.main.ExportADF",
+          "cloudFn": "cloud.GC-SEP.ExportADF"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860000.PROTO.GCMS",
+      "code": "GCMS",
+      "name": "GC-MS",
+      "family": "Allotrope ADF",
+      "tier": "catalog",
+      "owner": {
+        "prefix": "0860000",
+        "name": "ThingDaddy protocol library (vendor-neutral)",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860000.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "main",
+          "giai": "urn:epc:id:giai:0040753.5977BMSD",
+          "prefix": "0040753",
+          "label": "Agilent 5977B MSD (8890 GC)",
+          "docs": [
+            "urn:epc:id:gdti:0040753.USRMAN.5977BMSD"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [
+        {
+          "key": "sensor",
+          "cpi": "urn:epc:id:cpi:0614141.HSC030PA.0",
+          "unitGiai": "urn:epc:id:giai:0614141.HSC-GCMS",
+          "part": "HSC030PA",
+          "prefix": "0614141",
+          "label": "Honeywell pressure sensor (embedded)",
+          "embedIn": "main",
+          "embedInRel": "EMBEDDED_IN",
+          "datasheet": "https://prod-edam.honeywell.com/.../trustability-hsc-series-50099148-a-en.pdf",
+          "driverFns": [
+            {
+              "fn": "ReadPressure",
+              "sila": "PressureProvider.ReadPressure",
+              "edge": "i2c.read(0x28,4B)->14-bit",
+              "confidence": 0.98
+            },
+            {
+              "fn": "ReadTemperature",
+              "sila": "TemperatureProvider.ReadTemperature",
+              "edge": "bytes[2..3]->11-bit",
+              "confidence": 0.97
+            }
+          ]
+        }
+      ],
+      "samples": [
+        {
+          "key": "c0",
+          "gtin": "urn:epc:id:sgtin:0040753.GC-COL.1",
+          "gtinType": "SGTIN",
+          "kind": "column",
+          "prefix": "0040753",
+          "serial": "1",
+          "label": "HP-5ms column"
+        },
+        {
+          "key": "c1",
+          "gtin": "urn:epc:class:lgtin:0040753.TUNE-MIX.LOT2406",
+          "gtinType": "LGTIN",
+          "kind": "reagent",
+          "prefix": "0040753",
+          "lot": "LOT2406",
+          "label": "MS tune mixture"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "Initialize",
+          "deviceKey": "main",
+          "sila": "InstrumentController.Initialize",
+          "adf": "method setup",
+          "edgeFn": "edge.main.Initialize",
+          "cloudFn": "cloud.GCMS.Initialize"
+        },
+        {
+          "seq": 2,
+          "step": "Measure",
+          "deviceKey": "main",
+          "sila": "MeasurementProvider.Run",
+          "adf": "GC-MS datacube",
+          "edgeFn": "edge.main.Measure",
+          "cloudFn": "cloud.GCMS.Measure"
+        },
+        {
+          "seq": 3,
+          "step": "Monitorpressure",
+          "deviceKey": "sensor",
+          "sila": "PressureProvider.ReadPressure",
+          "adf": "pressure trace",
+          "edgeFn": "edge.sensor.Monitorpressure",
+          "cloudFn": "cloud.GCMS.Monitorpressure"
+        },
+        {
+          "seq": 4,
+          "step": "ExportADF",
+          "deviceKey": "main",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.main.ExportADF",
+          "cloudFn": "cloud.GCMS.ExportADF"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860000.PROTO.ICPMS",
+      "code": "ICPMS",
+      "name": "ICP-MS",
+      "family": "Allotrope ADF",
+      "tier": "catalog",
+      "owner": {
+        "prefix": "0860000",
+        "name": "ThingDaddy protocol library (vendor-neutral)",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860000.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "main",
+          "giai": "urn:epc:id:giai:0040753.7900ICPMS",
+          "prefix": "0040753",
+          "label": "Agilent 7900 ICP-MS",
+          "docs": [
+            "urn:epc:id:gdti:0040753.USRMAN.7900ICPMS"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [],
+      "samples": [
+        {
+          "key": "c0",
+          "gtin": "urn:epc:id:sgtin:0040753.NEB.1",
+          "gtinType": "SGTIN",
+          "kind": "column",
+          "prefix": "0040753",
+          "serial": "1",
+          "label": "MicroMist nebulizer"
+        },
+        {
+          "key": "c1",
+          "gtin": "urn:epc:class:lgtin:0040753.ARGON.LOT2406",
+          "gtinType": "LGTIN",
+          "kind": "reagent",
+          "prefix": "0040753",
+          "lot": "LOT2406",
+          "label": "Argon plasma gas"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "Initialize",
+          "deviceKey": "main",
+          "sila": "InstrumentController.Initialize",
+          "adf": "method setup",
+          "edgeFn": "edge.main.Initialize",
+          "cloudFn": "cloud.ICPMS.Initialize"
+        },
+        {
+          "seq": 2,
+          "step": "Measure",
+          "deviceKey": "main",
+          "sila": "MeasurementProvider.Run",
+          "adf": "ICP-MS datacube",
+          "edgeFn": "edge.main.Measure",
+          "cloudFn": "cloud.ICPMS.Measure"
+        },
+        {
+          "seq": 3,
+          "step": "ExportADF",
+          "deviceKey": "main",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.main.ExportADF",
+          "cloudFn": "cloud.ICPMS.ExportADF"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860000.PROTO.ICPOES",
+      "code": "ICPOES",
+      "name": "ICP-OES",
+      "family": "Allotrope ADF",
+      "tier": "catalog",
+      "owner": {
+        "prefix": "0860000",
+        "name": "ThingDaddy protocol library (vendor-neutral)",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860000.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "main",
+          "giai": "urn:epc:id:giai:0040753.5800ICPOES",
+          "prefix": "0040753",
+          "label": "Agilent 5800 ICP-OES",
+          "docs": [
+            "urn:epc:id:gdti:0040753.USRMAN.5800ICPOES"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [],
+      "samples": [
+        {
+          "key": "c0",
+          "gtin": "urn:epc:class:lgtin:0040753.ARGON.LOT2406",
+          "gtinType": "LGTIN",
+          "kind": "reagent",
+          "prefix": "0040753",
+          "lot": "LOT2406",
+          "label": "Argon plasma gas"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "Initialize",
+          "deviceKey": "main",
+          "sila": "InstrumentController.Initialize",
+          "adf": "method setup",
+          "edgeFn": "edge.main.Initialize",
+          "cloudFn": "cloud.ICPOES.Initialize"
+        },
+        {
+          "seq": 2,
+          "step": "Measure",
+          "deviceKey": "main",
+          "sila": "MeasurementProvider.Run",
+          "adf": "ICP-OES datacube",
+          "edgeFn": "edge.main.Measure",
+          "cloudFn": "cloud.ICPOES.Measure"
+        },
+        {
+          "seq": 3,
+          "step": "ExportADF",
+          "deviceKey": "main",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.main.ExportADF",
+          "cloudFn": "cloud.ICPOES.ExportADF"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860000.PROTO.MS-HRAM",
+      "code": "MS-HRAM",
+      "name": "High-Res Mass Spectrometry",
+      "family": "Allotrope ADF",
+      "tier": "catalog",
+      "owner": {
+        "prefix": "0860000",
+        "name": "ThingDaddy protocol library (vendor-neutral)",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860000.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "main",
+          "giai": "urn:epc:id:giai:0085126.ORBEXPLORIS",
+          "prefix": "0085126",
+          "label": "Thermo Orbitrap Exploris 240",
+          "docs": [
+            "urn:epc:id:gdti:0085126.USRMAN.ORBEXPLORIS"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [],
+      "samples": [
+        {
+          "key": "c0",
+          "gtin": "urn:epc:class:lgtin:0085126.CALMIX.LOT2406",
+          "gtinType": "LGTIN",
+          "kind": "reagent",
+          "prefix": "0085126",
+          "lot": "LOT2406",
+          "label": "Calibration solution"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "Initialize",
+          "deviceKey": "main",
+          "sila": "InstrumentController.Initialize",
+          "adf": "method setup",
+          "edgeFn": "edge.main.Initialize",
+          "cloudFn": "cloud.MS-HRAM.Initialize"
+        },
+        {
+          "seq": 2,
+          "step": "Measure",
+          "deviceKey": "main",
+          "sila": "MeasurementProvider.Run",
+          "adf": "High-Res Mass Spectrometry datacube",
+          "edgeFn": "edge.main.Measure",
+          "cloudFn": "cloud.MS-HRAM.Measure"
+        },
+        {
+          "seq": 3,
+          "step": "ExportADF",
+          "deviceKey": "main",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.main.ExportADF",
+          "cloudFn": "cloud.MS-HRAM.ExportADF"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860000.PROTO.CE-SEP",
+      "code": "CE-SEP",
+      "name": "Capillary Electrophoresis",
+      "family": "Allotrope ADF",
+      "tier": "catalog",
+      "owner": {
+        "prefix": "0860000",
+        "name": "ThingDaddy protocol library (vendor-neutral)",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860000.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "main",
+          "giai": "urn:epc:id:giai:0040753.7100CE",
+          "prefix": "0040753",
+          "label": "Agilent 7100 CE",
+          "docs": [
+            "urn:epc:id:gdti:0040753.USRMAN.7100CE"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [],
+      "samples": [
+        {
+          "key": "c0",
+          "gtin": "urn:epc:id:sgtin:0040753.CAP.1",
+          "gtinType": "SGTIN",
+          "kind": "column",
+          "prefix": "0040753",
+          "serial": "1",
+          "label": "Fused-silica capillary"
+        },
+        {
+          "key": "c1",
+          "gtin": "urn:epc:class:lgtin:0040753.BGE.LOT2406",
+          "gtinType": "LGTIN",
+          "kind": "reagent",
+          "prefix": "0040753",
+          "lot": "LOT2406",
+          "label": "Background electrolyte"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "Initialize",
+          "deviceKey": "main",
+          "sila": "InstrumentController.Initialize",
+          "adf": "method setup",
+          "edgeFn": "edge.main.Initialize",
+          "cloudFn": "cloud.CE-SEP.Initialize"
+        },
+        {
+          "seq": 2,
+          "step": "Measure",
+          "deviceKey": "main",
+          "sila": "MeasurementProvider.Run",
+          "adf": "Capillary Electrophoresis datacube",
+          "edgeFn": "edge.main.Measure",
+          "cloudFn": "cloud.CE-SEP.Measure"
+        },
+        {
+          "seq": 3,
+          "step": "ExportADF",
+          "deviceKey": "main",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.main.ExportADF",
+          "cloudFn": "cloud.CE-SEP.ExportADF"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860000.PROTO.NMR",
+      "code": "NMR",
+      "name": "NMR Spectroscopy",
+      "family": "Allotrope ADF",
+      "tier": "catalog",
+      "owner": {
+        "prefix": "0860000",
+        "name": "ThingDaddy protocol library (vendor-neutral)",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860000.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "main",
+          "giai": "urn:epc:id:giai:0012614.AVANCENEO600",
+          "prefix": "0012614",
+          "label": "Bruker AVANCE NEO 600",
+          "docs": [
+            "urn:epc:id:gdti:0012614.USRMAN.AVANCENEO600"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [
+        {
+          "key": "sensor",
+          "cpi": "urn:epc:id:cpi:0614141.HSC030PA.0",
+          "unitGiai": "urn:epc:id:giai:0614141.HSC-NMR",
+          "part": "HSC030PA",
+          "prefix": "0614141",
+          "label": "Honeywell temperature sensor (embedded)",
+          "embedIn": "main",
+          "embedInRel": "EMBEDDED_IN",
+          "datasheet": "https://prod-edam.honeywell.com/.../trustability-hsc-series-50099148-a-en.pdf",
+          "driverFns": [
+            {
+              "fn": "ReadPressure",
+              "sila": "PressureProvider.ReadPressure",
+              "edge": "i2c.read(0x28,4B)->14-bit",
+              "confidence": 0.98
+            },
+            {
+              "fn": "ReadTemperature",
+              "sila": "TemperatureProvider.ReadTemperature",
+              "edge": "bytes[2..3]->11-bit",
+              "confidence": 0.97
+            }
+          ]
+        }
+      ],
+      "samples": [
+        {
+          "key": "c0",
+          "gtin": "urn:epc:id:sgtin:0012614.NMRTUBE.1",
+          "gtinType": "SGTIN",
+          "kind": "vial",
+          "prefix": "0012614",
+          "serial": "1",
+          "label": "5 mm NMR tube"
+        },
+        {
+          "key": "c1",
+          "gtin": "urn:epc:class:lgtin:0012614.DMSO-D6.LOT2406",
+          "gtinType": "LGTIN",
+          "kind": "reagent",
+          "prefix": "0012614",
+          "lot": "LOT2406",
+          "label": "Deuterated solvent"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "Initialize",
+          "deviceKey": "main",
+          "sila": "InstrumentController.Initialize",
+          "adf": "method setup",
+          "edgeFn": "edge.main.Initialize",
+          "cloudFn": "cloud.NMR.Initialize"
+        },
+        {
+          "seq": 2,
+          "step": "Measure",
+          "deviceKey": "main",
+          "sila": "MeasurementProvider.Run",
+          "adf": "NMR Spectroscopy datacube",
+          "edgeFn": "edge.main.Measure",
+          "cloudFn": "cloud.NMR.Measure"
+        },
+        {
+          "seq": 3,
+          "step": "Monitortemperature",
+          "deviceKey": "sensor",
+          "sila": "TemperatureProvider.ReadTemperature",
+          "adf": "temperature trace",
+          "edgeFn": "edge.sensor.Monitortemperature",
+          "cloudFn": "cloud.NMR.Monitortemperature"
+        },
+        {
+          "seq": 4,
+          "step": "ExportADF",
+          "deviceKey": "main",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.main.ExportADF",
+          "cloudFn": "cloud.NMR.ExportADF"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860000.PROTO.FTIR",
+      "code": "FTIR",
+      "name": "FTIR Spectroscopy",
+      "family": "Allotrope ADF",
+      "tier": "catalog",
+      "owner": {
+        "prefix": "0860000",
+        "name": "ThingDaddy protocol library (vendor-neutral)",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860000.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "main",
+          "giai": "urn:epc:id:giai:0085126.NICOLETIS50",
+          "prefix": "0085126",
+          "label": "Thermo Nicolet iS50 FTIR",
+          "docs": [
+            "urn:epc:id:gdti:0085126.USRMAN.NICOLETIS50"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [],
+      "samples": [
+        {
+          "key": "c0",
+          "gtin": "urn:epc:class:lgtin:0085126.KBR.LOT2406",
+          "gtinType": "LGTIN",
+          "kind": "reagent",
+          "prefix": "0085126",
+          "lot": "LOT2406",
+          "label": "KBr window"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "Initialize",
+          "deviceKey": "main",
+          "sila": "InstrumentController.Initialize",
+          "adf": "method setup",
+          "edgeFn": "edge.main.Initialize",
+          "cloudFn": "cloud.FTIR.Initialize"
+        },
+        {
+          "seq": 2,
+          "step": "Measure",
+          "deviceKey": "main",
+          "sila": "MeasurementProvider.Run",
+          "adf": "FTIR Spectroscopy datacube",
+          "edgeFn": "edge.main.Measure",
+          "cloudFn": "cloud.FTIR.Measure"
+        },
+        {
+          "seq": 3,
+          "step": "ExportADF",
+          "deviceKey": "main",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.main.ExportADF",
+          "cloudFn": "cloud.FTIR.ExportADF"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860000.PROTO.RAMAN",
+      "code": "RAMAN",
+      "name": "Raman Spectroscopy",
+      "family": "Allotrope ADF",
+      "tier": "catalog",
+      "owner": {
+        "prefix": "0860000",
+        "name": "ThingDaddy protocol library (vendor-neutral)",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860000.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "main",
+          "giai": "urn:epc:id:giai:0012614.MULTIRAM",
+          "prefix": "0012614",
+          "label": "Bruker MultiRAM",
+          "docs": [
+            "urn:epc:id:gdti:0012614.USRMAN.MULTIRAM"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [],
+      "samples": [
+        {
+          "key": "c0",
+          "gtin": "urn:epc:id:sgtin:0012614.RVIAL.1",
+          "gtinType": "SGTIN",
+          "kind": "vial",
+          "prefix": "0012614",
+          "serial": "1",
+          "label": "Raman sample vial"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "Initialize",
+          "deviceKey": "main",
+          "sila": "InstrumentController.Initialize",
+          "adf": "method setup",
+          "edgeFn": "edge.main.Initialize",
+          "cloudFn": "cloud.RAMAN.Initialize"
+        },
+        {
+          "seq": 2,
+          "step": "Measure",
+          "deviceKey": "main",
+          "sila": "MeasurementProvider.Run",
+          "adf": "Raman Spectroscopy datacube",
+          "edgeFn": "edge.main.Measure",
+          "cloudFn": "cloud.RAMAN.Measure"
+        },
+        {
+          "seq": 3,
+          "step": "ExportADF",
+          "deviceKey": "main",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.main.ExportADF",
+          "cloudFn": "cloud.RAMAN.ExportADF"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860000.PROTO.NIR",
+      "code": "NIR",
+      "name": "NIR Spectroscopy",
+      "family": "Allotrope ADF",
+      "tier": "catalog",
+      "owner": {
+        "prefix": "0860000",
+        "name": "ThingDaddy protocol library (vendor-neutral)",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860000.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "main",
+          "giai": "urn:epc:id:giai:0012614.MPAII",
+          "prefix": "0012614",
+          "label": "Bruker MPA II",
+          "docs": [
+            "urn:epc:id:gdti:0012614.USRMAN.MPAII"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [],
+      "samples": [
+        {
+          "key": "c0",
+          "gtin": "urn:epc:id:sgtin:0012614.NIRVIAL.1",
+          "gtinType": "SGTIN",
+          "kind": "vial",
+          "prefix": "0012614",
+          "serial": "1",
+          "label": "NIR sample vial"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "Initialize",
+          "deviceKey": "main",
+          "sila": "InstrumentController.Initialize",
+          "adf": "method setup",
+          "edgeFn": "edge.main.Initialize",
+          "cloudFn": "cloud.NIR.Initialize"
+        },
+        {
+          "seq": 2,
+          "step": "Measure",
+          "deviceKey": "main",
+          "sila": "MeasurementProvider.Run",
+          "adf": "NIR Spectroscopy datacube",
+          "edgeFn": "edge.main.Measure",
+          "cloudFn": "cloud.NIR.Measure"
+        },
+        {
+          "seq": 3,
+          "step": "ExportADF",
+          "deviceKey": "main",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.main.ExportADF",
+          "cloudFn": "cloud.NIR.ExportADF"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860000.PROTO.UVVIS",
+      "code": "UVVIS",
+      "name": "UV-Vis Spectroscopy",
+      "family": "Allotrope ADF",
+      "tier": "catalog",
+      "owner": {
+        "prefix": "0860000",
+        "name": "ThingDaddy protocol library (vendor-neutral)",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860000.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "main",
+          "giai": "urn:epc:id:giai:0040753.CARY3500",
+          "prefix": "0040753",
+          "label": "Agilent Cary 3500 UV-Vis",
+          "docs": [
+            "urn:epc:id:gdti:0040753.USRMAN.CARY3500"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [],
+      "samples": [
+        {
+          "key": "c0",
+          "gtin": "urn:epc:id:sgtin:0040753.CUVETTE.1",
+          "gtinType": "SGTIN",
+          "kind": "vial",
+          "prefix": "0040753",
+          "serial": "1",
+          "label": "Quartz cuvette"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "Initialize",
+          "deviceKey": "main",
+          "sila": "InstrumentController.Initialize",
+          "adf": "method setup",
+          "edgeFn": "edge.main.Initialize",
+          "cloudFn": "cloud.UVVIS.Initialize"
+        },
+        {
+          "seq": 2,
+          "step": "Measure",
+          "deviceKey": "main",
+          "sila": "MeasurementProvider.Run",
+          "adf": "UV-Vis Spectroscopy datacube",
+          "edgeFn": "edge.main.Measure",
+          "cloudFn": "cloud.UVVIS.Measure"
+        },
+        {
+          "seq": 3,
+          "step": "ExportADF",
+          "deviceKey": "main",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.main.ExportADF",
+          "cloudFn": "cloud.UVVIS.ExportADF"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860000.PROTO.FLUOR",
+      "code": "FLUOR",
+      "name": "Fluorescence Spectroscopy",
+      "family": "Allotrope ADF",
+      "tier": "catalog",
+      "owner": {
+        "prefix": "0860000",
+        "name": "ThingDaddy protocol library (vendor-neutral)",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860000.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "main",
+          "giai": "urn:epc:id:giai:0040753.CARYECLIPSE",
+          "prefix": "0040753",
+          "label": "Agilent Cary Eclipse",
+          "docs": [
+            "urn:epc:id:gdti:0040753.USRMAN.CARYECLIPSE"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [],
+      "samples": [
+        {
+          "key": "c0",
+          "gtin": "urn:epc:id:sgtin:0040753.FCUVETTE.1",
+          "gtinType": "SGTIN",
+          "kind": "vial",
+          "prefix": "0040753",
+          "serial": "1",
+          "label": "Fluorescence cuvette"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "Initialize",
+          "deviceKey": "main",
+          "sila": "InstrumentController.Initialize",
+          "adf": "method setup",
+          "edgeFn": "edge.main.Initialize",
+          "cloudFn": "cloud.FLUOR.Initialize"
+        },
+        {
+          "seq": 2,
+          "step": "Measure",
+          "deviceKey": "main",
+          "sila": "MeasurementProvider.Run",
+          "adf": "Fluorescence Spectroscopy datacube",
+          "edgeFn": "edge.main.Measure",
+          "cloudFn": "cloud.FLUOR.Measure"
+        },
+        {
+          "seq": 3,
+          "step": "ExportADF",
+          "deviceKey": "main",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.main.ExportADF",
+          "cloudFn": "cloud.FLUOR.ExportADF"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860000.PROTO.AAS",
+      "code": "AAS",
+      "name": "Atomic Absorption Spectroscopy",
+      "family": "Allotrope ADF",
+      "tier": "catalog",
+      "owner": {
+        "prefix": "0860000",
+        "name": "ThingDaddy protocol library (vendor-neutral)",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860000.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "main",
+          "giai": "urn:epc:id:giai:0040753.240AA",
+          "prefix": "0040753",
+          "label": "Agilent 240AA AAS",
+          "docs": [
+            "urn:epc:id:gdti:0040753.USRMAN.240AA"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [],
+      "samples": [
+        {
+          "key": "c0",
+          "gtin": "urn:epc:id:sgtin:0040753.LAMP.1",
+          "gtinType": "SGTIN",
+          "kind": "column",
+          "prefix": "0040753",
+          "serial": "1",
+          "label": "Hollow cathode lamp"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "Initialize",
+          "deviceKey": "main",
+          "sila": "InstrumentController.Initialize",
+          "adf": "method setup",
+          "edgeFn": "edge.main.Initialize",
+          "cloudFn": "cloud.AAS.Initialize"
+        },
+        {
+          "seq": 2,
+          "step": "Measure",
+          "deviceKey": "main",
+          "sila": "MeasurementProvider.Run",
+          "adf": "Atomic Absorption Spectroscopy datacube",
+          "edgeFn": "edge.main.Measure",
+          "cloudFn": "cloud.AAS.Measure"
+        },
+        {
+          "seq": 3,
+          "step": "ExportADF",
+          "deviceKey": "main",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.main.ExportADF",
+          "cloudFn": "cloud.AAS.ExportADF"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860000.PROTO.TGA",
+      "code": "TGA",
+      "name": "Thermogravimetric Analysis",
+      "family": "Allotrope ADF",
+      "tier": "catalog",
+      "owner": {
+        "prefix": "0860000",
+        "name": "ThingDaddy protocol library (vendor-neutral)",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860000.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "main",
+          "giai": "urn:epc:id:giai:7612100.TGADSC3",
+          "prefix": "7612100",
+          "label": "Mettler TGA/DSC 3+",
+          "docs": [
+            "urn:epc:id:gdti:7612100.USRMAN.TGADSC3"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [
+        {
+          "key": "sensor",
+          "cpi": "urn:epc:id:cpi:0614141.HSC030PA.0",
+          "unitGiai": "urn:epc:id:giai:0614141.HSC-TGA",
+          "part": "HSC030PA",
+          "prefix": "0614141",
+          "label": "Honeywell temperature sensor (embedded)",
+          "embedIn": "main",
+          "embedInRel": "EMBEDDED_IN",
+          "datasheet": "https://prod-edam.honeywell.com/.../trustability-hsc-series-50099148-a-en.pdf",
+          "driverFns": [
+            {
+              "fn": "ReadPressure",
+              "sila": "PressureProvider.ReadPressure",
+              "edge": "i2c.read(0x28,4B)->14-bit",
+              "confidence": 0.98
+            },
+            {
+              "fn": "ReadTemperature",
+              "sila": "TemperatureProvider.ReadTemperature",
+              "edge": "bytes[2..3]->11-bit",
+              "confidence": 0.97
+            }
+          ]
+        }
+      ],
+      "samples": [
+        {
+          "key": "c0",
+          "gtin": "urn:epc:id:sgtin:7612100.CRUCIBLE.1",
+          "gtinType": "SGTIN",
+          "kind": "vial",
+          "prefix": "7612100",
+          "serial": "1",
+          "label": "Alumina crucible"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "Initialize",
+          "deviceKey": "main",
+          "sila": "InstrumentController.Initialize",
+          "adf": "method setup",
+          "edgeFn": "edge.main.Initialize",
+          "cloudFn": "cloud.TGA.Initialize"
+        },
+        {
+          "seq": 2,
+          "step": "Measure",
+          "deviceKey": "main",
+          "sila": "MeasurementProvider.Run",
+          "adf": "Thermogravimetric Analysis datacube",
+          "edgeFn": "edge.main.Measure",
+          "cloudFn": "cloud.TGA.Measure"
+        },
+        {
+          "seq": 3,
+          "step": "Monitortemperature",
+          "deviceKey": "sensor",
+          "sila": "TemperatureProvider.ReadTemperature",
+          "adf": "temperature trace",
+          "edgeFn": "edge.sensor.Monitortemperature",
+          "cloudFn": "cloud.TGA.Monitortemperature"
+        },
+        {
+          "seq": 4,
+          "step": "ExportADF",
+          "deviceKey": "main",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.main.ExportADF",
+          "cloudFn": "cloud.TGA.ExportADF"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860000.PROTO.DSC",
+      "code": "DSC",
+      "name": "Differential Scanning Calorimetry",
+      "family": "Allotrope ADF",
+      "tier": "catalog",
+      "owner": {
+        "prefix": "0860000",
+        "name": "ThingDaddy protocol library (vendor-neutral)",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860000.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "main",
+          "giai": "urn:epc:id:giai:7612100.DSC3",
+          "prefix": "7612100",
+          "label": "Mettler DSC 3",
+          "docs": [
+            "urn:epc:id:gdti:7612100.USRMAN.DSC3"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [
+        {
+          "key": "sensor",
+          "cpi": "urn:epc:id:cpi:0614141.HSC030PA.0",
+          "unitGiai": "urn:epc:id:giai:0614141.HSC-DSC",
+          "part": "HSC030PA",
+          "prefix": "0614141",
+          "label": "Honeywell temperature sensor (embedded)",
+          "embedIn": "main",
+          "embedInRel": "EMBEDDED_IN",
+          "datasheet": "https://prod-edam.honeywell.com/.../trustability-hsc-series-50099148-a-en.pdf",
+          "driverFns": [
+            {
+              "fn": "ReadPressure",
+              "sila": "PressureProvider.ReadPressure",
+              "edge": "i2c.read(0x28,4B)->14-bit",
+              "confidence": 0.98
+            },
+            {
+              "fn": "ReadTemperature",
+              "sila": "TemperatureProvider.ReadTemperature",
+              "edge": "bytes[2..3]->11-bit",
+              "confidence": 0.97
+            }
+          ]
+        }
+      ],
+      "samples": [
+        {
+          "key": "c0",
+          "gtin": "urn:epc:id:sgtin:7612100.PAN.1",
+          "gtinType": "SGTIN",
+          "kind": "vial",
+          "prefix": "7612100",
+          "serial": "1",
+          "label": "Aluminum DSC pan"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "Initialize",
+          "deviceKey": "main",
+          "sila": "InstrumentController.Initialize",
+          "adf": "method setup",
+          "edgeFn": "edge.main.Initialize",
+          "cloudFn": "cloud.DSC.Initialize"
+        },
+        {
+          "seq": 2,
+          "step": "Measure",
+          "deviceKey": "main",
+          "sila": "MeasurementProvider.Run",
+          "adf": "Differential Scanning Calorimetry datacube",
+          "edgeFn": "edge.main.Measure",
+          "cloudFn": "cloud.DSC.Measure"
+        },
+        {
+          "seq": 3,
+          "step": "Monitortemperature",
+          "deviceKey": "sensor",
+          "sila": "TemperatureProvider.ReadTemperature",
+          "adf": "temperature trace",
+          "edgeFn": "edge.sensor.Monitortemperature",
+          "cloudFn": "cloud.DSC.Monitortemperature"
+        },
+        {
+          "seq": 4,
+          "step": "ExportADF",
+          "deviceKey": "main",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.main.ExportADF",
+          "cloudFn": "cloud.DSC.ExportADF"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860000.PROTO.KF-TITR",
+      "code": "KF-TITR",
+      "name": "Karl Fischer Titration",
+      "family": "Allotrope ADF",
+      "tier": "catalog",
+      "owner": {
+        "prefix": "0860000",
+        "name": "ThingDaddy protocol library (vendor-neutral)",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860000.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "main",
+          "giai": "urn:epc:id:giai:7612100.V20S",
+          "prefix": "7612100",
+          "label": "Mettler V20S KF Titrator",
+          "docs": [
+            "urn:epc:id:gdti:7612100.USRMAN.V20S"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [],
+      "samples": [
+        {
+          "key": "c0",
+          "gtin": "urn:epc:class:lgtin:7612100.KF-REAG.LOT2406",
+          "gtinType": "LGTIN",
+          "kind": "reagent",
+          "prefix": "7612100",
+          "lot": "LOT2406",
+          "label": "KF titrant"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "Initialize",
+          "deviceKey": "main",
+          "sila": "InstrumentController.Initialize",
+          "adf": "method setup",
+          "edgeFn": "edge.main.Initialize",
+          "cloudFn": "cloud.KF-TITR.Initialize"
+        },
+        {
+          "seq": 2,
+          "step": "Measure",
+          "deviceKey": "main",
+          "sila": "MeasurementProvider.Run",
+          "adf": "Karl Fischer Titration datacube",
+          "edgeFn": "edge.main.Measure",
+          "cloudFn": "cloud.KF-TITR.Measure"
+        },
+        {
+          "seq": 3,
+          "step": "ExportADF",
+          "deviceKey": "main",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.main.ExportADF",
+          "cloudFn": "cloud.KF-TITR.ExportADF"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860000.PROTO.PH",
+      "code": "PH",
+      "name": "pH Measurement",
+      "family": "Allotrope ADF",
+      "tier": "catalog",
+      "owner": {
+        "prefix": "0860000",
+        "name": "ThingDaddy protocol library (vendor-neutral)",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860000.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "main",
+          "giai": "urn:epc:id:giai:7612100.SEVENEXCEL",
+          "prefix": "7612100",
+          "label": "Mettler SevenExcellence",
+          "docs": [
+            "urn:epc:id:gdti:7612100.USRMAN.SEVENEXCEL"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [],
+      "samples": [
+        {
+          "key": "c0",
+          "gtin": "urn:epc:class:lgtin:7612100.PHBUFFER.LOT2406",
+          "gtinType": "LGTIN",
+          "kind": "reagent",
+          "prefix": "7612100",
+          "lot": "LOT2406",
+          "label": "pH calibration buffer"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "Initialize",
+          "deviceKey": "main",
+          "sila": "InstrumentController.Initialize",
+          "adf": "method setup",
+          "edgeFn": "edge.main.Initialize",
+          "cloudFn": "cloud.PH.Initialize"
+        },
+        {
+          "seq": 2,
+          "step": "Measure",
+          "deviceKey": "main",
+          "sila": "MeasurementProvider.Run",
+          "adf": "pH Measurement datacube",
+          "edgeFn": "edge.main.Measure",
+          "cloudFn": "cloud.PH.Measure"
+        },
+        {
+          "seq": 3,
+          "step": "ExportADF",
+          "deviceKey": "main",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.main.ExportADF",
+          "cloudFn": "cloud.PH.ExportADF"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860000.PROTO.BALANCE",
+      "code": "BALANCE",
+      "name": "Mass / Balance",
+      "family": "Allotrope ADF",
+      "tier": "catalog",
+      "owner": {
+        "prefix": "0860000",
+        "name": "ThingDaddy protocol library (vendor-neutral)",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860000.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "main",
+          "giai": "urn:epc:id:giai:7612100.XPR226",
+          "prefix": "7612100",
+          "label": "Mettler XPR analytical balance",
+          "docs": [
+            "urn:epc:id:gdti:7612100.USRMAN.XPR226"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [],
+      "samples": [
+        {
+          "key": "c0",
+          "gtin": "urn:epc:id:sgtin:7612100.CALWT.1",
+          "gtinType": "SGTIN",
+          "kind": "vial",
+          "prefix": "7612100",
+          "serial": "1",
+          "label": "Calibration weight"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "Initialize",
+          "deviceKey": "main",
+          "sila": "InstrumentController.Initialize",
+          "adf": "method setup",
+          "edgeFn": "edge.main.Initialize",
+          "cloudFn": "cloud.BALANCE.Initialize"
+        },
+        {
+          "seq": 2,
+          "step": "Measure",
+          "deviceKey": "main",
+          "sila": "MeasurementProvider.Run",
+          "adf": "Mass / Balance datacube",
+          "edgeFn": "edge.main.Measure",
+          "cloudFn": "cloud.BALANCE.Measure"
+        },
+        {
+          "seq": 3,
+          "step": "ExportADF",
+          "deviceKey": "main",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.main.ExportADF",
+          "cloudFn": "cloud.BALANCE.ExportADF"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860000.PROTO.DISSOLUTION",
+      "code": "DISSOLUTION",
+      "name": "Dissolution Testing",
+      "family": "Allotrope ADF",
+      "tier": "catalog",
+      "owner": {
+        "prefix": "0860000",
+        "name": "ThingDaddy protocol library (vendor-neutral)",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860000.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "main",
+          "giai": "urn:epc:id:giai:0040753.708DS",
+          "prefix": "0040753",
+          "label": "Agilent 708-DS dissolution",
+          "docs": [
+            "urn:epc:id:gdti:0040753.USRMAN.708DS"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [
+        {
+          "key": "sensor",
+          "cpi": "urn:epc:id:cpi:0614141.HSC030PA.0",
+          "unitGiai": "urn:epc:id:giai:0614141.HSC-DISSOLUTION",
+          "part": "HSC030PA",
+          "prefix": "0614141",
+          "label": "Honeywell temperature sensor (embedded)",
+          "embedIn": "main",
+          "embedInRel": "EMBEDDED_IN",
+          "datasheet": "https://prod-edam.honeywell.com/.../trustability-hsc-series-50099148-a-en.pdf",
+          "driverFns": [
+            {
+              "fn": "ReadPressure",
+              "sila": "PressureProvider.ReadPressure",
+              "edge": "i2c.read(0x28,4B)->14-bit",
+              "confidence": 0.98
+            },
+            {
+              "fn": "ReadTemperature",
+              "sila": "TemperatureProvider.ReadTemperature",
+              "edge": "bytes[2..3]->11-bit",
+              "confidence": 0.97
+            }
+          ]
+        }
+      ],
+      "samples": [
+        {
+          "key": "c0",
+          "gtin": "urn:epc:id:sgtin:0040753.VESSEL.1",
+          "gtinType": "SGTIN",
+          "kind": "vial",
+          "prefix": "0040753",
+          "serial": "1",
+          "label": "Dissolution vessel"
+        },
+        {
+          "key": "c1",
+          "gtin": "urn:epc:class:lgtin:0040753.MEDIA.LOT2406",
+          "gtinType": "LGTIN",
+          "kind": "reagent",
+          "prefix": "0040753",
+          "lot": "LOT2406",
+          "label": "Dissolution media"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "Initialize",
+          "deviceKey": "main",
+          "sila": "InstrumentController.Initialize",
+          "adf": "method setup",
+          "edgeFn": "edge.main.Initialize",
+          "cloudFn": "cloud.DISSOLUTION.Initialize"
+        },
+        {
+          "seq": 2,
+          "step": "Measure",
+          "deviceKey": "main",
+          "sila": "MeasurementProvider.Run",
+          "adf": "Dissolution Testing datacube",
+          "edgeFn": "edge.main.Measure",
+          "cloudFn": "cloud.DISSOLUTION.Measure"
+        },
+        {
+          "seq": 3,
+          "step": "Monitortemperature",
+          "deviceKey": "sensor",
+          "sila": "TemperatureProvider.ReadTemperature",
+          "adf": "temperature trace",
+          "edgeFn": "edge.sensor.Monitortemperature",
+          "cloudFn": "cloud.DISSOLUTION.Monitortemperature"
+        },
+        {
+          "seq": 4,
+          "step": "ExportADF",
+          "deviceKey": "main",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.main.ExportADF",
+          "cloudFn": "cloud.DISSOLUTION.ExportADF"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860000.PROTO.DLS",
+      "code": "DLS",
+      "name": "Particle Size (DLS)",
+      "family": "Allotrope ADF",
+      "tier": "catalog",
+      "owner": {
+        "prefix": "0860000",
+        "name": "ThingDaddy protocol library (vendor-neutral)",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860000.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "main",
+          "giai": "urn:epc:id:giai:0860004.ZETASIZER",
+          "prefix": "0860004",
+          "label": "Malvern Zetasizer (representative)",
+          "docs": [
+            "urn:epc:id:gdti:0860004.USRMAN.ZETASIZER"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [],
+      "samples": [
+        {
+          "key": "c0",
+          "gtin": "urn:epc:id:sgtin:0860004.DLSCELL.1",
+          "gtinType": "SGTIN",
+          "kind": "vial",
+          "prefix": "0860004",
+          "serial": "1",
+          "label": "DLS sample cell"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "Initialize",
+          "deviceKey": "main",
+          "sila": "InstrumentController.Initialize",
+          "adf": "method setup",
+          "edgeFn": "edge.main.Initialize",
+          "cloudFn": "cloud.DLS.Initialize"
+        },
+        {
+          "seq": 2,
+          "step": "Measure",
+          "deviceKey": "main",
+          "sila": "MeasurementProvider.Run",
+          "adf": "Particle Size (DLS) datacube",
+          "edgeFn": "edge.main.Measure",
+          "cloudFn": "cloud.DLS.Measure"
+        },
+        {
+          "seq": 3,
+          "step": "ExportADF",
+          "deviceKey": "main",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.main.ExportADF",
+          "cloudFn": "cloud.DLS.ExportADF"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860000.PROTO.DPCR",
+      "code": "DPCR",
+      "name": "Digital PCR",
+      "family": "Allotrope ADF",
+      "tier": "catalog",
+      "owner": {
+        "prefix": "0860000",
+        "name": "ThingDaddy protocol library (vendor-neutral)",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860000.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "main",
+          "giai": "urn:epc:id:giai:0085126.ABSOLUTEQ",
+          "prefix": "0085126",
+          "label": "Thermo Absolute Q dPCR",
+          "docs": [
+            "urn:epc:id:gdti:0085126.USRMAN.ABSOLUTEQ"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [
+        {
+          "key": "sensor",
+          "cpi": "urn:epc:id:cpi:0614141.HSC030PA.0",
+          "unitGiai": "urn:epc:id:giai:0614141.HSC-DPCR",
+          "part": "HSC030PA",
+          "prefix": "0614141",
+          "label": "Honeywell temperature sensor (embedded)",
+          "embedIn": "main",
+          "embedInRel": "EMBEDDED_IN",
+          "datasheet": "https://prod-edam.honeywell.com/.../trustability-hsc-series-50099148-a-en.pdf",
+          "driverFns": [
+            {
+              "fn": "ReadPressure",
+              "sila": "PressureProvider.ReadPressure",
+              "edge": "i2c.read(0x28,4B)->14-bit",
+              "confidence": 0.98
+            },
+            {
+              "fn": "ReadTemperature",
+              "sila": "TemperatureProvider.ReadTemperature",
+              "edge": "bytes[2..3]->11-bit",
+              "confidence": 0.97
+            }
+          ]
+        }
+      ],
+      "samples": [
+        {
+          "key": "c0",
+          "gtin": "urn:epc:id:sgtin:0085126.DPLATE.1",
+          "gtinType": "SGTIN",
+          "kind": "plate",
+          "prefix": "0085126",
+          "serial": "1",
+          "label": "dPCR microfluidic plate"
+        },
+        {
+          "key": "c1",
+          "gtin": "urn:epc:class:lgtin:0085126.DMIX.LOT2406",
+          "gtinType": "LGTIN",
+          "kind": "reagent",
+          "prefix": "0085126",
+          "lot": "LOT2406",
+          "label": "dPCR master mix"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "Initialize",
+          "deviceKey": "main",
+          "sila": "InstrumentController.Initialize",
+          "adf": "method setup",
+          "edgeFn": "edge.main.Initialize",
+          "cloudFn": "cloud.DPCR.Initialize"
+        },
+        {
+          "seq": 2,
+          "step": "Measure",
+          "deviceKey": "main",
+          "sila": "MeasurementProvider.Run",
+          "adf": "Digital PCR datacube",
+          "edgeFn": "edge.main.Measure",
+          "cloudFn": "cloud.DPCR.Measure"
+        },
+        {
+          "seq": 3,
+          "step": "Monitortemperature",
+          "deviceKey": "sensor",
+          "sila": "TemperatureProvider.ReadTemperature",
+          "adf": "temperature trace",
+          "edgeFn": "edge.sensor.Monitortemperature",
+          "cloudFn": "cloud.DPCR.Monitortemperature"
+        },
+        {
+          "seq": 4,
+          "step": "ExportADF",
+          "deviceKey": "main",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.main.ExportADF",
+          "cloudFn": "cloud.DPCR.ExportADF"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860000.PROTO.FLOWCYTO",
+      "code": "FLOWCYTO",
+      "name": "Flow Cytometry",
+      "family": "Allotrope ADF",
+      "tier": "catalog",
+      "owner": {
+        "prefix": "0860000",
+        "name": "ThingDaddy protocol library (vendor-neutral)",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860000.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "main",
+          "giai": "urn:epc:id:giai:0382903.FACSYMPHONY",
+          "prefix": "0382903",
+          "label": "BD FACSymphony A5",
+          "docs": [
+            "urn:epc:id:gdti:0382903.USRMAN.FACSYMPHONY"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [],
+      "samples": [
+        {
+          "key": "c0",
+          "gtin": "urn:epc:class:lgtin:0382903.SHEATH.LOT2406",
+          "gtinType": "LGTIN",
+          "kind": "reagent",
+          "prefix": "0382903",
+          "lot": "LOT2406",
+          "label": "Sheath fluid"
+        },
+        {
+          "key": "c1",
+          "gtin": "urn:epc:class:lgtin:0382903.BEADS.LOT2406",
+          "gtinType": "LGTIN",
+          "kind": "reagent",
+          "prefix": "0382903",
+          "lot": "LOT2406",
+          "label": "Calibration beads"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "Initialize",
+          "deviceKey": "main",
+          "sila": "InstrumentController.Initialize",
+          "adf": "method setup",
+          "edgeFn": "edge.main.Initialize",
+          "cloudFn": "cloud.FLOWCYTO.Initialize"
+        },
+        {
+          "seq": 2,
+          "step": "Measure",
+          "deviceKey": "main",
+          "sila": "MeasurementProvider.Run",
+          "adf": "Flow Cytometry datacube",
+          "edgeFn": "edge.main.Measure",
+          "cloudFn": "cloud.FLOWCYTO.Measure"
+        },
+        {
+          "seq": 3,
+          "step": "ExportADF",
+          "deviceKey": "main",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.main.ExportADF",
+          "cloudFn": "cloud.FLOWCYTO.ExportADF"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860000.PROTO.ELISA",
+      "code": "ELISA",
+      "name": "Plate Reader / ELISA",
+      "family": "Allotrope ADF",
+      "tier": "catalog",
+      "owner": {
+        "prefix": "0860000",
+        "name": "ThingDaddy protocol library (vendor-neutral)",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860000.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "main",
+          "giai": "urn:epc:id:giai:0085126.MULTISKAN",
+          "prefix": "0085126",
+          "label": "Thermo Multiskan SkyHigh",
+          "docs": [
+            "urn:epc:id:gdti:0085126.USRMAN.MULTISKAN"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [],
+      "samples": [
+        {
+          "key": "c0",
+          "gtin": "urn:epc:id:sgtin:0085126.MTP.1",
+          "gtinType": "SGTIN",
+          "kind": "plate",
+          "prefix": "0085126",
+          "serial": "1",
+          "label": "96-well microplate"
+        },
+        {
+          "key": "c1",
+          "gtin": "urn:epc:class:lgtin:0085126.SUBSTRATE.LOT2406",
+          "gtinType": "LGTIN",
+          "kind": "reagent",
+          "prefix": "0085126",
+          "lot": "LOT2406",
+          "label": "ELISA substrate"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "Initialize",
+          "deviceKey": "main",
+          "sila": "InstrumentController.Initialize",
+          "adf": "method setup",
+          "edgeFn": "edge.main.Initialize",
+          "cloudFn": "cloud.ELISA.Initialize"
+        },
+        {
+          "seq": 2,
+          "step": "Measure",
+          "deviceKey": "main",
+          "sila": "MeasurementProvider.Run",
+          "adf": "Plate Reader / ELISA datacube",
+          "edgeFn": "edge.main.Measure",
+          "cloudFn": "cloud.ELISA.Measure"
+        },
+        {
+          "seq": 3,
+          "step": "ExportADF",
+          "deviceKey": "main",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.main.ExportADF",
+          "cloudFn": "cloud.ELISA.ExportADF"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860000.PROTO.CELLCOUNT",
+      "code": "CELLCOUNT",
+      "name": "Cell Counter",
+      "family": "Allotrope ADF",
+      "tier": "catalog",
+      "owner": {
+        "prefix": "0860000",
+        "name": "ThingDaddy protocol library (vendor-neutral)",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860000.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "main",
+          "giai": "urn:epc:id:giai:0085126.COUNTESS3",
+          "prefix": "0085126",
+          "label": "Thermo Countess 3",
+          "docs": [
+            "urn:epc:id:gdti:0085126.USRMAN.COUNTESS3"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [],
+      "samples": [
+        {
+          "key": "c0",
+          "gtin": "urn:epc:id:sgtin:0085126.SLIDE.1",
+          "gtinType": "SGTIN",
+          "kind": "vial",
+          "prefix": "0085126",
+          "serial": "1",
+          "label": "Counting slide"
+        },
+        {
+          "key": "c1",
+          "gtin": "urn:epc:class:lgtin:0085126.TRYPAN.LOT2406",
+          "gtinType": "LGTIN",
+          "kind": "reagent",
+          "prefix": "0085126",
+          "lot": "LOT2406",
+          "label": "Trypan blue"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "Initialize",
+          "deviceKey": "main",
+          "sila": "InstrumentController.Initialize",
+          "adf": "method setup",
+          "edgeFn": "edge.main.Initialize",
+          "cloudFn": "cloud.CELLCOUNT.Initialize"
+        },
+        {
+          "seq": 2,
+          "step": "Measure",
+          "deviceKey": "main",
+          "sila": "MeasurementProvider.Run",
+          "adf": "Cell Counter datacube",
+          "edgeFn": "edge.main.Measure",
+          "cloudFn": "cloud.CELLCOUNT.Measure"
+        },
+        {
+          "seq": 3,
+          "step": "ExportADF",
+          "deviceKey": "main",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.main.ExportADF",
+          "cloudFn": "cloud.CELLCOUNT.ExportADF"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860000.PROTO.CELLCULTURE",
+      "code": "CELLCULTURE",
+      "name": "Cell Culture Analyser",
+      "family": "Allotrope ADF",
+      "tier": "catalog",
+      "owner": {
+        "prefix": "0860000",
+        "name": "ThingDaddy protocol library (vendor-neutral)",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860000.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "main",
+          "giai": "urn:epc:id:giai:0860005.CEDEXBIO",
+          "prefix": "0860005",
+          "label": "Roche Cedex Bio (representative)",
+          "docs": [
+            "urn:epc:id:gdti:0860005.USRMAN.CEDEXBIO"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [
+        {
+          "key": "sensor",
+          "cpi": "urn:epc:id:cpi:0614141.HSC030PA.0",
+          "unitGiai": "urn:epc:id:giai:0614141.HSC-CELLCULTURE",
+          "part": "HSC030PA",
+          "prefix": "0614141",
+          "label": "Honeywell temperature sensor (embedded)",
+          "embedIn": "main",
+          "embedInRel": "EMBEDDED_IN",
+          "datasheet": "https://prod-edam.honeywell.com/.../trustability-hsc-series-50099148-a-en.pdf",
+          "driverFns": [
+            {
+              "fn": "ReadPressure",
+              "sila": "PressureProvider.ReadPressure",
+              "edge": "i2c.read(0x28,4B)->14-bit",
+              "confidence": 0.98
+            },
+            {
+              "fn": "ReadTemperature",
+              "sila": "TemperatureProvider.ReadTemperature",
+              "edge": "bytes[2..3]->11-bit",
+              "confidence": 0.97
+            }
+          ]
+        }
+      ],
+      "samples": [
+        {
+          "key": "c0",
+          "gtin": "urn:epc:class:lgtin:0860005.CCKIT.LOT2406",
+          "gtinType": "LGTIN",
+          "kind": "reagent",
+          "prefix": "0860005",
+          "lot": "LOT2406",
+          "label": "Cell culture reagent kit"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "Initialize",
+          "deviceKey": "main",
+          "sila": "InstrumentController.Initialize",
+          "adf": "method setup",
+          "edgeFn": "edge.main.Initialize",
+          "cloudFn": "cloud.CELLCULTURE.Initialize"
+        },
+        {
+          "seq": 2,
+          "step": "Measure",
+          "deviceKey": "main",
+          "sila": "MeasurementProvider.Run",
+          "adf": "Cell Culture Analyser datacube",
+          "edgeFn": "edge.main.Measure",
+          "cloudFn": "cloud.CELLCULTURE.Measure"
+        },
+        {
+          "seq": 3,
+          "step": "Monitortemperature",
+          "deviceKey": "sensor",
+          "sila": "TemperatureProvider.ReadTemperature",
+          "adf": "temperature trace",
+          "edgeFn": "edge.sensor.Monitortemperature",
+          "cloudFn": "cloud.CELLCULTURE.Monitortemperature"
+        },
+        {
+          "seq": 4,
+          "step": "ExportADF",
+          "deviceKey": "main",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.main.ExportADF",
+          "cloudFn": "cloud.CELLCULTURE.ExportADF"
+        }
+      ]
+    },
+    {
+      "id": "urn:epc:id:gdti:0860000.PROTO.BLOODGAS",
+      "code": "BLOODGAS",
+      "name": "Blood Gas Analysis",
+      "family": "Allotrope ADF",
+      "tier": "catalog",
+      "owner": {
+        "prefix": "0860000",
+        "name": "ThingDaddy protocol library (vendor-neutral)",
+        "verified": false,
+        "representative": true
+      },
+      "ownedByPgln": "urn:epc:id:pgln:0860000.0",
+      "state": "candidate",
+      "source": "build-44-harvest",
+      "inferred": true,
+      "verified": false,
+      "instruments": [
+        {
+          "key": "main",
+          "giai": "urn:epc:id:giai:0860006.ABL90",
+          "prefix": "0860006",
+          "label": "Radiometer ABL90 (representative)",
+          "docs": [
+            "urn:epc:id:gdti:0860006.USRMAN.ABL90"
+          ]
+        }
+      ],
+      "modules": [],
+      "sensors": [],
+      "samples": [
+        {
+          "key": "c0",
+          "gtin": "urn:epc:class:lgtin:0860006.SOLPACK.LOT2406",
+          "gtinType": "LGTIN",
+          "kind": "reagent",
+          "prefix": "0860006",
+          "lot": "LOT2406",
+          "label": "Solution pack"
+        }
+      ],
+      "location": {
+        "sgln": null,
+        "note": "no location SGLN bound in Build 44 protocol definition; ownership expressed as PGLN"
+      },
+      "steps": [
+        {
+          "seq": 1,
+          "step": "Initialize",
+          "deviceKey": "main",
+          "sila": "InstrumentController.Initialize",
+          "adf": "method setup",
+          "edgeFn": "edge.main.Initialize",
+          "cloudFn": "cloud.BLOODGAS.Initialize"
+        },
+        {
+          "seq": 2,
+          "step": "Measure",
+          "deviceKey": "main",
+          "sila": "MeasurementProvider.Run",
+          "adf": "Blood Gas Analysis datacube",
+          "edgeFn": "edge.main.Measure",
+          "cloudFn": "cloud.BLOODGAS.Measure"
+        },
+        {
+          "seq": 3,
+          "step": "ExportADF",
+          "deviceKey": "main",
+          "sila": "DataProvider.ExportADF",
+          "adf": "ADF result file",
+          "edgeFn": "edge.main.ExportADF",
+          "cloudFn": "cloud.BLOODGAS.ExportADF"
+        }
+      ]
+    }
+  ],
+  "techniqueFamilies": [
+    {
+      "tech": "Chromatography",
+      "conceptCount": 741,
+      "adfSchema": "ChromatographyResultSchema",
+      "silaFeature": "ChromatographyProvider",
+      "color": "#0369A1",
+      "familyGdti": "urn:epc:id:gdti:0085126.500.0001",
+      "representativeProtocols": [
+        "LC-MS",
+        "HPLC-UV",
+        "GC-FID",
+        "GC-MS",
+        "LC-MS/MS",
+        "UHPLC",
+        "SFC",
+        "Ion Chromatography",
+        "SEC",
+        "IEX",
+        "HIC",
+        "Affinity Chromatography",
+        "RP-HPLC",
+        "HILIC",
+        "GPC"
+      ],
+      "representativeInstruments": [
+        "Thermo Fisher Vanquish UHPLC",
+        "Waters ACQUITY UPLC",
+        "Agilent 8890 GC",
+        "Agilent 6470 LC-MS",
+        "Bruker EVOQ LC-TQ",
+        "Waters Xevo G2-XS QTOF",
+        "Mettler-Toledo RE 300"
+      ]
+    },
+    {
+      "tech": "TFF",
+      "conceptCount": 327,
+      "adfSchema": "FiltrationResultSchema",
+      "silaFeature": "FiltrationProvider",
+      "color": "#059669",
+      "familyGdti": "urn:epc:id:gdti:0085126.501.0001",
+      "representativeProtocols": [
+        "Tangential Flow Filtration",
+        "Ultrafiltration",
+        "Diafiltration",
+        "Microfiltration",
+        "NFF",
+        "Depth Filtration",
+        "Clarification",
+        "Buffer Exchange"
+      ],
+      "representativeInstruments": [
+        "Sartorius Vivaspin Pro",
+        "Millipore Pellicon",
+        "Pall Centramate",
+        "Sartorius Sartocheck 5 Plus"
+      ]
+    },
+    {
+      "tech": "MFI",
+      "conceptCount": 243,
+      "adfSchema": "ParticleAnalysisResultSchema",
+      "silaFeature": "ParticleCountProvider",
+      "color": "#7C3AED",
+      "familyGdti": "urn:epc:id:gdti:0085126.502.0001",
+      "representativeProtocols": [
+        "Micro-Flow Imaging",
+        "Sub-Visible Particle Analysis",
+        "Particle Characterization",
+        "Aggregation Analysis",
+        "Protein Particle Count"
+      ],
+      "representativeInstruments": [
+        "ProteinSimple MFI",
+        "Halo Labs HORIZON",
+        "Sartorius Zetasizer"
+      ]
+    },
+    {
+      "tech": "iCE/CE",
+      "conceptCount": 189,
+      "adfSchema": "CapillaryElectrophoresisResultSchema",
+      "silaFeature": "CEProvider",
+      "color": "#DC2626",
+      "familyGdti": "urn:epc:id:gdti:0085126.503.0001",
+      "representativeProtocols": [
+        "Imaged Capillary Electrophoresis",
+        "Capillary Electrophoresis",
+        "icIEF",
+        "CZE",
+        "CGE",
+        "cSDS",
+        "Charge Heterogeneity"
+      ],
+      "representativeInstruments": [
+        "ProteinSimple iCE3",
+        "Beckman PA 800 Plus",
+        "Agilent 7100 CE"
+      ]
+    },
+    {
+      "tech": "HPLC-UV",
+      "conceptCount": 170,
+      "adfSchema": "HPLCResultSchema",
+      "silaFeature": "HPLCProvider",
+      "color": "#D97706",
+      "familyGdti": "urn:epc:id:gdti:0085126.504.0001",
+      "representativeProtocols": [
+        "Reversed-Phase HPLC",
+        "Ion-Exchange HPLC",
+        "Size-Exclusion HPLC",
+        "UV Detection",
+        "DAD Detection",
+        "Protein Purity",
+        "Peptide Mapping"
+      ],
+      "representativeInstruments": [
+        "Thermo Fisher UltiMate 3000",
+        "Waters Alliance",
+        "Agilent 1290 Infinity II"
+      ]
+    },
+    {
+      "tech": "Biacore",
+      "conceptCount": 135,
+      "adfSchema": "SPRResultSchema",
+      "silaFeature": "SPRProvider",
+      "color": "#0891B2",
+      "familyGdti": "urn:epc:id:gdti:0085126.505.0001",
+      "representativeProtocols": [
+        "Surface Plasmon Resonance",
+        "Binding Kinetics",
+        "Affinity Measurement",
+        "KD Determination",
+        "On-rate Off-rate",
+        "Potency by SPR"
+      ],
+      "representativeInstruments": [
+        "Cytiva Biacore T200",
+        "Cytiva Biacore 8K",
+        "Cytiva Biacore S200"
+      ]
+    },
+    {
+      "tech": "ELISA",
+      "conceptCount": 95,
+      "adfSchema": "ELISAResultSchema",
+      "silaFeature": "PlateReaderProvider",
+      "color": "#166534",
+      "familyGdti": "urn:epc:id:gdti:0085126.506.0001",
+      "representativeProtocols": [
+        "Enzyme-Linked Immunosorbent Assay",
+        "Sandwich ELISA",
+        "Competitive ELISA",
+        "Direct ELISA",
+        "Indirect ELISA",
+        "HTRF",
+        "AlphaLISA",
+        "Electrochemiluminescence"
+      ],
+      "representativeInstruments": [
+        "PerkinElmer EnVision",
+        "BMG LABTECH PHERAstar",
+        "Molecular Devices SpectraMax"
+      ]
+    },
+    {
+      "tech": "DSD-Page",
+      "conceptCount": 64,
+      "adfSchema": "GelElectrophoresisResultSchema",
+      "silaFeature": "GelImagingProvider",
+      "color": "#6D28D9",
+      "familyGdti": "urn:epc:id:gdti:0085126.507.0001",
+      "representativeProtocols": [
+        "SDS-PAGE",
+        "Native PAGE",
+        "2D Electrophoresis",
+        "Western Blot",
+        "Coomassie Staining",
+        "Silver Staining",
+        "Gel Imaging"
+      ],
+      "representativeInstruments": [
+        "Bio-Rad ChemiDoc MP",
+        "Bio-Rad Criterion",
+        "Bio-Rad Proteean"
+      ]
+    },
+    {
+      "tech": "Potency",
+      "conceptCount": 64,
+      "adfSchema": "PotencyAssayResultSchema",
+      "silaFeature": "BioassayProvider",
+      "color": "#92400E",
+      "familyGdti": "urn:epc:id:gdti:0085126.508.0001",
+      "representativeProtocols": [
+        "Cell-Based Potency",
+        "Bioassay",
+        "Reporter Gene Assay",
+        "Proliferation Assay",
+        "Cytotoxicity Assay",
+        "EC50 Determination",
+        "Relative Potency"
+      ],
+      "representativeInstruments": [
+        "Molecular Devices ImageXpress",
+        "PerkinElmer Operetta",
+        "Yokogawa CV8000"
+      ]
+    },
+    {
+      "tech": "qPCR",
+      "conceptCount": 44,
+      "adfSchema": "PCRPerformanceResultSchema",
+      "silaFeature": "PCRProvider",
+      "color": "#0F766E",
+      "familyGdti": "urn:epc:id:gdti:0085126.509.0001",
+      "representativeProtocols": [
+        "Real-Time PCR",
+        "Quantitative PCR",
+        "Digital PCR",
+        "ddPCR",
+        "RT-PCR",
+        "PGx Genotyping",
+        "Gene Expression",
+        "Allelic Discrimination"
+      ],
+      "representativeInstruments": [
+        "Thermo Fisher QuantStudio 12K Flex",
+        "Bio-Rad CFX96",
+        "Roche LightCycler 480",
+        "Thermo Fisher QuantStudio 7 Flex"
+      ]
+    },
+    {
+      "tech": "Microplate Reader",
+      "conceptCount": 37,
+      "adfSchema": "PlateReaderResultSchema",
+      "silaFeature": "PlateReaderProvider",
+      "color": "#1D4ED8",
+      "familyGdti": "urn:epc:id:gdti:0085126.510.0001",
+      "representativeProtocols": [
+        "Absorbance Reading",
+        "Fluorescence Intensity",
+        "Luminescence",
+        "Time-Resolved FRET",
+        "Fluorescence Polarization",
+        "Kinetic Reading",
+        "Endpoint Assay"
+      ],
+      "representativeInstruments": [
+        "PerkinElmer EnVision",
+        "BMG LABTECH CLARIOstar",
+        "Molecular Devices SpectraMax i3x"
+      ]
+    },
+    {
+      "tech": "HTRF",
+      "conceptCount": 54,
+      "adfSchema": "HTRFResultSchema",
+      "silaFeature": "FluorescenceProvider",
+      "color": "#BE185D",
+      "familyGdti": "urn:epc:id:gdti:0085126.511.0001",
+      "representativeProtocols": [
+        "Homogeneous Time-Resolved FRET",
+        "TR-FRET",
+        "Cisbio HTRF",
+        "Binding Assay",
+        "Kinase Assay",
+        "Phosphorylation Assay"
+      ],
+      "representativeInstruments": [
+        "BMG LABTECH PHERAstar FSX",
+        "PerkinElmer EnVision",
+        "Tecan Spark"
+      ]
+    },
+    {
+      "tech": "FTIR",
+      "conceptCount": 29,
+      "adfSchema": "NIRResultSchema",
+      "silaFeature": "SpectroscopyProvider",
+      "color": "#374151",
+      "familyGdti": "urn:epc:id:gdti:0085126.512.0001",
+      "representativeProtocols": [
+        "Fourier Transform Infrared Spectroscopy",
+        "ATR-FTIR",
+        "Protein Secondary Structure",
+        "Formulation Analysis",
+        "Raw Material ID",
+        "Polymorphism"
+      ],
+      "representativeInstruments": [
+        "Bruker MPA II FT-NIR",
+        "Bruker Tensor 27",
+        "Mettler-Toledo ReactIR"
+      ]
+    },
+    {
+      "tech": "Bioanalyzer",
+      "conceptCount": 71,
+      "adfSchema": "BioanalyzerResultSchema",
+      "silaFeature": "LabOnChipProvider",
+      "color": "#065F46",
+      "familyGdti": "urn:epc:id:gdti:0085126.513.0001",
+      "representativeProtocols": [
+        "RNA Quality",
+        "DNA Fragment Analysis",
+        "Protein Sizing",
+        "Lab-on-Chip Electrophoresis",
+        "RIN Measurement",
+        "Fragment Size Distribution"
+      ],
+      "representativeInstruments": [
+        "Agilent Bioanalyzer 2100",
+        "Agilent TapeStation 4200",
+        "PerkinElmer LabChip GXII"
+      ]
+    },
+    {
+      "tech": "Bioreactor",
+      "conceptCount": 327,
+      "adfSchema": "BioreactorResultSchema",
+      "silaFeature": "BioreactorProvider",
+      "color": "#7E22CE",
+      "familyGdti": "urn:epc:id:gdti:0085126.514.0001",
+      "representativeProtocols": [
+        "Fed-Batch Culture",
+        "Perfusion Culture",
+        "Batch Culture",
+        "Cell Expansion",
+        "Upstream Processing",
+        "DO Control",
+        "pH Control",
+        "Temperature Control",
+        "Glucose Feeding",
+        "Cell Viability"
+      ],
+      "representativeInstruments": [
+        "Sartorius Biostat 25L",
+        "Thermo Fisher HyPerforma",
+        "Eppendorf BioBLU",
+        "Applikon MiniBio"
+      ]
+    }
+  ]
+}

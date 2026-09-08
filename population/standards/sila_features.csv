@@ -1,0 +1,23 @@
+feature,description,pillar
+SiLAService,entry point to a SiLA Server; feature discovery,P2
+AuthenticationService,"confirm client identity, issue access tokens",P2
+AuthorizationService,control access via client metadata for tokens,P2
+AuthorizationProviderService,validate access tokens (external user mgmt),P2
+AuthorizationConfigurationService,designate which authorization provider to use,P2
+ParameterConstraintsProvider,disclose parameter limits by state,P2
+LockController,exclusive server access via lock id + timeout,P2
+SimulationController,simulation mode for testing,P2
+ObservableCommandController,pause / resume / stop observable commands,P2
+InternationalizationService,internationalization support,P2
+AuditTrailService,audit trail of actions,P2
+ParameterDefaultsProvider,default parameter values,P2
+ServerDetailProvider,server detail metadata,P2
+InitializationController,initialize the server / instrument,P2
+DurationProvider,expected command durations,P2
+ServerMonitoringService,monitoring / alarm / logging,P2
+ErrorRecoveryService,recover from errors,P2
+TimeSyncProvider,time normal / time sync,P2
+KeepAliveService,heart beat / keep alive,P2
+DiscoveryService,discovery / server registry,P2
+BrokerService,broker / late binding,P2
+LicenseService,license management,P2

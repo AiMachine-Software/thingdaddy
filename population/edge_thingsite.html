@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Edge ThingSite — analyzer node</title>
+<style>
+  :root{--bg:#0c1620;--panel:#12212f;--panel2:#16283a;--line:#243648;--ink:#e6eef6;--dim:#8aa0b4;--acc:#38bdf8;--ok:#34d399;--cand:#fbbf24;--gs1:#fb7185;--wire:#2b4256}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:900px;margin:0 auto;padding:22px 22px 70px}
+  .top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;border-bottom:1px solid var(--line);padding-bottom:12px}
+  .brand{font-weight:800;letter-spacing:.02em}.brand .e{color:var(--acc)}
+  .conn{font-size:12px;color:var(--dim);display:flex;align-items:center;gap:14px}
+  .dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:5px}
+  .dot.off{background:var(--cand)}.dot.on{background:var(--ok)}
+  .concept{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px 15px;margin:14px 0;font-size:13px;color:var(--dim);line-height:1.55}
+  .concept b{color:var(--ink)}
+  .idcard{background:linear-gradient(120deg,#12212f,#16324a);border:1px solid var(--wire);border-radius:14px;padding:18px 20px;margin:14px 0}
+  .idcard .lab{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);font-weight:700}
+  .idcard h1{font-size:22px;margin:6px 0 4px}
+  .urn{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;color:var(--ink);background:#0b1a27;border:1px solid var(--wire);border-radius:8px;padding:8px 11px;display:inline-block;margin-top:4px}
+  .urn b{color:var(--acc)}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .b{font-size:11.5px;font-weight:700;border-radius:20px;padding:3px 10px;border:1px solid}
+  .b.off{color:var(--cand);border-color:#5b4d1f;background:#241f10}
+  .b.cand{color:var(--cand);border-color:#5b4d1f;background:#241f10}
+  h2{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin:24px 0 8px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:680px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 15px}
+  .card h3{margin:0 0 8px;font-size:13px;color:var(--dim);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+  .rel{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px dashed var(--line);font-size:13px}
+  .rel:last-child{border-bottom:0}.rel .k{color:var(--dim)}.rel .v{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;text-align:right;color:var(--ink)}
+  .rel .v .cat{color:var(--gs1)}
+  .events{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:6px 0}
+  .ev{display:flex;align-items:center;gap:12px;padding:9px 15px;border-bottom:1px solid #172736;font-size:13px}
+  .ev:last-child{border-bottom:0}
+  .ev .t{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--dim);white-space:nowrap}
+  .ev .step{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--acc)}
+  .ev .txt{flex:1;color:var(--ink)}
+  .ev .st{font-size:10.5px;font-weight:700;color:var(--cand);border:1px solid #5b4d1f;background:#241f10;border-radius:20px;padding:1px 8px;white-space:nowrap}
+  .sync{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;background:var(--panel2);border:1px solid var(--wire);border-radius:12px;padding:14px 16px;margin-top:14px}
+  .sync .l{font-size:13px;color:var(--dim);line-height:1.5}.sync .l b{color:var(--ink)}
+  .sync .pend{font-size:12px;font-weight:700;color:var(--cand);border:1px solid #5b4d1f;background:#241f10;border-radius:20px;padding:4px 11px}
+  .sync button{background:var(--acc);color:#052236;font-weight:800;border:0;border-radius:9px;padding:9px 16px;cursor:pointer;font-size:13px}
+  .disc{border-left:3px solid var(--cand);background:#171607;border-radius:0 8px 8px 0;padding:11px 15px;margin-top:16px;font-size:12.5px;color:#d9c48a;line-height:1.55}
+  .foot{color:#5c7a92;font-size:11.5px;margin-top:22px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand">Thing<span class="e">Daddy</span> · Edge ThingSite</div>
+    <div class="conn">
+      <span><span class="dot off"></span>network: offline</span>
+      <span><span class="dot on"></span>identity: local</span>
+    </div>
+  </div>
+
+  <div class="concept">An <b>edge ThingSite</b> lives on the instrument, not on a server. It is addressed by the thing's own <b>GS1 URN</b> — not a URL or an IP — so it knows what it is and what it's connected to <b>even offline</b>. It captures what happens as <b>candidate</b> events and syncs them up to the cloud ThingSite for the answerable party to ratify. It never mints truth; it observes.</div>
+
+  <div class="idcard">
+    <div class="lab">This node is addressed by what it is</div>
+    <h1>Clinical Chemistry Analyzer · GA / Diazyme lab</h1>
+    <div class="urn">urn:epc:id:giai:<b>0817089</b>.INSTR-A7</div>
+    <div class="badges">
+      <span class="b off">◔ resolves offline</span>
+      <span class="b cand">◇ identity candidate · GA ratifies</span>
+    </div>
+  </div>
+
+  <h2>What this node knows about itself — resolvable without the network</h2>
+  <div class="grid">
+    <div class="card"><h3>Local graph</h3>
+      <div class="rel"><span class="k">is a</span><span class="v">GIAI · instrument</span></div>
+      <div class="rel"><span class="k">runs protocol</span><span class="v">urn:epc:id:gdti:0817089.270…</span></div>
+      <div class="rel"><span class="k">driver (P2)</span><span class="v">SiLA · candidate</span></div>
+      <div class="rel"><span class="k">located at</span><span class="v">urn:epc:id:sgln:0817089.LAB1…</span></div>
+    </div>
+    <div class="card"><h3>Consumables on the bench — real Diazyme GTINs</h3>
+      <div class="rel"><span class="k">reagent</span><span class="v">…020016 <span class="cat">DZ141A-K</span></span></div>
+      <div class="rel"><span class="k">control</span><span class="v">…020023 <span class="cat">DZ138A-CON</span></span></div>
+      <div class="rel"><span class="k">reagent</span><span class="v">…020030 <span class="cat">DZ122A-K</span></span></div>
+      <div class="rel"><span class="k">calibrator</span><span class="v">…020047 <span class="cat">DZ122A-CAL</span></span></div>
+    </div>
+  </div>
+
+  <h2>Captured here — candidate EPCIS events, waiting to sync</h2>
+  <div class="events" id="events">
+    <div class="ev"><span class="t">08:14:02Z</span><span class="step">reading</span><span class="txt">Reagent <b>DZ141A-K</b> loaded · lot bound to run</span><span class="st">candidate</span></div>
+    <div class="ev"><span class="t">08:15:39Z</span><span class="step">td:calibrating</span><span class="txt">Calibrator <b>DZ122A-CAL</b> run · 6-point curve</span><span class="st">candidate</span></div>
+    <div class="ev"><span class="t">08:22:11Z</span><span class="step">inspecting</span><span class="txt">Control <b>DZ138A-CON</b> in range · QC pass</span><span class="st">candidate</span></div>
+    <div class="ev"><span class="t">08:31:47Z</span><span class="step">td:consuming</span><span class="txt">Reagent volume decremented · 42 tests remaining</span><span class="st">candidate</span></div>
+  </div>
+
+  <div class="sync">
+    <div class="l"><b>Cloud ThingSite:</b> General Atomics · Diazyme &nbsp;·&nbsp; last synced 06:00Z</div>
+    <div class="pend">4 candidate events pending ratification</div>
+    <button onclick="this.textContent='Queued for sync ✓';this.disabled=true">Sync candidates up ↑</button>
+  </div>
+
+  <div class="disc"><b>The discipline holds at the edge.</b> Every event above is a <b>candidate</b> — the node observed it, it did not mint it. The instrument's own GIAI is candidate until GA ratifies it. Nothing here is truth until it reaches the registrar and the answerable party confirms. Honest even air-gapped: it knows what it is, and it's honest about what it doesn't.</div>
+
+  <div class="foot">Edge ThingSite prototype · identity-addressed (GS1 URN, not URL/IP) · offline-first · candidate capture, cloud ratification · nothing minted. Powered by ThingDaddy.</div>
+</div>
+</body>
+</html>
