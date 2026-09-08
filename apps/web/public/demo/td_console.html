@@ -146,7 +146,7 @@ footer{border-top:1px solid var(--td-rule);margin-top:44px;padding:18px 0;
    came from.
    ══════════════════════════════════════════════════════════════════════════ */
 
-const API = 'http://127.0.0.1:8787';
+const API = ''  /* same origin: nginx proxies the API paths (deploy/server/thingdaddy-api-proxy.conf) */;
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s == null ? '' : s)
   .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
