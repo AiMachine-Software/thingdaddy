@@ -14,6 +14,47 @@ dotenv.config();
 // node-pg reads PGHOST/PGPORT/PGDATABASE/PGUSER/PGPASSWORD from the environment
 // automatically; passing an empty object lets those defaults flow through. We
 // keep a small pool — this is a local single-user service, not a fleet.
+// ============================================================================
+// TEST DATABASE GUARD — fail closed before the pool is constructed.
+//
+// api/test/gate_authority.mjs runs `DELETE FROM party WHERE prefix='0817089'`
+// (Diazyme), and .env points PGDATABASE at thingdaddy_population. Every FK
+// into party CASCADEs. A test that is safe only because someone remembered an
+// environment variable is one keystroke from destructive, so the refusal is
+// here rather than in each test file: an import cannot be forgotten and the
+// pool cannot be opened around it.
+//
+// Override with TD_ALLOW_TEST_DB=1 only if you know exactly why.
+// ============================================================================
+{
+  const entry = process.argv[1] || '';
+  const inTest =
+    /(^|[\\/])test[\\/]/.test(entry) ||
+    process.env.NODE_TEST_CONTEXT !== undefined ||
+    process.argv.includes('--test');
+  const db = process.env.PGDATABASE || '';
+
+  if (inTest && !db.endsWith('_test') && process.env.TD_ALLOW_TEST_DB !== '1') {
+    console.error(`
+  REFUSED: a test tried to open ${db ? `"${db}"` : 'an unnamed database'}.
+
+  Tests write and delete. They run only against a database whose name ends
+  "_test". This one does not, so nothing was opened.
+
+      PGDATABASE=thingdaddy_population_test node --test test/*.mjs
+
+  If that database does not exist yet:
+
+      createdb thingdaddy_population_test
+
+  An unset PGDATABASE is refused too: libpq would resolve it to your
+  username, and a database this process cannot name is one it must not
+  write to.
+`);
+    process.exit(1);
+  }
+}
+
 export const pool = new pg.Pool({
   max: 10,
   idleTimeoutMillis: 30_000,

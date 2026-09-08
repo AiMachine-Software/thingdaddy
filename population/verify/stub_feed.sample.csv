@@ -1,0 +1,2 @@
+prefix,company,status,prefix_length,mo,note
+0812345,Acme Diagnostics,verified,7,GS1 US,SIMULATED feed — not real. Replace with real GEPIR. Seed the full file via: python3 gs1_authority.py --make-stub-from-consensus gudid_consensus_full.csv --stub stub_feed.csv
