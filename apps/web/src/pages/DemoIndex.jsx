@@ -6,9 +6,8 @@ import React from 'react';
 const BASE = import.meta.env.BASE_URL; // "/" or "/thingdaddy/"
 
 const STATIC = [
-  ['screens.html', 'Screens S1 – S6', 'Deployable demo. Each panel is labelled LIVE or FIXTURE; without an API every panel is FIXTURE.'],
   ['console.html', 'Console', 'Deployable demo, console view. FIXTURE data when no API is reachable.'],
-  ['td_screens_live.html', 'Screens S1 – S6 (fill variant)', 'Earlier version of the demo screens.'],
+  ['td_screens_live.html', 'Screens S1 – S6 (legacy single file)', 'Superseded by the ThingSite route at /thingsite; kept because population/seed/demo_up.sh opens it. Hard-wired to 127.0.0.1:8787.'],
   ['td_console.html', 'Console (fill variant)', 'Earlier version of the console.'],
   ['td_configurator.html', 'Configurator', 'Self-contained page, no backend needed.'],
   ['GA_ThingSite.html', 'General Atomics · ThingSite', 'Generated ThingSite page for one company, fully static.'],

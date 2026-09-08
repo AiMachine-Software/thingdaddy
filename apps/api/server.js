@@ -1832,9 +1832,9 @@ app.get('/agent/prefix/:prefix(\\d+)/ecosystem', h(async (req, res) => {
 const PUBLIC_DIR = process.env.PUBLIC_DIR || '';
 if (PUBLIC_DIR && existsSync(PUBLIC_DIR)) {
   app.use(express.static(PUBLIC_DIR));
-  // The web app routes client-side (/registry, /demo). A deep link must get
+  // The web app routes client-side (/thingsite, /registry, /demo). A deep link must get
   // index.html, not the JSON 404 below. API paths are matched above this.
-  app.get(['/registry', '/registry/*', '/demo', '/demo/'], (_req, res) =>
+  app.get(['/registry', '/registry/*', '/thingsite', '/thingsite/*', '/demo', '/demo/'], (_req, res) =>
     res.sendFile(path.join(PUBLIC_DIR, 'index.html')));
 }
 

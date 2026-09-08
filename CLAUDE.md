@@ -149,6 +149,7 @@ GEPIR-confirmed. Everything else is a candidate until confirmed. (7 seed parties
 thingdaddy/
   apps/web/     the web app (React + Vite, one router):
                   src/platform/   the V4 platform (single file) — route /
+                  src/thingsite/  the ThingSite flow S1-S6 (React port of td_screens_live) — route /thingsite
                   src/registry/   the population registry UI — route /registry
                   public/demo/    the legacy single-file HTML demos — route /demo
   apps/api/     the population API (Express over Postgres) — the registration seam

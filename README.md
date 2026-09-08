@@ -8,6 +8,7 @@ and Physical-AI graph. See CLAUDE.md for the engineering laws.
 ```
 apps/web/        the web app — React + Vite, one router, one nav
   src/platform/    the V4 platform (single 37K-line file, see its CLAUDE.md)   route /
+  src/thingsite/   the ThingSite flow S1-S6: search, reveal, site, book, claim  route /thingsite
   src/registry/    the population registry UI (talks to the API)              route /registry
   public/demo/     the legacy single-file HTML demos, served as plain files    route /demo
 apps/api/        the population API — Express over Postgres (+ acceptance tests)
