@@ -17,7 +17,18 @@ Other things on this machine that you must **never** stop, rebuild, or re-port: 
 web (nginx site + `next start`), its Postgres, and anything on 8787 / 8788 / 5432 / 5433.
 This stack only uses 8789 and 5434, both loopback.
 
-## Commands (copy exactly)
+## Two layouts — check which one this server uses first
+
+- **Layout A (own hostname)**: nginx site `thingdaddy` → container 8789 serves API + web at
+  `https://td-demo.49.0.64.117.nip.io/`. Commands below.
+- **Layout B (what Ant set up on 8 Sep)**: static `dist/` under the default server at
+  `http://49.0.64.117/thingdaddy/`, API container on 8789 reached through
+  `snippets/thingdaddy-api-proxy.conf` (root-relative paths /health /stats /record …).
+  Update = `WEB_ROOT=<dir> bash deploy/server/static-up.sh` after `docker compose up -d --build`.
+  Verify: `curl http://127.0.0.1/health` must return JSON, not the SPA HTML.
+  Find `<dir>` with: `grep -rn "thingdaddy" /etc/nginx/sites-enabled/`.
+
+## Commands (copy exactly) — Layout A
 
 First deploy:
 ```bash

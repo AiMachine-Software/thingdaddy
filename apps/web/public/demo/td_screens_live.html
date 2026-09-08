@@ -610,7 +610,7 @@ function renderRegisterCount(stats){
    licences has three ThingSites; which they claim is theirs to decide.
    Every panel is labelled LIVE or FIXTURE. The fixture never masquerades.
    ══════════════════════════════════════════════════════════════════════════ */
-const API = 'http://127.0.0.1:8787';
+const API = ''  /* same origin: nginx proxies the API paths (deploy/server/thingdaddy-api-proxy.conf) */;
 let RAW = [];
 
 async function call(path){

@@ -28,3 +28,20 @@ bash ~/thingdaddy/deploy/server/up.sh
 - ถ้าอยากให้เว็บบน GitHub Pages ใช้ API ตัวนี้ด้วย: ตั้ง repository variable `API_BASE=https://td-demo.49.0.64.117.nip.io`
   และตั้ง `CORS_ORIGIN=https://aimachine-software.github.io` ใน `deploy/.env` แล้ว push production ให้ Pages build ใหม่
 - พอร์ตในเครื่อง: เว็บ+API 8789 · Postgres 5434 (ทั้งคู่ loopback) — ไม่ชนกับ field-mark
+
+## แบบที่ 2: เว็บ static ที่ /thingdaddy/ บน IP ตรง + API ผ่าน proxy (แบบที่ Ant ทำอยู่ 8 ก.ย.)
+
+หน้าเว็บ (dist/) วางเป็นไฟล์ static ใต้ nginx default server ที่ `http://49.0.64.117/thingdaddy/`
+ส่วน API รันใน container (8789) แล้วให้ nginx ส่ง path ของ API ไปหา
+
+```bash
+cd ~/thingdaddy && git pull --ff-only origin production
+docker compose -f deploy/docker-compose.yml up -d --build            # API (+ฐาน seed) ที่ 127.0.0.1:8789
+sudo cp deploy/server/thingdaddy-api-proxy.conf /etc/nginx/snippets/
+#   เปิด server block ที่เสิร์ฟ /thingdaddy/ แล้วเพิ่มบรรทัด:  include snippets/thingdaddy-api-proxy.conf;
+sudo nginx -t && sudo systemctl reload nginx
+WEB_ROOT=<โฟลเดอร์ที่ nginx เสิร์ฟเป็น /thingdaddy/> bash deploy/server/static-up.sh   # build ใหม่ + copy dist
+```
+
+ตรวจ: `curl http://49.0.64.117/health` ต้องได้ JSON ไม่ใช่ HTML · เปิด `/thingdaddy/demo/td_screens_live.html` แถบบนต้องเขียว LIVE
+หน้า demo ทุกหน้าถูกแก้ให้ `const API = ''` (same origin) แล้ว ไม่ยิง 127.0.0.1:8787 อีก

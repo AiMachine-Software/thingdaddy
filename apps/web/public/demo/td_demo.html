@@ -184,7 +184,7 @@ Nothing on this page writes, and nothing is minted here.</footer>
 </div>
 
 <script>
-const API = 'http://127.0.0.1:8787';
+const API = ''  /* same origin: nginx proxies the API paths (deploy/server/thingdaddy-api-proxy.conf) */;
 const $ = id => document.getElementById(id);
 const esc = s => String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const num = n => (n==null?'—':Number(n).toLocaleString());
