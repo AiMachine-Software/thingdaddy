@@ -4,6 +4,9 @@ Read this when you are a Claude Code session **on the server** (Ubuntu, nginx, D
 task is to bring up, update, verify, or roll back the ThingDaddy demo. The root `CLAUDE.md`
 is KJ's engineering contract for the product and still applies; this file only covers deploy.
 
+**Current task list**: `deploy/server/TASKS-2026-09-10.md` — state of the world, what to do in
+order, and the exact verify lines. Read it after this file.
+
 ## What runs where
 
 | Piece | Where | Port |
