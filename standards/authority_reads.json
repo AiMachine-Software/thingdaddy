@@ -1,0 +1,153 @@
+{
+  "register": "thingdaddy.authority_reads.v1",
+  "note": "The authority's own display, read by a human, with the screen filed. Nothing here is parsed, derived or inferred. A GLN that happens to split cleanly is NOT a licence key.",
+  "grades": {
+    "confirmed": "read from the authority, screen captured and filed",
+    "unverified-transcription": "prose in the record; the capture is not in the repo. NOT a hand-read.",
+    "owed": "never read from any live authority"
+  },
+  "reads": [
+    {
+      "licence_key": "081708902",
+      "licence_type": "GS1 Company Prefix",
+      "company": "Diazyme Laboratories, Inc",
+      "city": "Poway",
+      "country": "US",
+      "gln": "0817089020009",
+      "mo": "GS1 US",
+      "authority": "Verified by GS1 \u00b7 gs1.org",
+      "read_at": "2026-09-05",
+      "read_by": "KJ",
+      "authority_updated": "2026-07-01",
+      "capture": "IMG_6519.PNG",
+      "grade": "confirmed",
+      "corroboration": [
+        "GS1 encoder: (8004) 08170890245678 \u2192 giai:081708902.45678",
+        "GCP Length Table: prefix 0817 \u2192 gcpLength 9"
+      ],
+      "supersedes": "0817089 \u2014 a plausible GLN parse, never a licence key"
+    },
+    {
+      "licence_key": "081730202",
+      "licence_type": "GS1 Company Prefix",
+      "company": "Diazyme Laboratories, Inc",
+      "city": "Poway",
+      "country": "US",
+      "gln": "0817089020009",
+      "mo": "GS1 US",
+      "authority": "Verified by GS1 \u00b7 gs1.org",
+      "read_at": "2026-09-05",
+      "read_by": "KJ",
+      "authority_updated": "2026-07-07",
+      "capture": "IMG_6520.PNG",
+      "grade": "confirmed",
+      "corroboration": [
+        "GS1 encoder: (8004) 0817302028765 \u2192 giai:081730202.8765"
+      ],
+      "note": "A SECOND Diazyme licence. It appears nowhere in the record before 5 September. VBG displays the same GLN against both records \u2014 worth a look, not a conclusion."
+    },
+    {
+      "licence_key": "42503175",
+      "company": "Chromsystems Instruments + Chemicals GmbH",
+      "gln": "4250317500007",
+      "mo": "GS1 Germany",
+      "authority": "recorded in-session",
+      "read_at": "2026-07-26",
+      "read_by": "KJ",
+      "capture": null,
+      "grade": "unverified-transcription"
+    },
+    {
+      "licence_key": "0781410",
+      "company": "Honeywell International Inc.",
+      "gln": "0662498000001",
+      "mo": "GS1 US",
+      "authority": "recorded in-session",
+      "read_at": "2026-07-26",
+      "read_by": "KJ",
+      "capture": null,
+      "grade": "unverified-transcription",
+      "note": "GLN issued under sibling prefix 0662498 \u2014 same entity, two licences."
+    },
+    {
+      "licence_key": "0662498",
+      "company": "Honeywell International Inc.",
+      "mo": "GS1 US",
+      "authority": "recorded in-session",
+      "read_at": "2026-07-26",
+      "read_by": "KJ",
+      "capture": null,
+      "grade": "unverified-transcription"
+    },
+    {
+      "licence_key": "081577302",
+      "company": "Thermo Fisher Scientific (Asheville) LLC",
+      "gln": "0815773020007",
+      "mo": "GS1 US",
+      "authority": "recorded in-session",
+      "read_at": "2026-07-26",
+      "read_by": "KJ",
+      "capture": null,
+      "grade": "unverified-transcription"
+    },
+    {
+      "licence_key": "081693402",
+      "company": "Thermo Fisher Scientific (Asheville) LLC",
+      "mo": "GS1 US",
+      "authority": "recorded in-session",
+      "read_at": "2026-07-26",
+      "read_by": "KJ",
+      "capture": null,
+      "grade": "unverified-transcription"
+    },
+    {
+      "licence_key": "0850000184",
+      "company": "Thermo Fisher Scientific (Madison WI)",
+      "gln": "0850000184008",
+      "mo": "GS1 US",
+      "authority": "recorded in-session",
+      "read_at": "2026-07-26",
+      "read_by": "KJ",
+      "capture": null,
+      "grade": "unverified-transcription"
+    },
+    {
+      "licence_key": "08600008927",
+      "company": "Thermo Fisher Scientific (Madison WI)",
+      "mo": "GS1 US",
+      "authority": "recorded in-session",
+      "read_at": "2026-07-26",
+      "read_by": "KJ",
+      "capture": null,
+      "grade": "unverified-transcription",
+      "note": "ELEVEN digits. The lengths in this register run 7,8,9,10,11 \u2014 which is why AUTHORITY SETS LENGTH PER COMPANY and a range default cannot."
+    },
+    {
+      "licence_key": "0884883",
+      "company": "Thermo Fisher Scientific, CDX Fremont",
+      "gln": "0884883000001",
+      "mo": "GS1 US",
+      "authority": "recorded in-session",
+      "read_at": "2026-07-26",
+      "read_by": "KJ",
+      "capture": null,
+      "grade": "unverified-transcription"
+    }
+  ],
+  "superseded": [
+    {
+      "value": "0817089",
+      "why": "a plausible parse of GLN 0817089020009, written into verified_prefixes.json on 2026-07-20 labelled GEPIR-verified. GEPIR was retired 31 December 2023 \u2014 no authority could have been consulted.",
+      "superseded_by": "081708902",
+      "on": "2026-09-05",
+      "note": "NOT DELETED. It is cited in a published book 41 times and roots 252 nodes. A superseded reading stays visible as evidence the record improved."
+    },
+    {
+      "value": "0614141",
+      "why": "the GS1 encoder's own worked example, recorded as a verified Honeywell root on a first-party claim with no authority behind it.",
+      "superseded_by": null,
+      "on": "2026-07-20",
+      "note": "evicted. Crash-test dummy #1."
+    }
+  ]
+}

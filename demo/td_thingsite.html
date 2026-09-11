@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ThingSite</title>
+<style>
+:root{
+  --navy:#12344D; --bg:#F5F7F9; --surface:#fff; --rule:#DBE2E8; --ink:#1a1a1a;
+  --mut:#6b7178; --char:#1d1d1d; --teal:#118a8c;
+  --v:#0f7a34; --c:#a2660a; --e:#b3261e; --slot:#6b7178;
+  --vbg:#eaf6ee; --cbg:#fdf5e6; --ebg:#fdeceb; --sbg:#F5F7F9;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--surface);color:var(--ink);
+  font-family:"Source Sans Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.mono,code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+nav{background:var(--char);height:56px;display:flex;align-items:center;gap:14px;
+  padding:0 22px;position:sticky;top:0;z-index:60}
+nav .logo{color:#fff;font-weight:800;font-size:21px;letter-spacing:-.3px}
+nav .logo span{color:var(--teal)}
+nav .find{margin-left:auto;display:flex}
+nav .find input{border:1px solid #3a3f45;background:#2a2f34;color:#fff;border-radius:19px 0 0 19px;
+  padding:8px 15px;font-size:14px;outline:none;width:200px;font-family:ui-monospace,monospace}
+nav .find button{border:none;background:var(--teal);color:#fff;border-radius:0 19px 19px 0;
+  padding:0 17px;font-weight:700;cursor:pointer;font-size:14px}
+.strip{background:var(--navy);color:#fff;padding:8px 22px;font-size:12.5px;display:flex;
+  gap:16px;align-items:center;flex-wrap:wrap}
+.strip b{color:#9fe4e5}
+.strip .tog{margin-left:auto;display:flex;border:1px solid #3d5a72;border-radius:6px;overflow:hidden}
+.strip .tog button{border:none;background:transparent;color:#b7c4cf;padding:5px 13px;
+  font-size:12px;font-weight:700;cursor:pointer;font-family:inherit}
+.strip .tog button.on{background:var(--teal);color:#fff}
+.page{max-width:1060px;margin:0 auto;padding:26px 22px 90px}
+h1{font-size:32px;letter-spacing:-.7px;margin:0 0 3px}
+h2{font-size:20px;margin:34px 0 4px}
+h2+.sub{color:var(--mut);font-size:14px;margin:0 0 14px;max-width:82ch;line-height:1.55}
+.badge{display:inline-block;padding:1px 9px;border-radius:11px;font-size:11.5px;font-weight:700;
+  border:1px solid;vertical-align:2px}
+.badge.v{color:var(--v);border-color:var(--v);background:var(--vbg)}
+.badge.c{color:var(--c);border-color:var(--c);background:var(--cbg)}
+.badge.e{color:var(--e);border-color:var(--e);background:var(--ebg)}
+.badge.b{color:var(--navy);border-color:var(--navy);background:#eef2f6}
+.badge.slot{color:var(--slot);border-color:var(--rule);background:var(--sbg)}
+
+/* three authorities */
+.banner.e{background:var(--ebg);border-left:4px solid var(--e);color:#7a1a14;padding:12px 15px;
+  font-size:14px;line-height:1.55;margin:0 0 14px;border-radius:0 8px 8px 0}
+.banner.e b{color:var(--e)}
+.auth{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:12px 0 6px}
+.auth .a{border:1px solid var(--rule);border-radius:10px;padding:14px 15px}
+.auth .a.on{border-color:var(--v);background:var(--vbg)}
+.auth .a.you{border:2px dashed var(--teal);background:#f2fbfb}
+.auth .a .who{font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:var(--mut);
+  font-weight:700;margin-bottom:5px}
+.auth .a .what{font-size:15px;font-weight:700;margin-bottom:5px}
+.auth .a .d{font-size:12.5px;color:var(--mut);line-height:1.6}
+.auth .a.on .d{color:#2c5138}
+@media(max-width:820px){.auth{grid-template-columns:1fr}}
+
+.kpi{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 4px}
+.kpi div{border:1px solid var(--rule);border-radius:9px;padding:12px 16px;min-width:118px}
+.kpi .n{font-size:24px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.5px}
+.kpi .l{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.7px;margin-top:2px}
+
+.row{display:grid;grid-template-columns:190px 1fr;border:1px solid var(--rule);
+  border-radius:9px;overflow:hidden;margin:0 0 9px}
+.row>div{padding:11px 14px}
+.row .k{background:var(--bg);font-size:12px;text-transform:uppercase;letter-spacing:.7px;
+  color:var(--mut);font-weight:700}
+.row .val{font-size:15px}
+.row .val .src{display:block;font-size:12px;color:var(--mut);margin-top:5px;line-height:1.6}
+.card{border:1px solid var(--rule);border-radius:9px;padding:14px 16px;margin:0 0 10px}
+.card.v{border-left:4px solid var(--v)} .card.c{border-left:4px solid var(--c)}
+.card.e{border-left:4px solid var(--e)} .card.slot{border-left:4px solid var(--rule)}
+.card h3{margin:0 0 5px;font-size:16px}
+.card .m{font-size:13.5px;color:var(--mut);line-height:1.65}
+.card .m b{color:var(--ink)}
+.finding{border:1px solid var(--e);border-left-width:5px;border-radius:10px;padding:17px 19px;
+  margin:0 0 12px;background:#fffbfb}
+.finding h3{margin:0 0 8px;font-size:17.5px}
+.finding .q{font-size:16.5px;font-weight:700;margin:13px 0 10px}
+.gap{display:grid;grid-template-columns:180px 1fr;border:1px dashed var(--rule);
+  border-radius:8px;margin:0 0 8px;background:var(--sbg)}
+.gap>div{padding:10px 13px}
+.gap .k{font-size:12.5px;font-weight:700;color:var(--mut);font-family:ui-monospace,monospace}
+.gap .w{font-size:13.5px;color:var(--mut);line-height:1.6}
+table{border-collapse:collapse;width:100%;font-size:13.5px;margin:0 0 14px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-size:11px;letter-spacing:.7px;text-transform:uppercase;color:var(--mut);font-weight:700}
+button.act{border:1px solid var(--navy);background:#fff;color:var(--navy);border-radius:6px;
+  padding:9px 17px;font-size:14px;font-weight:600;cursor:pointer;margin:4px 8px 4px 0;font-family:inherit}
+button.act.pri{background:var(--navy);color:#fff}
+button.act.warn{background:var(--e);border-color:var(--e);color:#fff}
+button.act.inert{opacity:.42;cursor:not-allowed;border-style:dashed}
+.note{background:var(--bg);border-left:3px solid var(--teal);padding:12px 15px;font-size:13.5px;
+  color:#41505c;margin:14px 0;line-height:1.65;max-width:84ch}
+.demo{background:#b3261e;color:#fff;padding:11px 15px;border-radius:7px;font-size:13.5px;
+  margin:0 0 14px;line-height:1.6;max-width:84ch}
+.demo b{font-weight:800}
+pre.json{background:#101418;color:#c8d6e0;padding:16px 18px;border-radius:9px;overflow:auto;
+  font-size:12px;line-height:1.55;max-height:74vh}
+pre.json .k{color:#7fd6d8} pre.json .s{color:#e8c07d} pre.json .n{color:#c39ac9}
+.spin{color:var(--mut);padding:26px 0}
+footer{border-top:1px solid var(--rule);margin-top:44px;padding:18px 0;font-size:12.5px;
+  color:var(--mut);line-height:1.7}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Thing<span>Daddy</span>.</div>
+  <form class="find" onsubmit="go(document.getElementById('q').value);return false">
+    <input id="q" placeholder="0817089">
+    <button>Open</button>
+  </form>
+</nav>
+<div class="strip" id="strip"></div>
+<div class="page" id="page"><div class="spin">reading the register…</div></div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════════════
+   THE THINGSITE — the centrepiece.
+
+   THE PAGE IS A VIEW OF THE AGENT RECORD. Two fetches, two questions:
+     /agent/prefix/:prefix             what is held
+     /agent/prefix/:prefix/ecosystem   who it connects to
+   Everything below renders from those. Flip to MACHINE for the bytes.
+   If the two ever disagree, the page is lying.
+
+   THREE AUTHORITIES. GS1 delegated the number space. A regulator attested
+   the filing. NEITHER CAN PRODUCE THE OTHER'S HALF — and neither can answer
+   what only the licensee knows. That is why this page has a claim button.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+const API = ''  /* same origin: nginx proxies the API paths (deploy/server/thingdaddy-api-proxy.conf) */;
+const $ = id => document.getElementById(id);
+const esc = s => String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+  .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const badge = g => `<span class="badge ${g||'slot'}">${esc(g||'slot')}</span>`;
+const num = n => (n==null?'—':Number(n).toLocaleString());
+let REC = null, ECO = null, MODE = 'human';
+let AUTH = null, AUTH_TRIED = false;
+/* The authority register — a human read the authority's display and filed the screen.
+   Read once, relative to this page. If it cannot be read the page renders unchanged. */
+async function loadAuthority(){
+  if (AUTH_TRIED) return AUTH;
+  AUTH_TRIED = true;
+  try {
+    const r = await fetch('../standards/authority_reads.json');
+    if (r.ok) AUTH = await r.json();
+  } catch(e){ AUTH = null; }
+  return AUTH;
+}
+function authorityFor(pfx){
+  const a = AUTH || {};
+  const superseded = (a.superseded||[]).find(x => String(x.value) === String(pfx)) || null;
+  const read = (a.reads||[]).find(x => String(x.licence_key) === String(pfx) && x.grade === 'confirmed') || null;
+  return { superseded, read };
+}
+
+/* ONE FLOW, ONE FILE. A name goes to the reveal; digits go straight to the
+   record. The address is always the prefix — a name is only a lookup INTO
+   the prefix space, never the address itself. */
+function go(p){
+  const s = String(p||'').trim();
+  if (!s) return;
+  location.hash = /^\d{4,14}$/.test(s) ? s : 'q/' + encodeURIComponent(s);
+}
+
+function srcLine(pv){
+  if (!pv) return '';
+  const b = [];
+  if (pv.source) b.push(`<b>${esc(pv.source)}</b>`);
+  if (pv.source_kind) b.push(esc(pv.source_kind.replace(/-/g,' ')));
+  if (pv.verified_at) b.push('attested ' + esc(String(pv.verified_at).slice(0,10)));
+  else if (pv.last_updated) b.push('read ' + esc(String(pv.last_updated).slice(0,10)));
+  let s = b.join(' · ');
+  if (pv.note) s += `<br><span style="color:var(--c)">${esc(pv.note)}</span>`;
+  if (pv.rendered) s += `<br><i>${esc(pv.rendered.length>200?pv.rendered.slice(0,200)+'…':pv.rendered)}</i>`;
+  return `<span class="src">${s}</span>`;
+}
+const findAttached = (r, re) => (r.attached||[]).find(a => re.test(a.name||''));
+
+/* ── THE REVEAL ──────────────────────────────────────────────────────────
+   A name is not an address. Two rows may carry it and the registrar does not
+   decide which company a name means. Duplicates are shown, never merged, and
+   the choice is the reader's. */
+async function reveal(q){
+  $('page').innerHTML = '<div class="spin">reading the register…</div>';
+  $('strip').innerHTML = `<span><b>LIVE</b> ${API}</span><span>searching <b>${esc(q)}</b></span>`;
+  let rows = [];
+  try {
+    const r = await fetch(`${API}/search?q=${encodeURIComponent(q)}`);
+    const b = await r.json();
+    rows = (b && b.rows) || [];
+  } catch(e){
+    $('page').innerHTML = `<div class="note"><b>The API did not answer.</b>
+      <span class="mono">./population/seed/demo_up.sh</span></div>`; return;
+  }
+
+  let h = `<p><a href="#" onclick="location.hash='';return false"
+      style="color:var(--teal)">← start again</a></p>
+    <h1>${esc(q)}</h1>
+    <p style="color:var(--mut);font-size:15px;max-width:84ch;line-height:1.6;margin:0 0 16px">
+      This is what the register actually holds. <b>${rows.length} party row(s)</b> —
+      <b>duplicates are shown, never merged silently.</b> A name is not an address; the
+      registrar does not decide which company a name means.</p>`;
+
+  if (!rows.length){
+    return void ($('page').innerHTML = h + `
+      <div class="card e"><h3>Nothing on record ${badge('e')}</h3><div class="m">
+        The register holds nothing under that. <b>Never fabricated.</b> An honest not-found is a
+        real answer.<br><br>A ThingSite has no meaning without a GS1 prefix at its root, and we
+        do not invent one.</div>
+        <div style="margin-top:12px"><button class="act pri inert" disabled>Get a GS1 prefix</button></div>
+      </div>` + foot());
+  }
+
+  for (const p of rows.slice(0,12)){
+    const rooted = !!p.prefix;
+    h += `<div class="card ${rooted ? (p.state==='verified'?'v':'c') : 'e'}">
+      <h3>${esc(p.legal_name)} ${badge(p.state==='verified'?'v':p.state==='exception'?'e':'c')}</h3>
+      <div class="m">
+        ${rooted ? `<b class="mono" style="color:var(--ink)">prefix ${esc(p.prefix)}</b>`
+                 : `<b style="color:var(--e)">no prefix attached in production</b>`}
+        &nbsp;·&nbsp; party ${esc(p.id)}
+        ${p.gln?` &nbsp;·&nbsp; GLN ${esc(p.gln)}`:''}
+        ${p.mo?` &nbsp;·&nbsp; ${esc(p.mo)}`:''}
+        &nbsp;·&nbsp; via ${esc(p.source)}
+        ${p.exception_reason?`<br><span style="color:var(--c)">${esc(p.exception_reason)}</span>`:''}
+        ${!rooted?`<br>A prefix may exist in staging and not yet be promoted — <b>that is a gap
+          in our machine, not a statement about your company.</b>`:''}</div>
+      <div style="margin-top:11px">
+        ${rooted ? `<button class="act pri" onclick="location.hash='${esc(p.prefix)}'">View ThingSite</button>`
+                 : `<button class="act inert" disabled>Nothing to open — no root</button>`}
+        <button class="act inert" disabled>This one is not us</button></div></div>`;
+  }
+  h += `<div class="note"><b>One prefix = one ThingSite.</b> A company with four GS1 licences has
+    four pages, because four separate delegations were made. The registrar does not merge them,
+    and only the licensee can say they are one enterprise.</div>`;
+  $('page').innerHTML = h + foot();
+  window.scrollTo(0,0);
+}
+
+const foot = () => `<footer><b>ThingDaddy.</b> The registrar for the physical internet.
+  You own your IDs; we operate.<br>Every fact is <b>verified</b>, <b>candidate</b>, or an
+  <b>exception</b> — never a guess. Nothing on this page writes, and nothing is minted here.</footer>`;
+
+/* ── THE BUILD REPLAY ────────────────────────────────────────────────────
+   Airo's tempo, our mechanic. Airo GENERATES a presence in minutes and lets
+   you watch. We show the same thing assembling — except every line that
+   lands carries the source it came from, and NOTHING HERE WAS GENERATED.
+   The order is the record's own: pillar, then display order. */
+function buildReplay(r){
+  const at = r.attached || [];
+  if (!at.length) return '';
+  return `<h2>How this page was built</h2>
+    <p class="sub">Airo writes you a website in minutes. <b>We did not write yours — we found
+      it.</b> Watch it assemble, and watch every line arrive with its source.</p>
+    <div style="margin:0 0 10px">
+      <button class="act pri" onclick="replay()">Rebuild it in front of me</button>
+      <span id="rp-count" style="color:var(--mut);font-size:13.5px;margin-left:10px"></span></div>
+    <div id="rp" style="border:1px solid var(--rule);border-radius:9px;min-height:120px;
+      max-height:420px;overflow:auto;padding:6px 0;background:var(--sbg)"></div>
+    <div class="note"><b>Nothing on this page was invented, and nothing was generated.</b>
+      Every line was found in a public record, converted, and inserted with a citation. That is
+      the whole difference: a generated page is plausible, and a found page is <b>checkable</b>.</div>`;
+}
+
+function replay(){
+  const at = (REC && REC.attached) || [];
+  const box = $('rp'); if (!box) return;
+  box.innerHTML = ''; let i = 0;
+  const step = () => {
+    if (i >= at.length){
+      $('rp-count').textContent = `${at.length} value(s), each with its source. 0 invented.`;
+      return;
+    }
+    const a = at[i++];
+    const src = (a.provenance && a.provenance.rendered) || '';
+    const el = document.createElement('div');
+    el.style.cssText = 'padding:6px 14px;font-size:13px;border-bottom:1px solid #eef2f5;'
+      + 'display:grid;grid-template-columns:44px 1fr 74px;gap:10px;align-items:baseline;'
+      + 'opacity:0;transition:opacity .18s';
+    el.innerHTML = `<span class="mono" style="color:var(--teal);font-size:11px">${esc(a.pillar)}</span>
+      <span><b>${esc(a.name)}</b>
+        <span class="mono" style="color:var(--mut)">${esc(String(a.value==null?'—':a.value).slice(0,44))}</span>
+        ${src?`<br><span style="color:var(--mut);font-size:11.5px">${esc(src.slice(0,120))}</span>`
+             :'<br><span style="color:var(--c);font-size:11.5px">no source recorded</span>'}</span>
+      <span style="text-align:right">${a.grade_is_null?'<span class="badge e">no grade</span>':badge(a.grade)}</span>`;
+    box.appendChild(el);
+    requestAnimationFrame(()=>{ el.style.opacity = 1; });
+    box.scrollTop = box.scrollHeight;
+    $('rp-count').textContent = `${i} of ${at.length}…`;
+    setTimeout(step, 38);
+  };
+  step();
+}
+
+/* ── THE UNLOCK LADDER ───────────────────────────────────────────────────
+   Airo tells you what to do next. So do we — but every step names WHAT IT
+   UNLOCKS, computed from what the record is currently unable to answer.
+   A gap with no consequence is a chore. A gap that unlocks something is a
+   reason. */
+function unlockLadder(r, sup){
+  const gaps = r.gaps || [];
+  /* A superseded subject is not asked to answer keys "inside its licence" — see the finding. */
+  const cont = sup ? [] : ((r.findings && r.findings.containment) || []);
+  const steps = [];
+
+  if (gaps.some(g => g.field === 'licence_type'))
+    steps.push({ do:'Tell us your licence type',
+      who:'Only you and GS1 hold it. It is not in any regulator filing.',
+      unlocks:['this prefix can reach VERIFIED — it is the one field blocking it',
+               'every claim rooted here inherits a verified root',
+               'the composition check can name the licence behind an instrument'],
+      weight: 3 });
+
+  if (gaps.some(g => g.field === 'mo'))
+    steps.push({ do:'Confirm your member organisation',
+      who:'RECORDED from an authority or left null. We never derive it from the digits — '
+        + 'that is mo-band, and it is forbidden.',
+      unlocks:['completeness reaches 4 of 4 required fields',
+               'your estate can be grouped across member organisations'],
+      weight: 2 });
+
+  if (cont.length)
+    steps.push({ do:`Answer the key filed inside your licence`,
+      who:'Nobody else can. A bad cut, a mis-filing, a subsidiary and misuse look identical '
+        + 'from outside.',
+      unlocks:['the finding closes, dated and attributed to you',
+               'if it is yours, it becomes a recorded relationship and the graph improves',
+               'if it is not, the other party learns it too'],
+      weight: 3 });
+
+  if (r.capability && r.capability.grade === 'slot')
+    steps.push({ do:'Declare what your things can do',
+      who:'ONLY THE MAKER MAY. Nobody else is entitled to declare a capability surface.',
+      unlocks:['agents can call your instruments through MHS, MCP or SiLA',
+               'a protocol can be checked against your envelope BEFORE it runs',
+               'out-of-envelope operation becomes detectable rather than discoverable'],
+      weight: 3 });
+
+  if (r.actors && r.actors.grade === 'slot')
+    steps.push({ do:'Say who may act, and in what role',
+      who:'A GSRN is a persona; an SRIN is the revision running. Neither exists here yet.',
+      unlocks:['"who performed this action" gets an answer that is not "an agent"',
+               'a role can be scoped and revoked per key',
+               'an audit trail becomes a read rather than a reconstruction'],
+      weight: 2 });
+
+  steps.push({ do:'Claim this ThingSite',
+    who:'Unclaimed it is a public candidate. Claimed, your corrections are YOUR dated assertions.',
+    unlocks:['findings in your number space are delivered to you',
+             'corrections supersede rather than overwrite — the earlier reading stays visible',
+             'nothing is ever edited on your behalf'],
+    weight: 3 });
+
+  steps.sort((a,b)=>b.weight-a.weight);
+
+  return `<h2>What each of these unlocks</h2>
+    <p class="sub">Not a checklist. <b>Every line names what the register can answer once you
+      fill it</b> — and each is something the other two authorities cannot supply.</p>` +
+    steps.map((s,i)=>`<div class="card ${s.weight===3?'c':'slot'}">
+      <h3><span style="color:var(--teal)">${i+1}</span> &nbsp;${esc(s.do)}</h3>
+      <div class="m">${esc(s.who)}
+        <div style="margin-top:8px;color:var(--ink)"><b>Unlocks</b></div>
+        <ul style="margin:4px 0 0;padding-left:19px">
+          ${s.unlocks.map(u=>`<li style="margin:2px 0">${esc(u)}</li>`).join('')}</ul></div>
+    </div>`).join('');
+}
+
+/* ── YOUR OTHER LICENCES ─────────────────────────────────────────────────
+   A company with four GS1 licences has FOUR ThingSites, because four separate
+   delegations were made. They are CO-WORKERS, NOT ONE PAGE. This strip lets an
+   owner move between them without the registrar ever merging them — and it
+   says so, because grouping on a shared name is evidence, never a ruling. */
+function siblingStrip(){
+  if (!ECO) return '';
+  const rooted = (ECO.siblings||[]).filter(s => s.prefix);
+  if (!rooted.length) return '';
+  return `<div style="border:1px solid var(--rule);border-left:4px solid var(--teal);
+      border-radius:9px;padding:13px 16px;margin:0 0 16px;background:var(--sbg)">
+    <div style="font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:var(--mut);
+      font-weight:700;margin-bottom:7px">You may also hold — ${rooted.length} other licence(s)</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+      ${rooted.map(s=>`<button class="act" onclick="location.hash='${esc(s.prefix)}'"
+        style="margin:0"><span class="mono">${esc(s.prefix)}</span>
+        <span style="color:var(--mut);font-weight:400">· ${esc((s.holder||'').slice(0,28))}</span>
+        ${badge(s.grade)}</button>`).join('')}
+    </div>
+    <div style="font-size:12.5px;color:var(--mut);line-height:1.6">
+      <b>Separate delegations, separate ThingSites.</b> The registrar never merges them —
+      grouping on a shared name is evidence of one enterprise, never a ruling that they are one.
+      <b>Only you can confirm it</b>, and confirming is what turns a candidate grouping into a
+      dated assertion.</div></div>`;
+}
+
+/* ── NEW HERE ────────────────────────────────────────────────────────────
+   The acquisition flow, shown as the shell it is. A pre-built page becomes
+   yours by claim, not by signup — you already own the asset. */
+function newHere(r){
+  return `<h2>New here?</h2>
+    <p class="sub">You did not create this page and you do not need an account to read it.
+      <b>It already exists because you already own the licence.</b></p>
+    <div class="demo"><b>DEMO SHELL — NOT WIRED.</b> Verification and the token issue require
+      per-user authentication, which does not exist. The API has one shared
+      <span class="mono">INGEST_TOKEN</span>, not user identity. Every action here is inert.</div>
+    <div class="card"><h3>What claiming actually does</h3><div class="m">
+      <b>1 · Prove you control the prefix.</b> Not a signup — a demonstration that you hold the
+        licence the authority delegated.<br>
+      <b>2 · A token is issued to you</b>, scoped to that prefix and revocable by you.<br>
+      <b>3 · This page becomes yours.</b> Your corrections are recorded as YOUR dated assertions;
+        findings in your number space are delivered to you; and if you hold more licences, they
+        appear beside this one — <b>as separate ThingSites, never merged</b>.<br><br>
+      <b>Nothing is edited on your behalf, and nothing is ever minted here.</b> The customer
+      mints; we register and resolve.</div>
+      <div style="margin-top:12px">
+        <button class="act pri inert" disabled>Verify I control ${esc(r.subject.prefix)}</button>
+        <button class="act inert" disabled>Issue my token</button></div></div>`;
+}
+
+function human(r){
+  const nameC = (r.claims.legal_name||[])[0];
+  const nm = nameC ? nameC.value : null;
+  const src = nameC ? (nameC.provenance||{}) : {};
+
+  const au = authorityFor(r.subject.prefix);
+  /* SUPERSESSION IS THE RECORD'S TO DECLARE. The API reads the authority register at
+     request time and puts a top-level `supersession` block on the record. The page's own
+     read of the register is only a fallback for a build that predates that block — the
+     gating below must not depend on which of the two spoke. */
+  const sup = r.supersession
+    || (au.superseded ? { superseded_by: au.superseded.superseded_by, on: au.superseded.on,
+                          why: au.superseded.why, capture: null } : null);
+  let h = '';
+  if (sup){
+    h += `<div class="banner e"><b>Superseded ${esc(sup.on)}:</b> the authority holds
+      <b class="mono">${sup.superseded_by ? esc(sup.superseded_by) : 'no replacement'}</b>.
+      ${esc(sup.why||'')}${sup.capture?` <span class="mono">· capture ${esc(sup.capture)}</span>`:''}</div>`;
+  }
+  h += `<p style="margin:0 0 10px"><a href="#" onclick="location.hash='';return false"
+      style="color:var(--teal);font-size:13.5px">← start again</a>
+    ${nm?` &nbsp;·&nbsp; <a href="#q/${encodeURIComponent(nm.split(',')[0])}"
+      style="color:var(--teal);font-size:13.5px">every row under this name</a>`:''}</p>
+    <h1>${nm ? esc(nm) : 'This licence has no name on record'}</h1>
+    <p style="margin:0 0 10px"><span class="mono" style="font-size:22px;color:var(--mut);font-weight:600">${esc(r.subject.prefix)}</span>
+      ${badge(nameC?nameC.grade:'slot')}</p>
+    <p style="color:var(--mut);font-size:15px;max-width:84ch;line-height:1.6;margin:0 0 6px">
+      <b>This page was built for you before you arrived</b> — from your own public record and from
+      what regulators already hold. Every line says where it came from.
+      <b>Nothing here was invented.</b></p>`;
+
+  h += siblingStrip();
+
+  /* ── THE THREE AUTHORITIES ───────────────────────────────────────────── */
+  const agency = findAttached(r, /issuing agency/i);
+  const isGS1 = agency && /GS1/i.test(String(agency.value||''));
+  /* The delegation card answers to the authority register first. A superseded value is
+     NOT CONFIRMED whatever the filings say; a confirmed hand-read is CONFIRMED with the
+     date and the capture. Anything else falls through to what the filings say. */
+  const delegationOn = sup ? false : (au.read ? true : isGS1);
+  const delegationWhat = sup
+    ? `GS1 <span style="color:var(--e)">NOT CONFIRMED</span>`
+    : au.read
+      ? `GS1 <span style="color:var(--v)">CONFIRMED</span>`
+      : `GS1 ${isGS1?'':'<span style="color:var(--c)">not confirmed</span>'}`;
+  const delegationRead = au.read
+    ? `<br><br>read from the authority <b>${esc(au.read.read_at)}</b> · capture <b class="mono">${esc(au.read.capture||'—')}</b>`
+    : '';
+  const attested = src.source_kind === 'regulator-filing';
+  /* Step 2 does not unlock while step 1 is superseded. A regulator can attest that a
+     filing was made under this value; it cannot make the value a licence. */
+  const attestOn = attested && !sup;
+  h += `<h2>Two authorities already agree about you</h2>
+    <p class="sub">Neither can produce the other's half — and that is what makes this record
+      hard to fake.</p>
+    <div class="auth">
+      <div class="a ${delegationOn?'on':''}">
+        <div class="who">1 · delegation</div>
+        <div class="what">${delegationWhat}</div>
+        <div class="d">A member organisation delegated <b class="mono">${esc(r.subject.prefix)}</b>
+          to one licensee. Uniqueness is guaranteed downward — nobody else may allocate inside it.
+          <b>GS1 knows nothing about your devices.</b>
+          ${agency?`<br><br>issuing agency on your filings: <b>${esc(agency.value)}</b>`:''}${delegationRead}</div>
+      </div>
+      <div class="a ${attestOn?'on':''}">
+        <div class="who">2 · attestation</div>
+        <div class="what">${attested
+          ? (sup ? `${esc(src.source)} <span style="color:var(--e)">— not unlocked</span>` : esc(src.source))
+          : 'not attested'}</div>
+        <div class="d">${attested
+          ? (sup
+              ? `A regulator holds a filing made under <b class="mono">${esc(r.subject.prefix)}</b>. It attests that you filed — <b>it cannot make the value a licence</b>, and the authority holds <b class="mono">${sup.superseded_by ? esc(sup.superseded_by) : 'no replacement'}</b>. Step 2 stays locked until step 1 is answered.`
+              : 'A regulator holds a filing you made, under statute. <b>It cannot allocate a single digit</b> — it can only attest that you filed.')
+          : 'No regulator filing is held against this row. ' + (src.note?esc(src.note):'')}</div>
+      </div>
+      <div class="a you">
+        <div class="who">3 · confirmation</div>
+        <div class="what" style="color:var(--teal)">You</div>
+        <div class="d"><b>The only authority that can answer what neither of the others knows.</b>
+          Which licence type this is. What you actually operate. Whether the key filed inside your
+          number space was yours. <b>This page is waiting on you.</b></div>
+      </div>
+    </div>`;
+
+  /* ── ESTATE AT A GLANCE ──────────────────────────────────────────────── */
+  const dev = findAttached(r, /device records/i);
+  const mod = findAttached(r, /distinct device models/i);
+  const brd = findAttached(r, /brands/i);
+  if (dev || mod || brd){
+    h += `<h2>Your estate, as the register holds it</h2>
+      <p class="sub">Counted from your own filings — not estimated.</p><div class="kpi">
+      ${dev?`<div><div class="n">${esc(dev.value)}</div><div class="l">device records</div></div>`:''}
+      ${mod?`<div><div class="n">${esc(mod.value)}</div><div class="l">distinct models</div></div>`:''}
+      ${brd?`<div><div class="n">${esc(brd.value)}</div><div class="l">brands filed</div></div>`:''}
+      <div><div class="n">${num(r.keys_attached)}</div><div class="l">values held</div></div>
+      <div><div class="n" style="color:${(r.gaps||[]).length?'var(--c)':'var(--v)'}">${(r.gaps||[]).length}</div>
+        <div class="l">declared gaps</div></div></div>`;
+  }
+
+  /* ── THE FINDING ─────────────────────────────────────────────────────── */
+  h += buildReplay(r);
+  const cont = (r.findings && r.findings.containment) || [];
+  if (cont.length){
+    h += `<h2>The network has something to tell you</h2>
+      <p class="sub">Nobody asked for this. It surfaced in the ordinary course of resolving your
+        prefix — which is what a resolver is for.</p>`;
+    for (const c of cont){
+      h += `<div class="finding"><h3>A key was filed inside your licence</h3>
+        <div style="font-size:14.5px;line-height:1.75">
+          <b class="mono">${esc(c.prefix)}</b> sits inside <b class="mono">${esc(r.subject.prefix)}</b>,
+          filed as <b>${esc(c.holder)}</b> via ${esc(c.source)}${c.gln?`, carrying GLN
+          <span class="mono">${esc(c.gln)}</span>`:''}.<br><br>${esc(c.statement)}</div>
+        ${sup
+          ? `<div class="m" style="margin-top:11px;color:var(--e)"><b>Not asked.</b> The subject
+              prefix is superseded by <b class="mono">${sup.superseded_by ? esc(sup.superseded_by) : 'no replacement'}</b>
+              per Verified by GS1 ${esc(sup.on)}. "Inside your licence" is a statement about a
+              licence, and the authority holds a different one — the question has no answerable
+              form against this value, so it is withheld rather than put to you.</div>`
+          : `<div class="q">Did you authorise this?</div>
+        <button class="act pri inert" disabled>Yes — this is ours</button>
+        <button class="act warn inert" disabled>No — we did not authorise it</button>
+        <button class="act inert" disabled>Not sure, ask us</button>
+        <div class="m" style="margin-top:11px"><b>"Yes, that's ours" is a good outcome, not a
+          wasted alert.</b> It becomes a dated relationship and the record improves for everyone
+          downstream. We never say counterfeit, never say stolen, never say misfiled.</div>`}</div>`;
+    }
+  }
+
+  /* ── THE RECORD ──────────────────────────────────────────────────────── */
+  h += `<h2>The registration record</h2>
+    <p class="sub">What is held, and on whose authority.</p>`;
+  for (const [k,label] of [['legal_name','Registered to'],['gln','GLN'],['mo','Member organisation'],
+      ['duns','DUNS'],['lei','LEI'],['city','City'],['country','Country'],['licence_type','Licence type']]){
+    const vals = r.claims[k]||[]; if (!vals.length) continue;
+    h += `<div class="row"><div class="k">${esc(label)}</div><div class="val">` +
+      vals.map(v=>`${esc(v.value)} ${badge(v.grade)}${srcLine(v.provenance)}`)
+        .join('<hr style="border:none;border-top:1px solid var(--rule);margin:9px 0">') +
+      `</div></div>`;
+  }
+  h += `<div class="row"><div class="k">Prefix length</div><div class="val">${r.subject.length} digits${
+      sup ? ` — superseded; ${sup.superseded_by
+        ? `the licence is <b class="mono">${String(sup.superseded_by).length}</b>`
+        : 'the authority holds no replacement'}` : ''}
+    <span class="src">${esc(r.subject.length_method)}${sup && sup.superseded_by
+      ? ` · licence length is char_length of ${esc(sup.superseded_by)}, read from the authority ${esc(sup.on)}` : ''}</span></div></div>`;
+
+  /* ── WHAT IS ROOTED HERE ─────────────────────────────────────────────── */
+  const at = r.attached||[];
+  if (at.length){
+    const by = {}; for (const a of at) (by[a.pillar]=by[a.pillar]||[]).push(a);
+    h += `<h2>What is rooted in this licence</h2>
+      <p class="sub">${r.keys_attached} value(s).
+      ${r.display_strings_split?`<b>${r.display_strings_split} were stored as one display string
+        and are split here</b> — a value you can only read by eye is not in context.`:''}</p>`;
+    for (const p of Object.keys(by).sort()){
+      h += `<h3 style="margin:16px 0 6px;font-size:15px">${esc(p)}
+        <span style="color:var(--mut);font-weight:400">· ${by[p].length}</span></h3>
+        <table><tr><th>Item</th><th>Value</th><th>Grade</th><th>Where it came from</th></tr>` +
+        by[p].slice(0,25).map(a=>`<tr><td>${esc(a.name)}</td>
+          <td class="mono">${esc(a.value==null?'—':a.value)}
+            ${a.split_from_display?'<br><span style="font-size:11px;color:var(--c)">split from a display string</span>':''}</td>
+          <td>${a.grade_is_null?'<span class="badge e">no grade</span>':badge(a.grade)}</td>
+          <td style="font-size:12.5px;color:var(--mut)">${esc((a.provenance.rendered||'—').slice(0,150))}</td></tr>`).join('') +
+        (by[p].length>25?`<tr><td colspan="4" style="color:var(--mut)">…and ${by[p].length-25} more.
+          Shown 25. <b>A cap is not a total.</b></td></tr>`:'') + `</table>`;
+    }
+  }
+
+  /* ── ECOSYSTEM ───────────────────────────────────────────────────────── */
+  h += `<h2>Your ecosystem</h2>
+    <p class="sub">Who this licence connects to. <b>Every edge carries its grade and its
+      asserter</b> — a candidate edge read as a contract is the failure this register exists
+      to prevent.</p>`;
+  if (!ECO){
+    h += `<div class="note"><b>The ecosystem endpoint is not served by this build.</b>
+      Apply <span class="mono">patch_api_ecosystem.py</span> and restart. That is a stale
+      build, not an empty neighbourhood.</div>`;
+  } else {
+    const c = ECO.counts||{};
+    h += `<div class="kpi">
+      <div><div class="n">${num(c.siblings)}</div><div class="l">same-name rows</div></div>
+      <div><div class="n">${num(c.edges)}</div><div class="l">asserted edges</div></div>
+      <div><div class="n" style="color:${c.inside?'var(--e)':'var(--v)'}">${num(c.inside)}</div>
+        <div class="l">inside this licence</div></div></div>`;
+    if ((ECO.siblings||[]).length){
+      h += `<table><tr><th>Prefix</th><th>Name</th><th>MO</th><th>Source</th><th>Relation</th></tr>` +
+        ECO.siblings.slice(0,20).map(s=>`<tr><td class="mono">${esc(s.prefix||'—')}</td>
+          <td>${esc(s.holder)}</td><td>${esc(s.mo||'—')}</td><td>${esc(s.source)}</td>
+          <td>${badge(s.grade)} ${esc(s.relation)}</td></tr>`).join('') + `</table>
+        <div class="note">${esc(ECO.siblings[0].note)}</div>`;
+    }
+    for (const e of (ECO.edges||[]).slice(0,20)){
+      h += `<div class="card ${e.grade}"><h3>${e.direction==='out'?'→':'←'}
+        ${esc(e.counterparty||'unnamed counterparty')} ${badge(e.grade)}</h3>
+        <div class="m">${esc(e.relation||'relation not named')}
+          ${e.counterparty_prefix?` · <span class="mono">${esc(e.counterparty_prefix)}</span>`:''}
+          · source ${esc(e.source||'—')}
+          ${e.note?`<br><b style="color:var(--e)">${esc(e.note)}</b>`:''}</div></div>`;
+    }
+    for (const g of (ECO.gaps||[]))
+      h += `<div class="gap"><div class="k">${esc(g.field)}</div><div class="w">
+        <b>${esc(g.why)}</b>${g.consequence?`<br>${esc(g.consequence)}`:''}
+        ${g.detail?`<br><span class="mono" style="font-size:11.5px">${esc(g.detail)}</span>`:''}</div></div>`;
+    if (ECO.policy) h += `<div class="note">${esc(ECO.policy)}</div>`;
+  }
+
+  /* ── THE GAPS — THE INVITATION ───────────────────────────────────────── */
+  h += `<h2>What only you can tell us</h2>
+    <p class="sub">A declared gap is stronger than a blank. <b>These are the lines the other two
+      authorities cannot fill</b> — GS1 does not know what you operate, and the regulator does not
+      know which licence type you hold.</p>`;
+  const gaps = r.gaps||[];
+  if (!gaps.length) h += `<div class="note">No gaps declared on this row.</div>`;
+  for (const g of gaps)
+    h += `<div class="gap"><div class="k">${esc(g.field)}</div><div class="w">
+      <b>${esc(g.why)}</b>${g.blocks?` — blocks <b>${esc(g.blocks.join(', '))}</b>`:''}
+      ${g.rule?`<br><span style="color:var(--c)">${esc(g.rule)}</span>`:''}
+      ${g.detail?`<br>${esc(g.detail)}`:''}</div></div>`;
+
+  h += unlockLadder(r, sup);
+
+  h += `<h2>Capability and actors</h2>
+    <p class="sub">What your things can do, and who may act on them.</p>
+    <div class="card slot"><h3>Capability surface ${badge(r.capability.grade)}</h3>
+      <div class="m">${esc(r.capability.statement)}</div></div>
+    <div class="card slot"><h3>Actors ${badge(r.actors.grade)}</h3>
+      <div class="m">${esc(r.actors.statement)}</div></div>`;
+
+  /* ── CLAIM ───────────────────────────────────────────────────────────── */
+  h += `<h2>Claim this licence</h2>
+    <p class="sub">Unclaimed, this page is a public candidate — an invitation. Claimed, it is
+      yours: your corrections become <b>your</b> dated assertions, and findings in your number
+      space are delivered to you.</p>
+    <div class="card"><div class="m">
+      <b>We do not edit the mirror on your behalf.</b> We publish what is found as found, and you
+      correct it. Every correction supersedes rather than overwrites — the earlier reading stays
+      visible as evidence that the record improved.<br><br>
+      <b>Nothing is ever minted here.</b> The customer mints; we register and resolve.</div>
+      <div style="margin-top:12px">
+        <button class="act pri inert" disabled>Verify I control this prefix</button>
+        <button class="act inert" disabled>This one is not us</button></div></div>`;
+
+  h += newHere(r);
+
+  h += `<h2>What a machine sees</h2>
+    <p class="sub">This page is a view of a record shaped for a consumer that has never seen it.</p>
+    <table><tr><th>Question</th><th>Endpoint</th></tr>` +
+    Object.entries(r.ask||{}).filter(([,v])=>v).map(([k,v])=>
+      `<tr><td>${esc(k.replace(/_/g,' '))}</td><td class="mono">${esc(v)}</td></tr>`).join('') +
+    `</table><div class="note"><b>${esc(r.grade_note)}</b><br>` +
+    Object.entries(r.grades||{}).map(([k,v])=>`${badge(k)} ${esc(v)}`).join(' &nbsp; ') + `</div>`;
+  return h;
+}
+
+function colour(j){ return esc(j)
+  .replace(/&quot;([^&]*?)&quot;(\s*:)/g,'<span class="k">"$1"</span>$2')
+  .replace(/:\s&quot;(.*?)&quot;/g,': <span class="s">"$1"</span>')
+  .replace(/:\s(-?\d+\.?\d*|true|false|null)/g,': <span class="n">$1</span>'); }
+
+async function load(){
+  const raw = (location.hash||'').replace(/^#/,'').trim();
+
+  /* q/<name> → the reveal. digits → the record. empty → the front door. */
+  if (raw.startsWith('q/')) return void reveal(decodeURIComponent(raw.slice(2)));
+
+  const pfx = raw;
+  if (!pfx){
+    $('strip').innerHTML = `<span><b>ONE PREFIX = ONE THINGSITE.</b> The address is the prefix —
+      the only key here an authority issued.</span>`;
+    $('page').innerHTML = `
+      <h1 style="font-size:38px;line-height:1.15;max-width:19ch;margin:10px 0 2px">You have a website.</h1>
+      <h1 style="font-size:38px;line-height:1.15;max-width:19ch;color:var(--teal);margin:0 0 2px">Are you doing Physical AI?</h1>
+      <h1 style="font-size:38px;line-height:1.15;max-width:24ch;margin:0 0 12px">Then you need a ThingSite for all of your physical things.</h1>
+      <p style="color:var(--mut);font-size:16px;margin:0 0 18px">We have one for you.
+        Just enter your company name.</p>
+      <form class="brow" style="max-width:600px" onsubmit="go(document.getElementById('q2').value);return false">
+        <input id="q2" placeholder="Enter your company name" style="font-family:inherit">
+        <button>Search</button></form>
+      <p style="color:var(--mut);font-size:13.5px;margin:10px 0 0">
+        try <a href="#q/diazyme" style="color:var(--teal)"><b>Diazyme</b></a> ·
+        <a href="#q/illumina" style="color:var(--teal)"><b>Illumina</b></a> ·
+        or a prefix directly: <a href="#081627002" style="color:var(--teal)" class="mono">081627002</a></p>
+      <div class="note" style="margin-top:24px"><b>A page already exists for every GS1 licence the
+        register holds.</b> Built before anyone arrived, from public record, with every line
+        carrying the source it came from. <b>Nothing here was invented.</b></div>` + foot();
+    return;
+  }
+  $('page').innerHTML = '<div class="spin">reading the register…</div>';
+  let r, body;
+  try { r = await fetch(`${API}/agent/prefix/${encodeURIComponent(pfx)}`); body = await r.json(); }
+  catch(e){ $('page').innerHTML = `<div class="note"><b>The API did not answer.</b>
+    <span class="mono">./population/seed/demo_up.sh</span></div>`; return; }
+
+  if (body && typeof body.error === 'string' && body.error.startsWith('no route')){
+    $('page').innerHTML = `<div class="note"><b>STALE BUILD.</b> This build does not serve
+      <span class="mono">/agent/prefix/${esc(pfx)}</span>. The route is absent — that is not the
+      same as missing data. Apply <span class="mono">patch_api_agent_record.py</span> and
+      restart.</div>`; return;
+  }
+  REC = body; ECO = null;
+  try {
+    const e = await fetch(`${API}/agent/prefix/${encodeURIComponent(pfx)}/ecosystem`);
+    const eb = await e.json();
+    if (e.ok && eb && !(typeof eb.error==='string' && eb.error.startsWith('no route'))) ECO = eb;
+  } catch(e){}
+  await loadAuthority();
+
+  $('strip').innerHTML = `<span><b>LIVE</b> ${API}</span>
+    <span>record <b>${esc((body&&body.record)||'—')}</b></span>
+    <span>shaped for <b>${esc((body&&body.shaped_for)||'—')}</b></span>
+    <div class="tog"><button class="${MODE==='human'?'on':''}" onclick="setMode('human')">HUMAN</button>
+      <button class="${MODE==='machine'?'on':''}" onclick="setMode('machine')">MACHINE</button></div>`;
+
+  if (!r.ok || !body || body.resolves === false){
+    const nfAuth = authorityFor(pfx);
+    $('page').innerHTML = `${nfAuth.superseded ? `<div class="banner e"><b>Superseded ${esc(nfAuth.superseded.on)}:</b>
+        the authority holds <b class="mono">${nfAuth.superseded.superseded_by ? esc(nfAuth.superseded.superseded_by) : 'no replacement'}</b>.
+        ${esc(nfAuth.superseded.why)}</div>` : ''}<h1 class="mono">${esc(pfx)}</h1>
+      <div class="card e"><h3>${esc((body&&body.statement)||'No holder on record.')}
+        ${badge((body&&body.grade)||'e')}</h3>
+        <div class="m">reason <b>${esc((body&&body.reason)||'no-holder-on-record')}</b><br><br>
+        An honest not-found is a real answer. A ThingSite has no meaning without a GS1 prefix at
+        its root, and we do not invent one.</div>
+        ${nfAuth.read ? `<div class="m" style="margin-top:10px;color:var(--v)"><b>GS1 CONFIRMED.</b>
+          The authority holds this licence — read from its display
+          <b>${esc(nfAuth.read.read_at)}</b> · capture <b class="mono">${esc(nfAuth.read.capture||'—')}</b>.
+          The register has no party rooted on it yet; the delegation is real, the page is not built.</div>` : ''}
+        <div style="margin-top:12px"><button class="act pri inert" disabled>Get a GS1 prefix</button></div></div>`;
+    return;
+  }
+  render();
+}
+
+function render(){
+  $('page').innerHTML = (MODE==='machine'
+    ? `<h1>Machine view</h1>
+       <p style="color:var(--mut);max-width:84ch;line-height:1.6;font-size:15px">
+       <b>This is the record. The page you were reading is a view of it.</b> Same fetches, same
+       bytes — an agent that has never seen the page gets exactly this, <b>including every
+       declared gap</b>.</p>
+       <h2 style="margin-top:20px">/agent/prefix/${esc(REC.subject.prefix)}</h2>
+       <pre class="json">${colour(JSON.stringify(REC,null,2))}</pre>
+       <h2>/agent/prefix/${esc(REC.subject.prefix)}/ecosystem</h2>
+       ${ECO?`<pre class="json">${colour(JSON.stringify(ECO,null,2))}</pre>`
+            :`<div class="note">not served by this build.</div>`}`
+    : human(REC))
+  + `<footer><b>ThingDaddy.</b> The registrar for the physical internet. You own your IDs;
+     we operate.<br>Every fact is <b>verified</b>, <b>candidate</b>, or an <b>exception</b> —
+     never a guess. Nothing on this page writes, and nothing is minted here.</footer>`;
+  window.scrollTo(0,0);
+}
+function setMode(m){ MODE=m; render(); }
+window.addEventListener('hashchange', load);
+load();
+</script>
+</body>
+</html>

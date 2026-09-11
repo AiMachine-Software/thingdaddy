@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ThingDaddy — the console</title>
+<style>
+/* ── design tokens: taken from GoDaddy's own running code, 22 Jul recon ───── */
+:root{
+  --td-navy:#12344D; --td-blue:#002c6c; --td-bg:#F5F7F9; --td-surface:#fff;
+  --td-rule:#DBE2E8; --td-ink:#1a1a1a; --td-mut:#6b7178; --td-char:#1d1d1d;
+  --td-teal:#118a8c;
+  --v:#0f7a34; --c:#a2660a; --e:#b3261e; --b:#12344D; --slot:#6b7178;
+  --rail:248px; --content:1020px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--td-surface);color:var(--td-ink);
+  font-family:"Source Sans Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+a{color:inherit;text-decoration:none}
+code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
+
+nav.top{background:var(--td-char);height:56px;display:flex;align-items:center;
+  gap:14px;padding:0 20px;position:sticky;top:0;z-index:50}
+nav.top .logo{color:#fff;font-weight:800;font-size:21px;letter-spacing:-.3px}
+nav.top .logo span{color:var(--td-teal)}
+nav.top .right{margin-left:auto;color:#9aa3ab;font-size:13px}
+
+.live{background:var(--td-navy);color:#fff;padding:9px 20px;font-size:13px;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.live .dot{width:11px;height:11px;border-radius:50%;background:#2ecc71;flex:0 0 11px}
+.live .dot.bad{background:#e74c3c}
+.live b{font-weight:700}
+.live .muted{color:#b7c4cf}
+
+.wrap{display:flex;align-items:flex-start;min-height:calc(100vh - 96px)}
+.rail{width:var(--rail);flex:0 0 var(--rail);border-right:1px solid var(--td-rule);
+  padding:14px 0 60px;background:var(--td-surface);position:sticky;top:96px;
+  max-height:calc(100vh - 96px);overflow:auto}
+.rail h4{margin:16px 20px 6px;font-size:11px;letter-spacing:.9px;
+  text-transform:uppercase;color:var(--td-mut);font-weight:700}
+.rail a{display:flex;gap:9px;padding:7px 20px;cursor:pointer;font-size:14px;align-items:baseline}
+.rail a .n{color:var(--td-mut);font-size:11px;min-width:17px;font-variant-numeric:tabular-nums}
+.rail a:hover{background:var(--td-bg)}
+.rail a.on{background:var(--td-navy);color:#fff}
+.rail a.on .n{color:#8fb0c7}
+
+.main{flex:1;min-width:0;padding:26px 30px 90px}
+.inner{max-width:var(--content)}
+h1{font-size:29px;letter-spacing:-.6px;margin:0 0 4px}
+h1.hero{font-size:37px;line-height:1.16;letter-spacing:-.9px;font-weight:800;
+  margin:0 0 2px;max-width:19ch}
+h1.hero:last-of-type{margin-bottom:12px;max-width:24ch}
+h2{font-size:19px;margin:30px 0 10px}
+p.lede{color:var(--td-mut);font-size:15px;margin:0 0 18px;max-width:76ch;line-height:1.5}
+.src{font-size:11.5px;color:var(--td-mut);margin:0 0 20px;padding:6px 10px;
+  background:var(--td-bg);border-left:3px solid var(--td-rule);display:inline-block}
+.src b{color:var(--td-ink);font-family:ui-monospace,monospace}
+
+.card{border:1px solid var(--td-rule);border-radius:9px;padding:15px 17px;
+  margin:0 0 11px;background:var(--td-surface)}
+.card.hi{border-left:4px solid var(--c)}
+.card.ver{border-left:4px solid var(--v)}
+.card.exc{border-left:4px solid var(--e)}
+.card h3{margin:0 0 5px;font-size:16.5px}
+.card .meta{font-size:13px;color:var(--td-mut);margin-top:7px;line-height:1.65}
+.card .meta b{color:var(--td-ink);font-weight:600}
+
+.badge{display:inline-block;padding:1px 8px;border-radius:11px;font-size:11.5px;
+  font-weight:700;border:1px solid;margin-left:6px;vertical-align:2px}
+.badge.v{color:var(--v);border-color:var(--v);background:#eaf6ee}
+.badge.c{color:var(--c);border-color:var(--c);background:#fdf5e6}
+.badge.e{color:var(--e);border-color:var(--e);background:#fdeceb}
+.badge.b{color:var(--b);border-color:var(--b);background:#eef2f6}
+.badge.slot{color:var(--slot);border-color:var(--td-rule);background:var(--td-bg)}
+.badge.demo{color:#fff;background:#b3261e;border-color:#b3261e}
+
+.brow{display:flex;max-width:660px;margin:0 0 8px}
+.brow input{flex:1;border:1px solid #c8ced4;border-right:none;border-radius:24px 0 0 24px;
+  padding:13px 20px;font-size:15px;outline:none;font-family:inherit}
+.brow input:focus{border-color:var(--td-teal);box-shadow:0 0 0 3px rgba(17,138,140,.14)}
+.brow button{border:none;background:var(--td-navy);color:#fff;border-radius:0 24px 24px 0;
+  padding:0 26px;font-size:15px;font-weight:600;cursor:pointer}
+
+table{border-collapse:collapse;width:100%;font-size:13.5px;margin:0 0 18px}
+th,td{text-align:left;padding:8px 11px;border-bottom:1px solid var(--td-rule);vertical-align:top}
+th{font-size:11px;letter-spacing:.7px;text-transform:uppercase;color:var(--td-mut);font-weight:700}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+tr:hover td{background:var(--td-bg)}
+
+.kpi{display:flex;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.kpi div{border:1px solid var(--td-rule);border-radius:9px;padding:13px 17px;min-width:132px}
+.kpi .n{font-size:25px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.5px}
+.kpi .l{font-size:11.5px;color:var(--td-mut);text-transform:uppercase;letter-spacing:.7px;margin-top:2px}
+
+.note{background:var(--td-bg);border-left:3px solid var(--td-teal);padding:11px 14px;
+  font-size:13.5px;color:#41505c;margin:14px 0;line-height:1.6;max-width:80ch}
+.warn{background:#fdeceb;border-left:3px solid var(--e);padding:12px 15px;
+  font-size:13.5px;margin:0 0 20px;line-height:1.6;max-width:80ch}
+.demo-banner{background:#b3261e;color:#fff;padding:11px 15px;border-radius:7px;
+  font-size:13.5px;margin:0 0 20px;line-height:1.6;max-width:80ch}
+.demo-banner b{font-weight:800}
+
+button.act{border:1px solid var(--td-navy);background:var(--td-surface);color:var(--td-navy);
+  border-radius:6px;padding:7px 15px;font-size:13.5px;font-weight:600;cursor:pointer;
+  margin:3px 6px 3px 0;font-family:inherit}
+button.act.pri{background:var(--td-navy);color:#fff}
+button.act.inert{opacity:.42;cursor:not-allowed;border-style:dashed}
+.empty{color:var(--td-mut);font-size:14px;padding:26px;text-align:center;
+  border:1px dashed var(--td-rule);border-radius:9px}
+.spin{color:var(--td-mut);font-size:14px;padding:20px 0}
+.pillar{border:1px solid var(--td-rule);border-radius:9px;padding:13px 16px;margin:0 0 9px}
+.pillar .h{display:flex;align-items:baseline;gap:9px}
+.pillar .h .idx{color:var(--td-teal);font-weight:800}
+.pillar .body{font-size:13.5px;color:var(--td-mut);margin-top:6px;line-height:1.6}
+.bar{height:9px;background:var(--td-bg);border-radius:5px;overflow:hidden;display:flex;margin-top:5px}
+.bar i{display:block;height:100%}
+footer{border-top:1px solid var(--td-rule);margin-top:44px;padding:18px 0;
+  font-size:12.5px;color:var(--td-mut);line-height:1.7}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="logo">Thing<span>Daddy</span>.</div>
+  <div class="right" id="topright"></div>
+</nav>
+<div class="live" id="live"><span class="dot bad"></span><span>connecting…</span></div>
+
+<div class="wrap">
+  <div class="rail" id="rail"></div>
+  <div class="main"><div class="inner" id="view"><div class="spin">loading…</div></div></div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════════════
+   ThingDaddy console — 26 screens.
+
+   TIER 1 (1-17)  every screen is fed by a REAL endpoint. Nothing is invented.
+                  If the register does not hold it, the screen says so.
+   TIER 2 (18-26) DEMO SHELLS. They require authentication, which DOES NOT
+                  EXIST. Every one carries a red banner and every owner-side
+                  action is inert. Real data is shown where an endpoint gives
+                  it; nothing owner-specific is fabricated.
+
+   Every screen prints THE ENDPOINT THAT FED IT. Every line says where it
+   came from.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+const API = ''  /* same origin: nginx proxies the API paths (deploy/server/thingdaddy-api-proxy.conf) */;
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s == null ? '' : s)
+  .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const num = (n) => (n == null ? '—' : Number(n).toLocaleString());
+
+async function call(path){
+  try {
+    const r = await fetch(API + path, {headers:{Accept:'application/json'}});
+    const body = await r.json().catch(() => null);
+    return {ok:r.ok, status:r.status, body};
+  } catch (e) { return {ok:false, status:0, body:null, err:String(e)}; }
+}
+
+/* A missing endpoint and an honest empty answer are BOTH 404 and differ only
+   in the body. The console must never render one as the other. */
+function isNoRoute(r){
+  return !!(r && r.body && typeof r.body.error === 'string' && r.body.error.startsWith('no route'));
+}
+function guard(r, path){
+  if (r.status === 0) return `<div class="warn"><b>The API did not answer.</b> Is it running on ${API}?<br>
+    <span class="mono">./population/seed/demo_up.sh</span></div>`;
+  if (isNoRoute(r)) return `<div class="warn"><b>STALE BUILD.</b> This build does not serve
+    <span class="mono">${esc(path)}</span>. That is not missing data — the route is absent.
+    A stale build and an honest empty answer are both 404 and differ only in the body.<br>
+    <span class="mono">git pull &amp;&amp; ./population/seed/demo_up.sh</span></div>`;
+  return null;
+}
+const src = (...p) => `<p class="src">fed by <b>${p.map(esc).join('</b> · <b>')}</b></p>`;
+const badge = (g) => {
+  const map = {verified:'v', candidate:'c', exception:'e', built:'b', slot:'slot',
+               v:'v', c:'c', e:'e', b:'b'};
+  const k = map[g] || 'slot';
+  return `<span class="badge ${k}">${esc(g)}</span>`;
+};
+const demoBanner = (what) => `<div class="demo-banner"><b>DEMO SHELL — NOT WIRED.</b>
+  ${esc(what)} requires per-user authentication, which does not exist yet. The API has one
+  shared <span class="mono">INGEST_TOKEN</span>, not user identity. Every action on this screen
+  is inert. Real figures below come from live endpoints; nothing owner-specific is invented.</div>`;
+
+/* ── the screen table ───────────────────────────────────────────────────── */
+const SCREENS = [
+  {g:'Find',      n:1,  id:'front',       t:'Front door'},
+  {g:'Find',      n:2,  id:'reveal',      t:'Reveal — what we hold'},
+  {g:'Find',      n:7,  id:'checker',     t:'Prefix checker'},
+  {g:'Find',      n:9,  id:'keytypes',    t:'Key types'},
+  {g:'Find',      n:17, id:'notfound',    t:'Honest not-found'},
+
+  {g:'The record',n:3,  id:'thingsite',   t:'ThingSite — five pillars'},
+  {g:'The record',n:4,  id:'book',        t:'The Book'},
+  {g:'The record',n:13, id:'provenance',  t:'Provenance timeline'},
+  {g:'The record',n:14, id:'graph',       t:'Graph & associations'},
+  {g:'The record',n:15, id:'complete',    t:'Completeness'},
+
+  {g:'The estate',n:10, id:'verified',    t:'Verified directory'},
+  {g:'The estate',n:11, id:'glance',      t:'The register at a glance'},
+  {g:'The estate',n:12, id:'exceptions',  t:'Exception register'},
+  {g:'The estate',n:16, id:'estate',      t:'Multi-licence estates'},
+  {g:'The estate',n:8,  id:'containment', t:'Containment findings'},
+
+  {g:'Act',       n:5,  id:'claim',       t:'Claim a licence'},
+  {g:'Act',       n:6,  id:'getprefix',   t:'Get a GS1 prefix'},
+
+  {g:'Owner · demo',n:18,id:'signin',     t:'Sign in',            demo:1},
+  {g:'Owner · demo',n:19,id:'dashboard',  t:'Dashboard',          demo:1},
+  {g:'Owner · demo',n:20,id:'inbox',      t:'Notifications',      demo:1},
+  {g:'Owner · demo',n:21,id:'configurator',t:'ThingSite Configurator', demo:1},
+  {g:'Owner · demo',n:22,id:'agentpolicy',t:'Agent access policy',demo:1},
+  {g:'Owner · demo',n:23,id:'manage',     t:'Estate management',  demo:1},
+  {g:'Owner · demo',n:24,id:'audit',      t:'Audit & export',     demo:1},
+  {g:'Owner · demo',n:25,id:'team',       t:'Team & permissions', demo:1},
+  {g:'Owner · demo',n:26,id:'plans',      t:'Plans & pricing',    demo:1},
+];
+
+function buildRail(){
+  let html = '', lastG = null;
+  for (const s of SCREENS){
+    if (s.g !== lastG){ html += `<h4>${esc(s.g)}</h4>`; lastG = s.g; }
+    html += `<a id="rail-${s.id}" href="#${s.id}"><span class="n">${s.n}</span><span>${esc(s.t)}</span></a>`;
+  }
+  $('rail').innerHTML = html;
+}
+
+/* ── the live banner — reads the API, never asserts ─────────────────────── */
+let STATS = null;
+async function banner(){
+  const h = await call('/health');
+  const s = await call('/stats');
+  if (!h.ok || !h.body){
+    $('live').innerHTML = `<span class="dot bad"></span><span><b>NO API.</b>
+      Nothing on this page is live. Start it with
+      <span class="mono">./population/seed/demo_up.sh</span></span>`;
+    return;
+  }
+  STATS = s.body;
+  const by = (s.body && s.body.by_state) || {};
+  $('live').innerHTML = `<span class="dot"></span>
+    <span><b>LIVE</b> <span class="muted">${API} · db</span> <b>${esc(h.body.db)}</b></span>
+    <span class="muted">·</span>
+    <span><b>${num(s.body && s.body.total)}</b> <span class="muted">records</span></span>
+    <span class="muted">(${num(by.candidate)} candidate · ${num(by.exception)} exception ·
+      <b>${num(by.verified)} verified</b>)</span>`;
+  $('topright').textContent = 'read-only · nothing here writes';
+}
+
+/* ══ TIER 1 ════════════════════════════════════════════════════════════════ */
+
+async function front(){
+  const by = (STATS && STATS.by_state) || {};
+  return `<h1 class="hero">You have a website.</h1>
+    <h1 class="hero" style="color:var(--td-teal)">Are you doing Physical AI?</h1>
+    <h1 class="hero">Then you need a ThingSite for all of your physical things.</h1>
+    <p class="lede">We have one for you. Just enter your company name.</p>
+    <form class="brow" onsubmit="go('reveal', document.getElementById('q').value); return false">
+      <input id="q" placeholder="Enter your company name">
+      <button>Search</button>
+    </form>
+    ${src('/health','/stats')}
+    <div class="kpi">
+      <div><div class="n">${num(STATS && STATS.total)}</div><div class="l">records held</div></div>
+      <div><div class="n" style="color:var(--v)">${num(by.verified)}</div><div class="l">verified</div></div>
+      <div><div class="n" style="color:var(--c)">${num(by.candidate)}</div><div class="l">candidate</div></div>
+      <div><div class="n" style="color:var(--e)">${num(by.exception)}</div><div class="l">exception</div></div>
+    </div>
+    <div class="note"><b>Every figure on this page is a count of rows, taken a moment ago.</b>
+      There is no rounded headline number here, and there is no colour for “we guessed”.
+      A gap is declared as a gap.</div>`;
+}
+
+async function reveal(q){
+  if (!q) return `<h1>Reveal</h1><p class="lede">Search from the front door, or the checker.</p>`;
+  const path = '/search?q=' + encodeURIComponent(q);
+  const r = await call(path);
+  const g = guard(r, path); if (g) return `<h1>Reveal</h1>` + g;
+  const rows = (r.body && r.body.rows) || [];
+
+  /* If the query is digits, ALSO ask for containment. A prefix search that
+     silently drops a matching unrooted row, or silently folds in a longer
+     prefix, is a completeness failure. Both are shown, separately. */
+  let containment = null;
+  if (/^\d{4,12}$/.test(q.trim())){
+    const c = await call('/containment/' + q.trim());
+    if (c.ok && c.body && c.body.finding === 'containment') containment = c.body;
+  }
+
+  let html = `<h1>${esc(q)}</h1>
+    <p class="lede">This is what the register actually holds. <b>${rows.length} party row(s)</b> —
+      duplicates are shown, never merged silently.</p>${src(path, containment ? '/containment/:prefix' : '')}`;
+
+  if (!rows.length) return html + notFoundBody(q);
+
+  for (const p of rows){
+    const cls = p.state === 'verified' ? 'ver' : (p.prefix ? 'hi' : 'exc');
+    html += `<div class="card ${cls}">
+      <h3>${esc(p.legal_name)} ${badge(p.state)}</h3>
+      <div class="meta">
+        ${p.prefix ? `<b class="mono">prefix ${esc(p.prefix)}</b>` :
+          `<b style="color:var(--e)">no prefix attached in production</b>`}
+        &nbsp;·&nbsp; party ${esc(p.id)}
+        ${p.gln ? ` &nbsp;·&nbsp; GLN ${esc(p.gln)}` : ''}
+        ${p.mo ? ` &nbsp;·&nbsp; ${esc(p.mo)}` : ''}
+        &nbsp;·&nbsp; via ${esc(p.source)}
+        ${p.exception_reason ? `<br><span style="color:var(--c)">${esc(p.exception_reason)}</span>` : ''}
+        ${!p.prefix ? `<br>A prefix may exist in staging and not yet be promoted — that is a gap
+          in our machine, not a statement about your company.` : ''}
+      </div>
+      <div style="margin-top:10px">
+        ${p.prefix ? `<button class="act pri" onclick="window.open('td_thingsite.html#${esc(p.prefix)}','thingsite')">View ThingSite</button>` : ''}
+        <button class="act" onclick="go('complete','${esc(p.id)}')">Completeness</button>
+        <button class="act" onclick="go('provenance','${esc(p.prefix||'')}')">Provenance</button>
+        <button class="act" onclick="go('graph','${esc(p.id)}')">Graph</button>
+      </div></div>`;
+  }
+
+  if (containment && containment.inside && containment.inside.length){
+    html += `<h2>Containment finding</h2>
+      <div class="warn"><b>A key exists inside this licence.</b> GS1 licences do not nest, so
+      a longer prefix beginning with these digits was allocated inside this one's number space.
+      <b>This is a fact, not a verdict.</b></div>`;
+    for (const c of containment.inside){
+      html += `<div class="card exc"><h3>${esc(c.legal_name)} ${badge(c.state)}</h3>
+        <div class="meta"><b class="mono">${esc(c.prefix)}</b> sits inside
+        <b class="mono">${esc(containment.prefix)}</b>
+        ${c.gln ? ` &nbsp;·&nbsp; GLN ${esc(c.gln)}` : ''} &nbsp;·&nbsp; via ${esc(c.source)}</div></div>`;
+    }
+    html += `<div class="note">${esc(containment.note)}</div>`;
+  }
+  return html;
+}
+
+function notFoundBody(q){
+  return `<div class="card exc"><h3>${esc(q)} <span class="badge slot">no prefix on file</span></h3>
+    <div class="meta">The register holds nothing under that. <b>Never fabricated.</b>
+      An honest not-found is a real answer.</div>
+    <div style="margin-top:10px">
+      <button class="act pri" onclick="go('getprefix')">Get a GS1 prefix</button>
+    </div></div>
+    <div class="note">A ThingSite has no meaning without a GS1 prefix at its root. We do not
+      invent one, and we do not build a page around a number nobody issued.</div>`;
+}
+
+async function checker(pfx){
+  let html = `<h1>Prefix checker</h1>
+    <p class="lede">Paste a GS1 company prefix. We report who holds it in the register, and
+      whether anything has been filed <b>inside</b> its number space.</p>
+    <form class="brow" onsubmit="go('checker', document.getElementById('cq').value); return false">
+      <input id="cq" class="mono" value="${esc(pfx||'')}" placeholder="0817089">
+      <button>Check</button>
+    </form>${src('/containment/:prefix')}`;
+  if (!pfx) return html + `<div class="note">Free, no account. Try <b>0817089</b>.</div>`;
+
+  const path = '/containment/' + encodeURIComponent(pfx);
+  const r = await call(path);
+  const g = guard(r, path); if (g) return html + g;
+  const b = r.body || {};
+
+  html += `<div class="kpi">
+    <div><div class="n">${(b.holders||[]).length}</div><div class="l">holders on record</div></div>
+    <div><div class="n" style="color:${(b.inside||[]).length?'var(--e)':'var(--v)'}">${(b.inside||[]).length}</div>
+      <div class="l">filed inside it</div></div>
+    <div><div class="n">${(b.outside||[]).length}</div><div class="l">it sits inside</div></div></div>`;
+
+  for (const h of (b.holders||[])){
+    html += `<div class="card ver"><h3>${esc(h.legal_name)} ${badge(h.state)}</h3>
+      <div class="meta"><b class="mono">${esc(h.prefix)}</b> &nbsp;·&nbsp; party ${esc(h.id)}
+      &nbsp;·&nbsp; via ${esc(h.source)}${h.mo?` &nbsp;·&nbsp; ${esc(h.mo)}`:''}</div></div>`;
+  }
+  if (!(b.holders||[]).length) html += `<div class="empty">No holder on record for that prefix.</div>`;
+
+  if ((b.inside||[]).length){
+    html += `<h2>Inside this licence</h2><div class="warn">
+      <b>GS1 licences do not nest.</b> A longer prefix beginning with these digits was allocated
+      inside this one's number space — and only the licensee allocates there.</div>`;
+    for (const c of b.inside){
+      html += `<div class="card exc"><h3>${esc(c.legal_name)} ${badge(c.state)}</h3>
+        <div class="meta"><b class="mono">${esc(c.prefix)}</b>
+        ${c.gln?` &nbsp;·&nbsp; GLN ${esc(c.gln)}`:''} &nbsp;·&nbsp; via ${esc(c.source)}
+        ${c.first_seen?` &nbsp;·&nbsp; first seen ${esc(String(c.first_seen).slice(0,10))}`:''}</div></div>`;
+    }
+  }
+  if (b.note) html += `<div class="note">${esc(b.note)}</div>`;
+  return html;
+}
+
+async function containment(){
+  const path = '/containment?limit=100';
+  const r = await call(path);
+  const g = guard(r, path);
+  let html = `<h1>Containment findings</h1>
+    <p class="lede">Every prefix in the register that is a strict leading substring of another.
+      Arithmetic over digits — no name matching, no judgement.</p>${src(path)}`;
+  if (g) return html + g;
+  const rows = (r.body && r.body.rows) || [];
+  html += `<div class="kpi"><div><div class="n">${num(rows.length)}</div>
+    <div class="l">findings</div></div>
+    <div><div class="n">${num(STATS && STATS.total)}</div><div class="l">rows swept</div></div></div>`;
+  if (!rows.length) return html + `<div class="empty">No containment anywhere in the register.</div>`;
+  html += `<table><tr><th>Inside</th><th>held by</th><th>sits within</th><th>held by</th><th>source</th></tr>`;
+  for (const x of rows){
+    html += `<tr><td class="mono"><b>${esc(x.child)}</b></td><td>${esc(x.child_name)}</td>
+      <td class="mono">${esc(x.parent)}</td><td>${esc(x.parent_name)}</td>
+      <td>${esc(x.child_source)}</td></tr>`;
+  }
+  html += `</table><div class="note">${esc((r.body&&r.body.note)||'')}<br><br>
+    <b>Four causes look identical here and the register must never say which:</b> a bad cut by our
+    own loader · a mis-filing · a subsidiary or channel filing inside the parent licence ·
+    genuine misuse. <b>We report the containment. The licensee reports the cause.</b></div>`;
+  return html;
+}
+
+async function exceptions(reason){
+  const path = '/exceptions?limit=100' + (reason ? '&reason=' + encodeURIComponent(reason) : '');
+  const r = await call(path);
+  let html = `<h1>Exception register</h1>
+    <p class="lede">Things we looked at and could not resolve, <b>named</b>. A declared gap is
+      stronger than a blank — and it is the reason the other grades mean anything.</p>${src(path)}`;
+  const g = guard(r, path); if (g) return html + g;
+  const b = r.body || {};
+  html += `<div class="kpi"><div><div class="n" style="color:var(--e)">${num(b.total)}</div>
+    <div class="l">named exceptions</div></div></div><h2>By reason</h2><table>
+    <tr><th>Reason</th><th class="num">Rows</th></tr>`;
+  for (const x of (b.by_reason||[])){
+    const short = String(x.reason).length > 90 ? String(x.reason).slice(0,90) + '…' : x.reason;
+    html += `<tr><td><a href="#exceptions/${encodeURIComponent(x.reason)}">${esc(short)}</a></td>
+      <td class="num">${num(x.n)}</td></tr>`;
+  }
+  html += `</table>`;
+  if (reason) html += `<h2>${esc(reason).slice(0,120)}</h2>`;
+  html += `<table><tr><th>Company</th><th>Prefix</th><th>Source</th><th>Reason</th></tr>`;
+  for (const x of (b.rows||[])){
+    html += `<tr><td>${esc(x.legal_name)}</td><td class="mono">${esc(x.prefix||'—')}</td>
+      <td>${esc(x.source)}</td><td>${esc(String(x.exception_reason||'').slice(0,110))}</td></tr>`;
+  }
+  html += `</table><div class="note">${esc(b.note||'')}</div>`;
+  return html;
+}
+
+async function estate(fold){
+  const path = fold ? '/estate?fold=' + encodeURIComponent(fold) : '/estate?limit=60';
+  const r = await call(path);
+  let html = `<h1>Multi-licence estates</h1>
+    <p class="lede">A company with four GS1 licences appears as four rows — one prefix, one
+      ThingSite. Grouping them is a <b>candidate assertion on name-fold evidence</b>, never a
+      ruling that they are one legal entity.</p>${src(path)}`;
+  const g = guard(r, path); if (g) return html + g;
+  const b = r.body || {};
+
+  if (fold){
+    html += `<h2>${esc(fold)} ${badge('candidate')}</h2><table>
+      <tr><th>Company</th><th>Prefix</th><th>State</th><th>MO</th><th>Source</th></tr>`;
+    for (const x of (b.rows||[])){
+      html += `<tr><td>${esc(x.legal_name)}</td><td class="mono">${esc(x.prefix||'—')}</td>
+        <td>${badge(x.state)}</td><td>${esc(x.mo||'—')}</td><td>${esc(x.source)}</td></tr>`;
+    }
+    html += `</table><div class="note">${esc(b.note||'')}</div>`;
+    return html;
+  }
+
+  html += `<table><tr><th>Name fold</th><th>Example</th><th class="num">Rooted</th>
+    <th class="num">Unrooted</th><th class="num">MOs</th></tr>`;
+  for (const x of (b.rows||[])){
+    html += `<tr><td class="mono"><a href="#estate/${encodeURIComponent(x.name_fold)}">${esc(x.name_fold)}</a></td>
+      <td>${esc(x.example_name)}</td><td class="num">${num(x.rooted)}</td>
+      <td class="num">${num(x.unrooted)}</td><td class="num">${num(x.mos)}</td></tr>`;
+  }
+  html += `</table><div class="note">${esc(b.note||'')}</div>`;
+  return html;
+}
+
+async function verifiedDir(){
+  const path = '/verified';
+  const r = await call(path);
+  let html = `<h1>Verified directory</h1>
+    <p class="lede">Every row an authority has attested. We can name the authority and the date.</p>${src(path)}`;
+  const g = guard(r, path); if (g) return html + g;
+  const rows = (r.body && (r.body.rows || r.body)) || [];
+  const list = Array.isArray(rows) ? rows : [];
+  html += `<div class="kpi"><div><div class="n" style="color:var(--v)">${num(list.length)}</div>
+    <div class="l">verified</div></div></div>
+    <table><tr><th>Company</th><th>Prefix</th><th>GLN</th><th>MO</th><th>Source</th><th>Verified</th></tr>`;
+  for (const x of list){
+    html += `<tr><td>${esc(x.legal_name)}</td>
+      <td class="mono"><a href="#thingsite/${esc(x.prefix)}">${esc(x.prefix)}</a></td>
+      <td class="mono">${esc(x.gln||'—')}</td><td>${esc(x.mo||'—')}</td><td>${esc(x.source)}</td>
+      <td>${esc(String(x.verified_at||'').slice(0,10))}</td></tr>`;
+  }
+  return html + `</table>`;
+}
+
+async function glance(){
+  const cg = await call('/claims/grades');
+  let html = `<h1>The register at a glance</h1>
+    <p class="lede">What the whole estate is made of, by grade, by member organisation, by
+      source register.</p>${src('/stats','/claims/grades')}`;
+  const by = (STATS && STATS.by_state) || {};
+  html += `<div class="kpi">
+    <div><div class="n">${num(STATS && STATS.total)}</div><div class="l">party rows</div></div>
+    <div><div class="n" style="color:var(--v)">${num(by.verified)}</div><div class="l">verified</div></div>
+    <div><div class="n" style="color:var(--c)">${num(by.candidate)}</div><div class="l">candidate</div></div>
+    <div><div class="n" style="color:var(--e)">${num(by.exception)}</div><div class="l">exception</div></div>
+  </div>`;
+
+  const g = guard(cg, '/claims/grades');
+  if (g) html += g;
+  else {
+    const b = cg.body || {};
+    html += `<h2>Content claims by pillar and grade</h2>
+      <div class="kpi"><div><div class="n">${num(b.total)}</div><div class="l">claims</div></div>
+      <div><div class="n" style="color:${b.ungraded?'var(--e)':'var(--v)'}">${num(b.ungraded)}</div>
+      <div class="l">ungraded</div></div></div>
+      <table><tr><th>Pillar</th><th class="num">verified</th><th class="num">candidate</th>
+      <th class="num">exception</th><th class="num">built</th><th class="num">slot</th>
+      <th class="num">no grade</th></tr>`;
+    for (const p of ['P1','P2','P3','P4','P5']){
+      const m = (b.matrix && b.matrix[p]) || {};
+      html += `<tr><td><b>${p}</b></td><td class="num">${num(m.v||0)}</td><td class="num">${num(m.c||0)}</td>
+        <td class="num">${num(m.e||0)}</td><td class="num">${num(m.b||0)}</td>
+        <td class="num">${num(m.slot||0)}</td>
+        <td class="num" style="${m['<<NULL>>']?'color:var(--e);font-weight:700':''}">${num(m['<<NULL>>']||0)}</td></tr>`;
+    }
+    html += `</table>`;
+    if (b.note) html += `<div class="note">${esc(b.note)}</div>`;
+  }
+
+  const mo = (STATS && STATS.by_mo) || {};
+  const moRows = Object.entries(mo).sort((a,b2)=>b2[1]-a[1]).slice(0,25);
+  html += `<h2>By member organisation <span class="badge slot">${Object.keys(mo).length} in the estate</span></h2>
+    <table><tr><th>Member organisation</th><th class="num">Rows</th></tr>`;
+  for (const [k,v] of moRows) html += `<tr><td>${esc(k)}</td><td class="num">${num(v)}</td></tr>`;
+  html += `</table>`;
+
+  const so = (STATS && STATS.by_source) || {};
+  html += `<h2>By source register</h2><table><tr><th>Source</th><th class="num">Rows</th></tr>`;
+  for (const [k,v] of Object.entries(so).sort((a,b2)=>b2[1]-a[1])){
+    const gepir = /^gepir/i.test(k);
+    html += `<tr><td>${esc(k)}${gepir?' <span class="badge e">retired source</span>':''}</td>
+      <td class="num">${num(v)}</td></tr>`;
+  }
+  return html + `</table><div class="note"><b>GEPIR was retired on 31 December 2023.</b> Rows still
+    stamped with it are almost certainly correct hand-reads recorded under a name that no longer
+    exists. Flagged here rather than quietly renamed.</div>`;
+}
+
+async function thingsite(pfx){
+  if (!pfx) return `<h1>ThingSite</h1><p class="lede">Open one from Reveal or the Verified directory.</p>`;
+  const path = '/record/prefix/' + encodeURIComponent(pfx);
+  const r = await call(path);
+  let html = `<h1 class="mono">${esc(pfx)}</h1>`;
+  const g = guard(r, path); if (g) return html + g;
+  if (!r.ok || !r.body || r.body.error)
+    return html + `<div class="empty">No record for that prefix.</div>` + src(path);
+
+  const p = r.body.party || {};
+  const ev = r.body.events || [];
+  html = `<h1>${esc(p.legal_name)}</h1>
+    <p class="lede"><span class="mono">prefix ${esc(p.prefix)}</span> ${badge(p.state)} ·
+      built from your own public record. <b>Every line says where it came from.</b></p>${src(path)}
+    <div class="card ${p.state==='verified'?'ver':'hi'}"><h3>The registration record</h3>
+      <div class="meta">
+        party ${esc(p.id)} &nbsp;·&nbsp; GLN ${esc(p.gln||'not read')} &nbsp;·&nbsp;
+        ${esc(p.mo||'MO not read')} &nbsp;·&nbsp; ${esc(p.city||'')} ${esc(p.country||'')}
+        &nbsp;·&nbsp; via ${esc(p.source)}
+        ${p.exception_reason?`<br><span style="color:var(--c)">${esc(p.exception_reason)}</span>`:''}
+      </div></div>`;
+
+  html += await pillarsFor(p.prefix, p.id);
+
+  html += `<h2>Provenance</h2>`;
+  if (!ev.length) html += `<div class="empty">No events on this row.</div>`;
+  for (const e of ev.slice(0, 12)){
+    html += `<div class="card"><h3>${esc(e.event_type)} ${badge(e.to_state||'candidate')}</h3>
+      <div class="meta">${esc(String(e.at||'').slice(0,19).replace('T',' '))} &nbsp;·&nbsp;
+      actor <b>${esc(e.actor||'—')}</b> &nbsp;·&nbsp; source <b>${esc(e.source||'—')}</b>
+      ${e.detail?`<br><span class="mono" style="font-size:12px">${esc(JSON.stringify(e.detail)).slice(0,300)}</span>`:''}
+      </div></div>`;
+  }
+  html += `<div style="margin-top:14px">
+    <button class="act pri" onclick="go('claim','${esc(pfx)}')">Claim this licence</button>
+    <button class="act" onclick="go('checker','${esc(pfx)}')">Check for containment</button>
+    <button class="act" onclick="go('complete','${esc(p.id)}')">Completeness</button></div>`;
+  return html;
+}
+
+/* The five pillars, read from content_claim. Renders WHAT IS HELD — an empty
+   pillar is a declared gap and says so, never a placeholder. */
+const PILLAR_NAMES = {
+  P1:['Identity','who this licence belongs to, and the keys rooted in it'],
+  P2:['Drivers','the control interface — SiLA Features, driver stacks'],
+  P3:['Protocols','methods and procedures — Allotrope AFO'],
+  P4:['Cloud & edge','where the machine face is hosted and bound'],
+  P5:['The graph','what this connects to, and how'],
+};
+async function pillarsFor(prefix, partyId){
+  const path = prefix ? `/prefix/${encodeURIComponent(prefix)}/claims?limit=800`
+                      : `/party/${encodeURIComponent(partyId)}/claims?limit=800`;
+  const r = await call(path);
+  let html = `<h2>The five pillars</h2>${src(path)}`;
+  const g = guard(r, path);
+  if (g) return html + g;
+  if (!r.ok || !r.body || r.body.error)
+    return html + `<div class="empty">No claim record for this row.</div>`;
+
+  const rec = r.body.records ? r.body.records[0] : r.body;
+  const pillars = (rec && rec.pillars) || {};
+  const counts  = (rec && rec.counts)  || {};
+  const total   = (rec && rec.total)   || 0;
+
+  html += `<div class="kpi"><div><div class="n">${num(total)}</div>
+    <div class="l">claims held</div></div>
+    ${rec && rec.ungraded ? `<div><div class="n" style="color:var(--e)">${num(rec.ungraded)}</div>
+      <div class="l">ungraded</div></div>` : ''}</div>`;
+
+  for (const key of ['P1','P2','P3','P4','P5']){
+    const meta = PILLAR_NAMES[key];
+    const rows = pillars[key] || [];
+    const c = counts[key] || {};
+    const chips = Object.entries(c).map(([k,v]) =>
+      `<span class="badge ${k==='<<NULL>>'?'e':k}">${k==='<<NULL>>'?'no grade':esc(k)} ${v}</span>`).join('');
+
+    html += `<div class="pillar"><div class="h">
+        <span class="idx">${key.slice(1)}</span><b>${esc(meta[0])}</b>
+        ${rows.length ? chips : '<span class="badge slot">slot</span>'}</div>
+      <div class="body">${esc(meta[1])}`;
+
+    if (!rows.length){
+      html += `<br><i>Nothing held on this pillar. <b>A declared gap, not a blank</b> — the
+        register does not fill a pillar it has not read.</i></div></div>`;
+      continue;
+    }
+
+    html += `</div><table style="margin-top:9px"><tr><th>Section</th><th>Item</th>
+      <th>Identifier</th><th>Grade</th><th>Where it came from</th></tr>`;
+    for (const x of rows.slice(0, 40)){
+      const tx = String(x.tx || '');
+      html += `<tr><td>${esc(x.section)}</td><td>${esc(x.nm)}</td>
+        <td class="mono">${esc(String(x.identifier||'—').slice(0,60))}</td>
+        <td>${x.grade ? badge(x.grade) : '<span class="badge e">no grade</span>'}</td>
+        <td style="font-size:12.5px;color:var(--td-mut)" title="${esc(tx)}">
+          ${esc(tx.length > 130 ? tx.slice(0,130) + '…' : tx) || '—'}
+          ${x.doc_key ? `<br><span class="mono" style="font-size:11px">doc ${esc(x.doc_key)}</span>` : ''}
+        </td></tr>`;
+    }
+    if (rows.length > 40)
+      html += `<tr><td colspan="5" style="color:var(--td-mut)">…and ${num(rows.length-40)} more
+        on this pillar. Shown: 40. <b>A cap is not a total.</b></td></tr>`;
+    html += `</table></div>`;
+  }
+
+  if (rec && rec.truncated)
+    html += `<div class="warn"><b>Truncated at the API limit.</b> This row holds more claims
+      than were returned — the count above is a page, not a total.</div>`;
+  return html;
+}
+
+async function book(pfx){
+  if (!pfx) return `<h1>The Book</h1><p class="lede">Open a ThingSite first.</p>`;
+  const path = '/record/prefix/' + encodeURIComponent(pfx);
+  const r = await call(path);
+  let html = `<h1>The Book</h1>`;
+  const g = guard(r, path); if (g) return html + g;
+  const p = (r.body && r.body.party) || {};
+  return `<h1>${esc(p.legal_name||pfx)} — the Book</h1>
+    <p class="lede">The narrative read of the record: what is held, how it was learned, and what
+      is still a declared gap. Written from the claim layer, never generated.</p>${src(path)}
+    <div class="note"><b>This is the ThingDaddy answer to an AI site builder.</b> GoDaddy's Airo
+      generates plausible copy from a description. We do the opposite: the fleet finds the
+      material, converts it, inserts it, and <b>every line carries its source and its date</b>.
+      The magic is the same — minutes to a filled page — and the difference is that nothing here
+      was invented.</div>
+    <div class="card"><h3>Chapter 1 · The registration record</h3><div class="meta">
+      <b class="mono">${esc(p.prefix||'')}</b> ${badge(p.state||'candidate')} ·
+      ${esc(p.legal_name||'')} · via ${esc(p.source||'')} ·
+      ${esc(p.exception_reason||'no exception recorded')}</div></div>
+    <div class="card"><h3>Chapters 2–5 <span class="badge slot">slot</span></h3>
+      <div class="meta">Drivers, protocols, cloud and edge, and the graph are served by the claim
+      layer per party. Declared as gaps here rather than filled with prose.</div></div>`;
+}
+
+async function provenance(pfx){
+  if (!pfx) return `<h1>Provenance timeline</h1><p class="lede">Open a rooted record first.</p>`;
+  const path = '/record/prefix/' + encodeURIComponent(pfx);
+  const r = await call(path);
+  let html = `<h1>Provenance — <span class="mono">${esc(pfx)}</span></h1>
+    <p class="lede">Every event on this row, append-only, in order. This is the audit trail an
+      auditor reads.</p>${src(path)}`;
+  const g = guard(r, path); if (g) return html + g;
+  const ev = (r.body && r.body.events) || [];
+  if (!ev.length) return html + `<div class="empty">No events recorded on this row.</div>`;
+  html += `<table><tr><th>When</th><th>Event</th><th>From → to</th><th>Actor</th><th>Source</th></tr>`;
+  for (const e of ev){
+    html += `<tr><td class="mono">${esc(String(e.at||'').slice(0,19).replace('T',' '))}</td>
+      <td><b>${esc(e.event_type)}</b></td>
+      <td>${esc(e.from_state||'—')} → ${esc(e.to_state||'—')}</td>
+      <td>${esc(e.actor||'—')}</td><td>${esc(e.source||'—')}</td></tr>`;
+  }
+  return html + `</table><div class="note">Append-only. A correction supersedes rather than
+    overwrites, so the earlier reading stays visible as evidence.</div>`;
+}
+
+async function graph(pid){
+  if (!pid) return `<h1>Graph & associations</h1><p class="lede">Open a record first.</p>`;
+  const p1 = '/node/by-legacy/party/' + encodeURIComponent(pid);
+  const r = await call(p1);
+  let html = `<h1>Graph & associations</h1><p class="lede">The spine node for this party, and its
+    one-hop neighbourhood.</p>${src(p1, '/node/:id/associations')}`;
+  const g = guard(r, p1); if (g) return html + g;
+  if (!r.ok || !r.body || r.body.error){
+    return html + `<div class="empty"><b>Not on the spine yet.</b><br>
+      ${esc((r.body && r.body.error) || '')}<br><br>
+      The route exists and there is genuinely nothing to return. The console never fakes a node.</div>`;
+  }
+  const node = r.body.node || {};
+  const a = await call('/node/' + node.id + '/associations?limit=100');
+  const rows = (a.body && a.body.associations) || [];
+  html += `<div class="card"><h3>${esc(node.legal_name || node.label || 'node ' + node.id)}</h3>
+    <div class="meta">node ${esc(node.id)} &nbsp;·&nbsp; ${esc(node.key_type)}
+    &nbsp;·&nbsp; <span class="mono">${esc(node.urn||'')}</span></div></div>
+    <div class="kpi"><div><div class="n">${num(rows.length)}</div><div class="l">associations</div></div></div>`;
+  if (!rows.length) return html + `<div class="empty">No associations on this node.</div>`;
+  html += `<table><tr><th>Dir</th><th>Relation</th><th>Neighbour</th><th>Key</th><th>State</th><th>Source</th></tr>`;
+  for (const x of rows.slice(0, 120)){
+    const out = x.direction === 'out';
+    html += `<tr><td>${out?'→':'←'}</td><td><b>${esc(x.rel)}</b></td>
+      <td>${esc(out ? (x.object_legal_name||x.object_label) : (x.subject_legal_name||x.subject_label))}</td>
+      <td class="mono">${esc(out ? x.object_key_type : x.subject_key_type)}</td>
+      <td>${badge(x.state||'candidate')}</td><td>${esc(x.source||'—')}</td></tr>`;
+  }
+  return html + `</table>`;
+}
+
+async function complete(pid){
+  if (!pid) return `<h1>Completeness</h1><p class="lede">Open a record first.</p>`;
+  const path = '/party/' + encodeURIComponent(pid) + '/completeness';
+  const r = await call(path);
+  let html = `<h1>Completeness</h1>
+    <p class="lede">How resolvable this record is to a machine — and exactly what is missing.
+      This is search-engine optimisation, for agents.</p>${src(path)}`;
+  const g = guard(r, path); if (g) return html + g;
+  const b = r.body || {};
+  const pres = (b.present||[]).length, req = (b.required||[]).length || 1;
+  const pct = Math.round(100 * pres / req);
+  html += `<div class="kpi">
+    <div><div class="n" style="color:${b.complete?'var(--v)':'var(--c)'}">${pct}%</div>
+      <div class="l">complete</div></div>
+    <div><div class="n">${pres}/${req}</div><div class="l">required fields</div></div>
+    <div><div class="n">${badge(b.state||'candidate')}</div><div class="l">state</div></div></div>
+    <div class="bar"><i style="width:${pct}%;background:var(--v)"></i>
+      <i style="width:${100-pct}%;background:var(--td-rule)"></i></div>
+    <h2>Present</h2><table><tr><th>Field</th></tr>`;
+  for (const f of (b.present||[])) html += `<tr><td>${esc(f)} <span class="badge v">present</span></td></tr>`;
+  html += `</table><h2>Missing</h2>`;
+  if (!(b.missing||[]).length) html += `<div class="empty">Nothing missing.</div>`;
+  else { html += `<table><tr><th>Field</th></tr>`;
+    for (const f of b.missing) html += `<tr><td>${esc(f)} <span class="badge slot">slot</span></td></tr>`;
+    html += `</table>`; }
+  return html + `<div class="note">A missing field is a <b>named gap</b>, not a low score.
+    Filling it is work with a known shape.</div>`;
+}
+
+async function keytypes(){
+  const keys = [
+    ['GTIN','Trade item','a product you sell'],
+    ['GLN','Location','a place, a legal entity, a department'],
+    ['GIAI','Individual asset','one physical thing, serialised'],
+    ['GRAI','Returnable asset','a pallet, a tote, a cylinder'],
+    ['SSCC','Logistic unit','a shipment, a pallet load'],
+    ['GDTI','Document','a certificate, a protocol, a record'],
+    ['GSRN','Service relation','a person or an agent in a role'],
+    ['GSIN','Shipment','a consignment across carriers'],
+    ['GINC','Consignment','freight under one contract'],
+    ['GCN','Coupon','a promotional instrument'],
+    ['CPID','Component / part','a part in a bill of materials'],
+    ['GMN','Model number','a regulated device model'],
+    ['GSRN-P','Service provider','the provider side of a relation'],
+    ['PGLN','Party','the party key itself'],
+  ];
+  let html = `<h1>Key types</h1>
+    <p class="lede">A domain extension is <b>chosen</b>. A GS1 key type is <b>determined by what
+      the thing is</b>. The picker is really a classifier.</p>
+    <p class="src">reference — GS1 General Specifications. Counts per key type are not yet
+      exposed by the API and are <b>not shown rather than estimated</b>.</p>
+    <table><tr><th>Key</th><th>What it identifies</th><th>In plain terms</th></tr>`;
+  for (const k of keys)
+    html += `<tr><td class="mono"><b>${esc(k[0])}</b></td><td>${esc(k[1])}</td><td>${esc(k[2])}</td></tr>`;
+  return html + `</table><div class="note"><b>All of them root in one GS1 company prefix.</b>
+    That is why the prefix is the primary key and everything else hangs off it.</div>`;
+}
+
+async function notfound(){
+  return `<h1>Honest not-found</h1>
+    <p class="lede">What the register does when it holds nothing.</p>
+    ${notFoundBody('a company we do not hold')}
+    <div class="note">Most systems answer an unknown lookup with an empty page or an invented
+      placeholder. <b>A refused key is never a guess.</b></div>`;
+}
+
+async function claim(pfx){
+  return `<h1>Claim a licence</h1>
+    <p class="lede">${pfx ? `Claiming <span class="mono">${esc(pfx)}</span>. ` : ''}
+      A ThingSite is a mirror until its owner claims it. Unclaimed, it is a public candidate —
+      an invitation. Claimed, it belongs to the licensee.</p>
+    ${demoBanner('Claiming')}
+    <div class="card"><h3>What claiming does</h3><div class="meta">
+      · the licensee becomes the answerable party on this prefix<br>
+      · corrections they make are recorded as <b>their</b> dated assertions<br>
+      · notifications about their number space are delivered to them<br>
+      · <b>we do not edit the mirror on their behalf</b> — we publish what is found as found</div></div>
+    <div style="margin-top:12px">
+      <button class="act pri inert" disabled>Verify I control this prefix</button>
+      <button class="act inert" disabled>This one is not us</button></div>`;
+}
+
+async function getprefix(){
+  return `<h1>Get a GS1 prefix</h1>
+    <p class="lede">No prefix, no ThingSite. We do not invent one and we never mint on your
+      behalf — <b>the customer mints; we register and resolve</b>.</p>
+    ${src('reference — GS1 member organisation application process')}
+    <div class="card"><h3>1 · Which member organisation</h3><div class="meta">
+      A licence is issued by the GS1 MO for your country. The register currently holds rows from
+      <b>${Object.keys((STATS&&STATS.by_mo)||{}).length}</b> member organisations.</div></div>
+    <div class="card"><h3>2 · Apply</h3><div class="meta">
+      You apply to the MO directly. We can prepare the application from what the register already
+      holds about you — <b>the form is the harvest</b>.</div></div>
+    <div class="card"><h3>3 · Your ThingSite roots</h3><div class="meta">
+      The moment the prefix is issued, the page we already built for you has a root, and
+      everything on it becomes addressable.</div></div>
+    <div style="margin-top:12px"><button class="act pri inert" disabled>Start an application</button></div>
+    ${demoBanner('Applying')}`;
+}
+
+/* ══ TIER 2 — DEMO SHELLS ══════════════════════════════════════════════════ */
+
+async function signin(){
+  return `<h1>Sign in</h1>${demoBanner('Sign-in')}
+    <p class="lede">Everything owner-side sits behind this screen: the dashboard, notifications,
+      the configurator, agent policy, audit and billing. <b>Nine screens depend on it.</b></p>
+    <div class="warn"><b>This is the largest unbuilt dependency in the product.</b> The API today
+      has a single shared <span class="mono">INGEST_TOKEN</span> — a secret, not an identity.
+      There is no user table, no session, no per-prefix authorisation.</div>
+    <div class="card"><h3>What sign-in has to establish</h3><div class="meta">
+      · which human is asking<br>
+      · which prefixes they are answerable for<br>
+      · what they may do to each — read, correct, ratify, revoke<br>
+      · a durable address for notifications about their number space</div></div>
+    <div style="margin-top:12px">
+      <button class="act pri inert" disabled>Sign in</button>
+      <button class="act inert" disabled>Create an account</button></div>`;
+}
+
+async function dashboard(){
+  const r = await call('/verified');
+  const list = (r.body && (r.body.rows || r.body)) || [];
+  const rows = Array.isArray(list) ? list.slice(0, 8) : [];
+  return `<h1>Dashboard</h1>${demoBanner('The owner dashboard')}
+    <p class="lede">What a licensee sees on arrival: their prefixes, their grades, and anything
+      the network has to tell them.</p>
+    ${src('/verified — REAL ROWS, shown as an illustration of shape. Ownership is not asserted.')}
+    <div class="kpi">
+      <div><div class="n">${rows.length}</div><div class="l">licences shown</div></div>
+      <div><div class="n">—</div><div class="l">open findings</div></div>
+      <div><div class="n">—</div><div class="l">unread notices</div></div></div>
+    <table><tr><th>Prefix</th><th>Company</th><th>State</th><th>MO</th></tr>`
+    + rows.map(x => `<tr><td class="mono">${esc(x.prefix)}</td><td>${esc(x.legal_name)}</td>
+        <td>${badge(x.state)}</td><td>${esc(x.mo||'—')}</td></tr>`).join('')
+    + `</table><div class="note">These are real verified rows from the register. <b>They are not
+      "your" prefixes</b> — without authentication there is no "you", and the console will not
+      pretend otherwise.</div>`;
+}
+
+async function inbox(){
+  const c = await call('/containment?limit=5');
+  const rows = (c.body && c.body.rows) || [];
+  let html = `<h1>Notifications</h1>${demoBanner('The notification inbox')}
+    <p class="lede">The Google-security mechanic, for identity. <b>Activity in your number space.
+      Was this you?</b> We report; you answer; your answer is recorded, dated and sourced.</p>
+    ${src('/containment — REAL findings, rendered as they would arrive')}`;
+  if (!rows.length) return html + `<div class="empty">No findings in the register.</div>`;
+  for (const x of rows){
+    html += `<div class="card hi"><h3>A key was filed inside <span class="mono">${esc(x.parent)}</span></h3>
+      <div class="meta">
+        <b class="mono">${esc(x.child)}</b> — filed as <b>${esc(x.child_name)}</b>
+        via ${esc(x.child_source)}${x.child_gln?`, carrying GLN ${esc(x.child_gln)}`:''}.<br>
+        Your licence <b class="mono">${esc(x.parent)}</b> is held as <b>${esc(x.parent_name)}</b>.
+        GS1 licences do not nest, so those digits sit inside your number space — and only you
+        allocate there.<br><br><b>Did you authorise this?</b></div>
+      <div style="margin-top:10px">
+        <button class="act pri inert" disabled>Yes — this is ours</button>
+        <button class="act inert" disabled>No — we did not authorise it</button>
+        <button class="act inert" disabled>Not sure, ask us later</button></div></div>`;
+  }
+  return html + `<div class="note"><b>"Yes, that's ours" is a good outcome, not a wasted alert.</b>
+    It becomes a dated relationship and the graph improves. We never say counterfeit, never say
+    stolen, never say misfiled — a bad cut, a mis-filing, a subsidiary, and misuse all look
+    identical here, and only the licensee knows which.</div>`;
+}
+
+async function configurator(){
+  return `<h1>ThingSite Configurator</h1>${demoBanner('The configurator')}
+    <p class="lede">The website-builder parallel: drag pillar content onto the ThingSite canvas.
+      <b>Rule-constrained</b> — only protocol-legal configurations form. You cannot drop a wrong
+      note.</p>
+    <div class="note"><b>Configuration, not code.</b> A SiLA driver is a declared Feature, so it
+      is draggable rather than programmable. Everything dropped lands as <b>candidate</b>;
+      ratifying it is a separate, founder-gated act.</div>
+    ${['Identity','Drivers','Protocols','Cloud & edge','The graph'].map((p,i)=>
+      `<div class="pillar"><div class="h"><span class="idx">${i+1}</span><b>${p}</b>
+        <span class="badge slot">drop zone</span></div>
+      <div class="body">Palette is fed by the harvest — sitemap reader, document miner, SiLA and
+        Allotrope public definitions.</div></div>`).join('')}
+    <div style="margin-top:12px"><button class="act pri inert" disabled>Start from a regime template</button>
+      <button class="act inert" disabled>Ratify</button></div>`;
+}
+
+async function agentpolicy(){
+  return `<h1>Agent access policy</h1>${demoBanner('Agent policy')}
+    <p class="lede">Which agents may resolve your things, at what depth, on what terms.</p>
+    <div class="note">GoDaddy added <b>AI Crawl Control</b> in April 2026 so site owners could
+      decide how AI crawlers use their content. For a website that is a nuisance feature. <b>For a
+      machine-first register it is core governance</b> — and it composes with GSRN service
+      relations, which are already scoped and revocable by design.</div>
+    <table><tr><th>Agent</th><th>Scope</th><th>Depth</th><th>State</th></tr>
+      <tr><td>any</td><td>identity + grades</td><td>record</td><td>${badge('candidate')}</td></tr>
+      <tr><td>named GSRN</td><td>full pillars</td><td>graph, 1 hop</td><td>${badge('slot')}</td></tr>
+      <tr><td>revoked</td><td>—</td><td>—</td><td>${badge('exception')}</td></tr></table>
+    <div style="margin-top:12px"><button class="act pri inert" disabled>Add a policy</button></div>`;
+}
+
+async function manage(){
+  const r = await call('/estate?limit=8');
+  const rows = (r.body && r.body.rows) || [];
+  return `<h1>Estate management</h1>${demoBanner('Estate management')}
+    <p class="lede">Every licence you hold, across every member organisation, in one place.</p>
+    <div class="note">GoDaddy shipped <b>Global Portfolio</b> in June 2026 — "track domains at any
+      registrar from your GoDaddy account". The identical problem exists for prefixes and nobody
+      solves it: a multinational holds licences from several MOs and has no single view of its own
+      estate.</div>
+    ${src('/estate — REAL groupings on name-fold evidence, grade: candidate')}
+    <table><tr><th>Name fold</th><th>Example</th><th class="num">Rooted</th><th class="num">MOs</th></tr>`
+    + rows.map(x=>`<tr><td class="mono">${esc(x.name_fold)}</td><td>${esc(x.example_name)}</td>
+        <td class="num">${num(x.rooted)}</td><td class="num">${num(x.mos)}</td></tr>`).join('')
+    + `</table>`;
+}
+
+async function audit(){
+  return `<h1>Audit & export</h1>${demoBanner('Audit and export')}
+    <p class="lede">A point-in-time export of everything the register holds about your prefixes,
+      with every source and every date.</p>
+    <div class="card"><h3>What an export carries</h3><div class="meta">
+      · every claim, its grade, its source and the date it was read<br>
+      · the full append-only event spine per prefix<br>
+      · every exception, named<br>
+      · the tool and version that derived each row</div></div>
+    <div class="note">Shaped for 21 CFR Part 11 and for the auditor who asks "how do you know
+      that". <b>A document cited without a page is never emitted.</b></div>
+    <div style="margin-top:12px"><button class="act pri inert" disabled>Export</button></div>`;
+}
+
+async function team(){
+  return `<h1>Team & permissions</h1>${demoBanner('Team management')}
+    <p class="lede">Who may read, correct, ratify and revoke — per prefix, not per account.</p>
+    <div class="note"><b>Separation of powers.</b> No single actor holds every power. Ratifying is
+      distinct from correcting, and both are distinct from reading. The registrar never ratifies
+      on the licensee's behalf.</div>
+    <table><tr><th>Role</th><th>Read</th><th>Correct</th><th>Ratify</th><th>Revoke</th></tr>
+      <tr><td>Viewer</td><td>✓</td><td></td><td></td><td></td></tr>
+      <tr><td>Editor</td><td>✓</td><td>✓</td><td></td><td></td></tr>
+      <tr><td>Answerable party</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr></table>`;
+}
+
+async function plans(){
+  return `<h1>Plans & pricing</h1>${demoBanner('Billing')}
+    <p class="lede">The line is simple: <b>the look is free, the vigilance is the product</b>.</p>
+    <div class="note"><b>We never charge for the thing that makes the register trustworthy.</b>
+      The moment a containment finding sits behind a paywall we are a protection service, not a
+      registrar, and the mirror rule breaks.</div>
+    <div class="card ver"><h3>Free — the mirror</h3><div class="meta">
+      what the register holds about you · a containment finding in your space · the prefix checker ·
+      your unclaimed ThingSite · honest not-found</div></div>
+    <div class="card hi"><h3>Paid — the vigilance</h3><div class="meta">
+      continuous watching rather than one look · history and audit export · your <b>whole estate</b>
+      across every member organisation · delivery into your systems · a resolution SLA ·
+      managed verification, where we do the reading · someone to call</div></div>
+    <div class="note">GoDaddy's own precedent: WHOIS lookup free, WHOIS privacy paid. SSL Checker
+      free, Managed SSL paid.</div>`;
+}
+
+/* ── router ─────────────────────────────────────────────────────────────── */
+const R = {
+  front, reveal, checker, keytypes, notfound,
+  thingsite, book, provenance, graph, complete,
+  verified: verifiedDir, glance, exceptions, estate, containment,
+  claim, getprefix,
+  signin, dashboard, inbox, configurator, agentpolicy, manage, audit, team, plans,
+};
+
+function go(id, arg){
+  location.hash = id + (arg ? '/' + encodeURIComponent(arg) : '');
+}
+async function route(){
+  const raw = location.hash.replace(/^#/, '') || 'front';
+  const i = raw.indexOf('/');
+  const id = i === -1 ? raw : raw.slice(0, i);
+  const arg = i === -1 ? null : decodeURIComponent(raw.slice(i + 1));
+  const fn = R[id] || front;
+  for (const s of SCREENS){
+    const el = $('rail-' + s.id);
+    if (el) el.className = (s.id === id ? 'on' : '');
+  }
+  $('view').innerHTML = '<div class="spin">reading the register…</div>';
+  try { $('view').innerHTML = await fn(arg); }
+  catch (e) {
+    $('view').innerHTML = `<div class="warn"><b>This screen failed to render.</b>
+      <span class="mono">${esc(String(e))}</span><br>Reported, not hidden.</div>`;
+  }
+  $('view').innerHTML += `<footer><b>ThingDaddy.</b> The registrar for the physical internet.
+    You own your IDs; we operate.<br>
+    Every fact is <b>verified</b>, <b>candidate</b>, or an <b>exception</b> — never a guess.
+    Nothing on this console writes. Nothing is minted here.</footer>`;
+  window.scrollTo(0, 0);
+}
+
+buildRail();
+window.addEventListener('hashchange', route);
+banner().then(route);
+</script>
+</body>
+</html>
